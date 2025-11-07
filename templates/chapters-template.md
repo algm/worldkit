@@ -1,251 +1,283 @@
----
+# Chapter Breakdown: [STORY NAME]
 
-description: "Task list template for feature implementation"
----
+**Story Branch**: `[###-story-name]`  
+**Created**: [DATE]  
+**Status**: Draft
 
-# Tasks: [FEATURE NAME]
+## Overview
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**Total Estimated Word Count**: [X words]
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Number of Chapters**: [X chapters]
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**Average Chapter Length**: [X words per chapter]
 
-## Format: `[ID] [P?] [Story] Description`
+**POV Strategy**: [e.g., "First person from protagonist only", "Third person limited alternating between characters", "Multiple first-person POVs"]
 
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
+## Act I: Setup
 
-## Path Conventions
+### Chapter 1: [Chapter Title]
 
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+**POV Character**: [Who tells this chapter]
 
-<!-- 
-  ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
-  
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
-  
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
-  
-  DO NOT keep these sample tasks in the generated tasks.md file.
-  ============================================================================
--->
+**Location**: [Where it takes place]
 
-## Phase 1: Setup (Shared Infrastructure)
+**Estimated Word Count**: [X words]
 
-**Purpose**: Project initialization and basic structure
+**Purpose**: [What this chapter accomplishes - plot and character]
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+**Opening Line Idea**: [Optional - memorable first line if you have one]
+
+**Scene Breakdown**:
+
+1. **Scene 1.1** - [Scene title/summary]
+   - **Type**: [Dialogue, Action, Description, Reflection, etc.]
+   - **Goal**: [What needs to happen]
+   - **Conflict**: [What opposes the goal]
+   - **Outcome**: [Result/transition]
+   - **Character Development**: [What we learn or how character changes]
+
+2. **Scene 1.2** - [Scene title/summary]
+   - **Type**: [Scene type]
+   - **Goal**: [Scene goal]
+   - **Conflict**: [Tension/obstacle]
+   - **Outcome**: [Result]
+   - **World Building**: [Details revealed about the world]
+
+**Chapter End Hook**: [How this chapter makes readers want to continue]
+
+**Notes**: [Anything specific to remember for this chapter]
 
 ---
 
-## Phase 2: Foundational (Blocking Prerequisites)
+### Chapter 2: [Chapter Title]
 
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
+**POV Character**: [Who tells this chapter]
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+**Location**: [Where it takes place]
 
-Examples of foundational tasks (adjust based on your project):
+**Estimated Word Count**: [X words]
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+**Purpose**: [Chapter's narrative function]
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**Scene Breakdown**:
 
----
+1. **Scene 2.1** - [Scene title/summary]
+   - **Type**: [Scene type]
+   - **Goal**: [Scene goal]
+   - **Conflict**: [What creates tension]
+   - **Outcome**: [Result]
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+2. **Scene 2.2** - [Scene title/summary]
+   - **Type**: [Scene type]
+   - **Goal**: [Scene goal]
+   - **Conflict**: [Obstacle]
+   - **Outcome**: [Result]
 
-**Goal**: [Brief description of what this story delivers]
+**Chapter End Hook**: [Transition to next chapter]
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
-
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
-
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**Notes**: [Special considerations]
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+[Continue for all Act I chapters...]
 
-**Goal**: [Brief description of what this story delivers]
+## Act II: Confrontation
 
-**Independent Test**: [How to verify this story works on its own]
+### Chapter [X]: [Chapter Title]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+**POV Character**: [Who tells this chapter]
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+**Location**: [Where it takes place]
 
-### Implementation for User Story 2
+**Estimated Word Count**: [X words]
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+**Purpose**: [Chapter's function in rising action]
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+**Scene Breakdown**:
 
----
+1. **Scene X.1** - [Scene title/summary]
+   - **Type**: [Scene type]
+   - **Goal**: [What character wants in this scene]
+   - **Conflict**: [What prevents them from getting it]
+   - **Outcome**: [How it resolves - success, failure, compromise]
+   - **Stakes**: [What's at risk in this scene]
 
-## Phase 5: User Story 3 - [Title] (Priority: P3)
+2. **Scene X.2** - [Scene title/summary]
+   - **Type**: [Scene type]
+   - **Goal**: [Scene objective]
+   - **Conflict**: [Opposition]
+   - **Outcome**: [Result and consequences]
 
-**Goal**: [Brief description of what this story delivers]
+**Chapter End Hook**: [Compelling reason to continue]
 
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
+**Notes**: [Important details for this chapter]
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+[Continue for all Act II chapters...]
+
+## Act III: Resolution
+
+### Chapter [X]: [Chapter Title - The Climax]
+
+**POV Character**: [Who tells this chapter]
+
+**Location**: [Where the climax occurs]
+
+**Estimated Word Count**: [X words]
+
+**Purpose**: [Bring central conflict to its peak and resolution]
+
+**Scene Breakdown**:
+
+1. **Scene X.1** - [Approach to climax]
+   - **Type**: [Scene type]
+   - **Goal**: [Character's final push]
+   - **Conflict**: [Ultimate obstacle]
+   - **Outcome**: [Lead-in to climactic moment]
+   - **Emotional Beat**: [Character's internal state]
+
+2. **Scene X.2** - [Climactic confrontation]
+   - **Type**: [Action/Confrontation]
+   - **Goal**: [Resolve central conflict]
+   - **Conflict**: [Final opposition]
+   - **Outcome**: [Resolution of main plot]
+   - **Character Arc Completion**: [How protagonist applies their growth]
+
+**Chapter End Hook**: [Transition to resolution]
+
+**Notes**: [Critical elements for the climax]
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+### Chapter [X]: [Chapter Title - Denouement]
 
-**Purpose**: Improvements that affect multiple user stories
+**POV Character**: [Who tells this chapter]
 
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+**Location**: [Where story concludes]
 
----
+**Estimated Word Count**: [X words]
 
-## Dependencies & Execution Order
+**Purpose**: [Wrap up loose ends and show new normal]
 
-### Phase Dependencies
+**Scene Breakdown**:
 
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+1. **Scene X.1** - [Aftermath]
+   - **Type**: [Reflection/Resolution]
+   - **Goal**: [Show consequences of climax]
+   - **Outcome**: [Immediate aftermath]
 
-### User Story Dependencies
+2. **Scene X.2** - [Final scene]
+   - **Type**: [Conclusion]
+   - **Goal**: [Emotional resolution]
+   - **Outcome**: [Final state of world and characters]
+   - **Closing Image**: [Mirror or contrast to opening]
 
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
+**Final Line Idea**: [Optional - memorable last line if you have one]
 
-### Within Each User Story
-
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
-
-### Parallel Opportunities
-
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
+**Notes**: [Thematic elements to emphasize]
 
 ---
 
-## Parallel Example: User Story 1
+## Scene Index by Type
 
-```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+**Action Scenes**: [List chapter.scene numbers, e.g., 1.2, 5.1, 12.3]
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+**Dialogue-Heavy Scenes**: [List chapter.scene numbers]
+
+**Character Development Scenes**: [List chapter.scene numbers]
+
+**World Building Scenes**: [List chapter.scene numbers]
+
+**Transition Scenes**: [List chapter.scene numbers]
+
+## POV Distribution
+
+**[Character 1 Name]**: [Chapters X, Y, Z] - [Total word count]
+
+**[Character 2 Name]**: [Chapters X, Y, Z] - [Total word count]
+
+[Continue for all POV characters...]
+
+## Pacing Visualization
+
+```
+Act I    Act II (Part 1)  Act II (Part 2)  Act III
+Setup    Rising Action    Complications    Resolution
+█████    ███████████      ███████████      █████
 ```
 
----
+**Tension Curve**:
+- Low: Chapters [X, Y]
+- Building: Chapters [X, Y]
+- High: Chapters [X, Y]
+- Peak: Chapter [X]
+- Resolution: Chapters [X, Y]
 
-## Implementation Strategy
+## Writing Order Recommendations
 
-### MVP First (User Story 1 Only)
+**Suggested Writing Sequence**:
+1. Chapter [X] - [Rationale for writing this first]
+2. Chapter [X] - [Why this should be next]
+3. Chapters [X-Y] - [Can be written in order or parallel]
+4. Chapter [X] - [Save for after others are drafted]
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
+**Parallel Writing Opportunities**:
+- [Chapters that can be drafted simultaneously]
 
-### Incremental Delivery
+## Research & Preparation Checklist
 
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+### Before Writing Act I
+- [ ] Research item 1
+- [ ] Character voice exercises for [Character Name]
+- [ ] Sketch or find reference for [Location]
 
-### Parallel Team Strategy
+### Before Writing Act II
+- [ ] Research item 2
+- [ ] Outline detailed action sequence for Chapter [X]
+- [ ] Finalize subplot integration points
 
-With multiple developers:
+### Before Writing Act III
+- [ ] Ensure all setups have payoffs
+- [ ] Verify character arc completions
+- [ ] Review theme integration
 
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+## Word Count Tracking
 
----
+| Chapter | Target Words | Draft Words | Status |
+|---------|--------------|-------------|--------|
+| 1       | [X]          | -           | Not Started |
+| 2       | [X]          | -           | Not Started |
+| ...     | ...          | ...         | ...    |
+| **Total** | **[X]**    | **0**       | 0%     |
+
+## Review & Acceptance Checklist
+
+### Chapter Completeness
+- [ ] All planned chapters have scene breakdowns
+- [ ] Each scene has clear purpose (plot or character)
+- [ ] Pacing is balanced across acts
+- [ ] POV distribution feels appropriate
+
+### Scene Quality
+- [ ] Each scene has Goal-Conflict-Outcome structure
+- [ ] Scenes connect logically
+- [ ] Chapter hooks are compelling
+- [ ] Transitions between scenes are smooth
+
+### Narrative Flow
+- [ ] Story beats from outline are all covered
+- [ ] Character arcs track through chapters
+- [ ] Subplots are integrated appropriately
+- [ ] Theme is woven throughout
+
+### Ready for Writing
+- [ ] Research needs identified
+- [ ] Writing order determined
+- [ ] Word count targets set
+- [ ] First chapter is detailed enough to start writing
 
 ## Notes
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+[Additional notes on structure, scenes to add/remove, or changes from outline]

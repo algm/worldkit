@@ -591,7 +591,7 @@ def download_template_from_github(ai_assistant: str, download_dir: Path, *, scri
         raise typer.Exit(1)
 
     assets = release_data.get("assets", [])
-    pattern = f"spec-kit-template-{ai_assistant}-{script_type}"
+    pattern = f"worldbuilding-kit-template-{ai_assistant}-{script_type}"
     matching_assets = [
         asset for asset in assets
         if pattern in asset["name"] and asset["name"].endswith(".zip")
@@ -819,10 +819,10 @@ def download_and_extract_template(project_path: Path, ai_assistant: str, script_
 
 
 def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = None) -> None:
-    """Ensure POSIX .sh scripts under .specify/scripts (recursively) have execute bits (no-op on Windows)."""
+    """Ensure POSIX .sh scripts under .worldbuild/scripts (recursively) have execute bits (no-op on Windows)."""
     if os.name == "nt":
         return  # Windows: skip silently
-    scripts_root = project_path / ".specify" / "scripts"
+    scripts_root = project_path / ".worldbuild" / "scripts"
     if not scripts_root.is_dir():
         return
     failures: list[str] = []

@@ -244,17 +244,17 @@ FEATURE_DIR="$WORLDS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
 TEMPLATE="$REPO_ROOT/.worldbuild/templates/spec-template.md"
-WORLD_FILE="$FEATURE_DIR/world.md"
-if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$WORLD_FILE"; else touch "$WORLD_FILE"; fi
+FEATURE_SPEC="$FEATURE_DIR/spec.md"
+if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$FEATURE_SPEC"; else touch "$FEATURE_SPEC"; fi
 
 # Set the WORLDBUILD_STORY environment variable for the current session
 export WORLDBUILD_STORY="$BRANCH_NAME"
 
 if $JSON_MODE; then
-    printf '{"BRANCH_NAME":"%s","WORLD_FILE":"%s","FEATURE_NUM":"%s"}\n' "$BRANCH_NAME" "$WORLD_FILE" "$FEATURE_NUM"
+    printf '{"BRANCH_NAME":"%s","FEATURE_SPEC":"%s","FEATURE_NUM":"%s"}\n' "$BRANCH_NAME" "$FEATURE_SPEC" "$FEATURE_NUM"
 else
     echo "BRANCH_NAME: $BRANCH_NAME"
-    echo "WORLD_FILE: $WORLD_FILE"
+    echo "FEATURE_SPEC: $FEATURE_SPEC"
     echo "FEATURE_NUM: $FEATURE_NUM"
     echo "WORLDBUILD_STORY environment variable set to: $BRANCH_NAME"
 fi

@@ -125,6 +125,8 @@ find_feature_dir_by_prefix() {
 }
 
 # Legacy function name for backward compatibility
+# DEPRECATED: Use get_world_paths() instead. This alias will be maintained for 
+# backward compatibility but may be removed in a future version.
 get_feature_paths() {
     get_world_paths
 }

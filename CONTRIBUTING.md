@@ -55,7 +55,7 @@ Here are a few things you can do that will increase the likelihood of your pull 
 
 ## Development workflow
 
-When working on spec-kit:
+When working on worldkit:
 
 1. Test changes with the `worldbuild` CLI commands (`/worldkit.specify`, `/worldkit.plan`, `/worldkit.tasks`) in your coding agent of choice
 2. Verify templates are working correctly in `templates/` directory

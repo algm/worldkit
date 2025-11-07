@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-   <a href="https://github.com/algm/spec-kit/actions/workflows/release.yml"><img src="https://github.com/algm/spec-kit/actions/workflows/release.yml/badge.svg" alt="Release"/></a>
-   <a href="https://github.com/algm/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/algm/spec-kit?style=social" alt="GitHub stars"/></a>
-   <a href="https://github.com/algm/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/algm/spec-kit" alt="License"/></a>
+   <a href="https://github.com/algm/worldkit/actions/workflows/release.yml"><img src="https://github.com/algm/worldkit/actions/workflows/release.yml/badge.svg" alt="Release"/></a>
+   <a href="https://github.com/algm/worldkit/stargazers"><img src="https://img.shields.io/github/stars/algm/worldkit?style=social" alt="GitHub stars"/></a>
+   <a href="https://github.com/algm/worldkit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/algm/worldkit" alt="License"/></a>
 </p>
 
 ---
@@ -48,7 +48,7 @@ Choose your preferred installation method:
 Install once and use everywhere:
 
 ```bash
-uv tool install worldbuild-cli --from git+https://github.com/algm/spec-kit.git
+uv tool install worldbuild-cli --from git+https://github.com/algm/worldkit.git
 ```
 
 Then use the tool directly:
@@ -61,7 +61,7 @@ worldbuild check
 To upgrade worldbuild run:
 
 ```bash
-uv tool install worldbuild-cli --force --from git+https://github.com/algm/spec-kit.git
+uv tool install worldbuild-cli --force --from git+https://github.com/algm/worldkit.git
 ```
 
 #### Option 2: One-time Usage
@@ -69,7 +69,7 @@ uv tool install worldbuild-cli --force --from git+https://github.com/algm/spec-k
 Run directly without installing:
 
 ```bash
-uvx --from git+https://github.com/algm/spec-kit.git worldbuild init <STORY_NAME>
+uvx --from git+https://github.com/algm/worldkit.git worldbuild init <STORY_NAME>
 ```
 
 **Benefits of persistent installation:**
@@ -400,7 +400,7 @@ The AI will draft chapters according to your detailed breakdown, maintaining voi
 
 ## 💬 Support
 
-For support, please open a [GitHub issue](https://github.com/algm/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using World-Driven Fiction Writing.
+For support, please open a [GitHub issue](https://github.com/algm/worldkit/issues/new). We welcome bug reports, feature requests, and questions about using World-Driven Fiction Writing.
 
 ## 📄 License
 

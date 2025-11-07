@@ -11,7 +11,7 @@ echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
 # Check if pyproject.toml exists and extract version from it
 if [ -f "pyproject.toml" ]; then
-  PYPROJECT_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = ["'\'']\(.*\)["'\'']/\1/' | tr -d ' ')
+  PYPROJECT_VERSION=$(grep '^version = ' pyproject.toml | sed -n 's/^version = [\"'\'']\([^\"'\'']*\)[\"'\''].*$/\1/p' | tr -d ' ')
   if [ -n "$PYPROJECT_VERSION" ]; then
     NEW_VERSION="v$PYPROJECT_VERSION"
     echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT

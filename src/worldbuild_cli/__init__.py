@@ -862,11 +862,44 @@ def ensure_executable_scripts(project_path: Path, tracker: StepTracker | None = 
             for f in failures:
                 console.print(f"  - {f}")
 
+def save_language_config(project_path: Path, language: str, tracker: StepTracker | None = None) -> None:
+    """Save language configuration to the project's memory directory."""
+    memory_dir = project_path / "memory"
+    memory_dir.mkdir(parents=True, exist_ok=True)
+    
+    config_file = memory_dir / "config.json"
+    
+    try:
+        # Load existing config if it exists
+        config = {}
+        if config_file.exists():
+            with open(config_file, 'r', encoding='utf-8') as f:
+                config = json.load(f)
+        
+        # Update language setting
+        config['language'] = language
+        
+        # Save config
+        with open(config_file, 'w', encoding='utf-8') as f:
+            json.dump(config, f, indent=2, ensure_ascii=False)
+            f.write('\n')
+        
+        if tracker:
+            tracker.add("language", "Configure output language")
+            tracker.complete("language", language)
+    except Exception as e:
+        if tracker:
+            tracker.add("language", "Configure output language")
+            tracker.error("language", str(e))
+        else:
+            console.print(f"[yellow]Warning: Could not save language configuration: {e}[/yellow]")
+
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional if using --here, or use '.' for current directory)"),
     ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor-agent, qwen, opencode, codex, windsurf, kilocode, auggie, codebuddy, amp, or q"),
     script_type: str = typer.Option(None, "--script", help="Script type to use: sh or ps"),
+    language: str = typer.Option("en", "--language", "--lang", help="Language for generated outputs (e.g., en, es, fr, de, pt, ja, zh)"),
     ignore_agent_tools: bool = typer.Option(False, "--ignore-agent-tools", help="Skip checks for AI agent tools like Claude Code"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
     here: bool = typer.Option(False, "--here", help="Initialize project in the current directory instead of creating a new one"),
@@ -885,11 +918,14 @@ def init(
     4. Extract the template to a new project directory or current directory
     5. Initialize a fresh git repository (if not --no-git and no existing repo)
     6. Optionally set up AI assistant commands
+    7. Configure output language for generated content
     
     Examples:
         worldbuild init my-story
         worldbuild init my-story --ai claude
         worldbuild init my-story --ai copilot --no-git
+        worldbuild init my-story --language es          # Spanish outputs
+        worldbuild init my-story --lang fr --ai claude  # French outputs
         worldbuild init --ignore-agent-tools my-story
         worldbuild init . --ai claude         # Initialize in current directory
         worldbuild init .                     # Initialize in current directory (interactive AI selection)
@@ -1010,8 +1046,9 @@ def init(
 
     console.print(f"[cyan]Selected AI assistant:[/cyan] {selected_ai}")
     console.print(f"[cyan]Selected script type:[/cyan] {selected_script}")
+    console.print(f"[cyan]Output language:[/cyan] {language}")
 
-    tracker = StepTracker("Initialize Specify Project")
+    tracker = StepTracker("Initialize Worldbuild Project")
 
     sys._specify_tracker_active = True
 
@@ -1028,6 +1065,7 @@ def init(
         ("zip-list", "Archive contents"),
         ("extracted-summary", "Extraction summary"),
         ("chmod", "Ensure scripts executable"),
+        ("language", "Configure output language"),
         ("cleanup", "Cleanup"),
         ("git", "Initialize git repository"),
         ("final", "Finalize")
@@ -1047,6 +1085,8 @@ def init(
             download_and_extract_template(project_path, selected_ai, selected_script, here, verbose=False, tracker=tracker, client=local_client, debug=debug, github_token=github_token)
 
             ensure_executable_scripts(project_path, tracker=tracker)
+            
+            save_language_config(project_path, language, tracker=tracker)
 
             if not no_git:
                 tracker.start("git")

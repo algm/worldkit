@@ -10,6 +10,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for checklist content
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to outputs**:
+   - Write checklist items, descriptions, and notes in the configured language
+   - Keep technical markers in English for consistency (e.g., `- [ ]`, file paths)
+   - Maintain checklist structure while translating the content
+
 ## Goal
 
 Generate custom quality checklists that serve as "unit tests for your story elements"—validating that characters, plots, settings, and themes meet quality standards before writing.

@@ -13,6 +13,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for all generated outputs
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to outputs**:
+   - Write all world descriptions, character profiles, settings, and narrative content in the configured language
+   - Keep technical markers and section headers in English for consistency (e.g., `[NEEDS EXPANSION]`, file paths)
+   - Maintain the template structure while translating the content
+
 ## Outline
 
 The text the user typed after `/worldkit.worldbuild` in the triggering message **is** the world/story description. Assume you always have it available in this conversation even if `{ARGS}` appears literally below. Do not ask the user to repeat it unless they provided an empty command.

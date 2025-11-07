@@ -358,8 +358,8 @@ class BannerGroup(TyperGroup):
 
 
 app = typer.Typer(
-    name="specify",
-    help="Setup tool for Specify spec-driven development projects",
+    name="worldbuild",
+    help="Setup tool for Worldbuilding Kit world-driven fiction writing projects",
     add_completion=False,
     invoke_without_command=True,
     cls=BannerGroup,

@@ -1,8 +1,5 @@
 ---
-description: Execute the implementation plan by processing and executing all tasks defined in tasks.md
-scripts:
-  sh: scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks
-  ps: scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
+description: Execute the writing process based on chapter breakdown.
 ---
 
 ## User Input
@@ -15,124 +12,225 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-1. Run `{SCRIPT}` from repo root and parse FEATURE_DIR and AVAILABLE_DOCS list. All paths must be absolute. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+1. **Prerequisites Check**:
+   - Verify `world.md` exists and is complete
+   - Verify `outline.md` exists and is complete
+   - Verify `chapters.md` exists with detailed scene breakdown
+   - Verify foundation file (if applicable)
+   - ERROR if any prerequisite missing
 
-2. **Check checklists status** (if FEATURE_DIR/checklists/ exists):
-   - Scan all checklist files in the checklists/ directory
-   - For each checklist, count:
-     - Total items: All lines matching `- [ ]` or `- [X]` or `- [x]`
-     - Completed items: Lines matching `- [X]` or `- [x]`
-     - Incomplete items: Lines matching `- [ ]`
-   - Create a status table:
+2. **Load Context**:
+   - Read world.md for characters, settings, world rules
+   - Read outline.md for overall story structure
+   - Read chapters.md for scene-by-scene breakdown
+   - Read foundation.md for world constraints (if exists)
+   - Read character-arcs.md for character development tracking
+   - Note writing order recommendations from chapters.md
 
-     ```text
-     | Checklist | Total | Completed | Incomplete | Status |
-     |-----------|-------|-----------|------------|--------|
-     | ux.md     | 12    | 12        | 0          | ✓ PASS |
-     | test.md   | 8     | 5         | 3          | ✗ FAIL |
-     | security.md | 6   | 6         | 0          | ✓ PASS |
-     ```
+3. **Determine Writing Approach**:
+   
+   **Option A - Sequential Writing** (Default):
+   - Write chapters in story order
+   - Good for maintaining flow and continuity
+   - Best for linear narratives
+   
+   **Option B - Recommended Order**:
+   - Follow writing order from chapters.md
+   - Write key scenes first (climax, turning points)
+   - Fill in connecting scenes afterward
+   - Good for complex stories
+   
+   **Option C - Character-Focused**:
+   - Write all scenes for one POV character first
+   - Ensures voice consistency
+   - Good for multi-POV stories
 
-   - Calculate overall status:
-     - **PASS**: All checklists have 0 incomplete items
-     - **FAIL**: One or more checklists have incomplete items
+4. **Scene Writing Process**:
+   
+   For each scene in the chapter:
+   
+   a. **Review Scene Details**:
+      - Goal: What character wants
+      - Conflict: What opposes them
+      - Outcome: How scene resolves
+      - Type: Action, dialogue, reflection, etc.
+   
+   b. **Draft the Scene**:
+      - Start with strong opening line/paragraph
+      - Show, don't tell (use action and dialogue over narration)
+      - Maintain POV consistency
+      - Include sensory details
+      - Embed character voice and personality
+      - Build tension toward scene outcome
+      - End with transition or hook to next scene
+   
+   c. **Check Foundation Consistency**:
+      - Verify magic/technology use follows established rules
+      - Ensure character actions align with established traits
+      - Check world details match foundation
+      - Maintain genre conventions
+   
+   d. **Track Progress**:
+      - Update word count in chapters.md tracking table
+      - Note any deviations from planned scene structure
+      - Flag any new research needs discovered during writing
 
-   - **If any checklist is incomplete**:
-     - Display the table with incomplete item counts
-     - **STOP** and ask: "Some checklists are incomplete. Do you want to proceed with implementation anyway? (yes/no)"
-     - Wait for user response before continuing
-     - If user says "no" or "wait" or "stop", halt execution
-     - If user says "yes" or "proceed" or "continue", proceed to step 3
+5. **Chapter Completion**:
+   
+   After completing each chapter:
+   
+   a. **Internal Review**:
+      - Does chapter accomplish its stated purpose?
+      - Are character voices consistent?
+      - Is pacing appropriate?
+      - Does chapter hook work?
+      - Are scenes connected smoothly?
+   
+   b. **Continuity Check**:
+      - Character details consistent with previous chapters
+      - Timeline makes sense
+      - No contradictions with foundation
+      - Subplot threads maintained
+   
+   c. **Polish Pass**:
+      - Remove redundant words and phrases
+      - Strengthen weak verbs
+      - Vary sentence structure
+      - Check for POV slips
+      - Ensure show vs. tell balance
 
-   - **If all checklists are complete**:
-     - Display the table showing all checklists passed
-     - Automatically proceed to step 3
+6. **Progress Reporting**:
+   
+   After each chapter or writing session:
+   - Update word count tracking table
+   - Note completed chapters/scenes
+   - Identify any issues or changes needed
+   - Update estimated completion timeline
+   - Flag any necessary revisions to outline/chapters
 
-3. Load and analyze the implementation context:
-   - **REQUIRED**: Read tasks.md for the complete task list and execution plan
-   - **REQUIRED**: Read plan.md for tech stack, architecture, and file structure
-   - **IF EXISTS**: Read data-model.md for entities and relationships
-   - **IF EXISTS**: Read contracts/ for API specifications and test requirements
-   - **IF EXISTS**: Read research.md for technical decisions and constraints
-   - **IF EXISTS**: Read quickstart.md for integration scenarios
+7. **Handling Deviations**:
+   
+   If story diverges from outline during writing:
+   - Document the change and rationale
+   - Assess impact on remaining chapters
+   - Update chapters.md if needed
+   - Ensure new direction still serves story goals
+   - Maintain foundation consistency
 
-4. **Project Setup Verification**:
-   - **REQUIRED**: Create/verify ignore files based on actual project setup:
+## Writing Guidelines
 
-   **Detection & Creation Logic**:
-   - Check if the following command succeeds to determine if the repository is a git repo (create/verify .gitignore if so):
+### Voice & Style
 
-     ```sh
-     git rev-parse --git-dir 2>/dev/null
-     ```
+**POV Consistency**:
+- First person: Stay in character's head, limited knowledge
+- Third person limited: Focus on POV character's perceptions
+- Third person omniscient: Maintain god-like perspective
+- Never slip between POV types within a scene
 
-   - Check if Dockerfile* exists or Docker in plan.md → create/verify .dockerignore
-   - Check if .eslintrc*or eslint.config.* exists → create/verify .eslintignore
-   - Check if .prettierrc* exists → create/verify .prettierignore
-   - Check if .npmrc or package.json exists → create/verify .npmignore (if publishing)
-   - Check if terraform files (*.tf) exist → create/verify .terraformignore
-   - Check if .helmignore needed (helm charts present) → create/verify .helmignore
+**Character Voice**:
+- Each character should sound distinct in dialogue
+- Internal thoughts reflect character personality
+- Word choice appropriate to character background
+- Emotional reactions consistent with character traits
 
-   **If ignore file already exists**: Verify it contains essential patterns, append missing critical patterns only
-   **If ignore file missing**: Create with full pattern set for detected technology
+**Show, Don't Tell**:
+- Use action and dialogue to reveal character and emotion
+- Avoid direct exposition dumps
+- Trust readers to infer meaning
+- Save telling for transitions and summaries
 
-   **Common Patterns by Technology** (from plan.md tech stack):
-   - **Node.js/JavaScript/TypeScript**: `node_modules/`, `dist/`, `build/`, `*.log`, `.env*`
-   - **Python**: `__pycache__/`, `*.pyc`, `.venv/`, `venv/`, `dist/`, `*.egg-info/`
-   - **Java**: `target/`, `*.class`, `*.jar`, `.gradle/`, `build/`
-   - **C#/.NET**: `bin/`, `obj/`, `*.user`, `*.suo`, `packages/`
-   - **Go**: `*.exe`, `*.test`, `vendor/`, `*.out`
-   - **Ruby**: `.bundle/`, `log/`, `tmp/`, `*.gem`, `vendor/bundle/`
-   - **PHP**: `vendor/`, `*.log`, `*.cache`, `*.env`
-   - **Rust**: `target/`, `debug/`, `release/`, `*.rs.bk`, `*.rlib`, `*.prof*`, `.idea/`, `*.log`, `.env*`
-   - **Kotlin**: `build/`, `out/`, `.gradle/`, `.idea/`, `*.class`, `*.jar`, `*.iml`, `*.log`, `.env*`
-   - **C++**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.so`, `*.a`, `*.exe`, `*.dll`, `.idea/`, `*.log`, `.env*`
-   - **C**: `build/`, `bin/`, `obj/`, `out/`, `*.o`, `*.a`, `*.so`, `*.exe`, `Makefile`, `config.log`, `.idea/`, `*.log`, `.env*`
-   - **Swift**: `.build/`, `DerivedData/`, `*.swiftpm/`, `Packages/`
-   - **R**: `.Rproj.user/`, `.Rhistory`, `.RData`, `.Ruserdata`, `*.Rproj`, `packrat/`, `renv/`
-   - **Universal**: `.DS_Store`, `Thumbs.db`, `*.tmp`, `*.swp`, `.vscode/`, `.idea/`
+### Scene Elements
 
-   **Tool-Specific Patterns**:
-   - **Docker**: `node_modules/`, `.git/`, `Dockerfile*`, `.dockerignore`, `*.log*`, `.env*`, `coverage/`
-   - **ESLint**: `node_modules/`, `dist/`, `build/`, `coverage/`, `*.min.js`
-   - **Prettier**: `node_modules/`, `dist/`, `build/`, `coverage/`, `package-lock.json`, `yarn.lock`, `pnpm-lock.yaml`
-   - **Terraform**: `.terraform/`, `*.tfstate*`, `*.tfvars`, `.terraform.lock.hcl`
-   - **Kubernetes/k8s**: `*.secret.yaml`, `secrets/`, `.kube/`, `kubeconfig*`, `*.key`, `*.crt`
+**Opening Lines**:
+- Hook reader immediately
+- Establish scene setting quickly
+- Ground reader in POV and situation
+- Create forward momentum
 
-5. Parse tasks.md structure and extract:
-   - **Task phases**: Setup, Tests, Core, Integration, Polish
-   - **Task dependencies**: Sequential vs parallel execution rules
-   - **Task details**: ID, description, file paths, parallel markers [P]
-   - **Execution flow**: Order and dependency requirements
+**Dialogue**:
+- Each line should serve a purpose (reveal character, advance plot, or build tension)
+- Use subtext - characters don't always say what they mean
+- Vary dialogue tags but don't avoid "said"
+- Include action beats to break up long exchanges
 
-6. Execute implementation following the task plan:
-   - **Phase-by-phase execution**: Complete each phase before moving to the next
-   - **Respect dependencies**: Run sequential tasks in order, parallel tasks [P] can run together  
-   - **Follow TDD approach**: Execute test tasks before their corresponding implementation tasks
-   - **File-based coordination**: Tasks affecting the same files must run sequentially
-   - **Validation checkpoints**: Verify each phase completion before proceeding
+**Action Sequences**:
+- Use short sentences for fast pacing
+- Focus on key moments, not every movement
+- Maintain clarity of what's happening
+- Show character reactions and emotions
+- End with consequences
 
-7. Implementation execution rules:
-   - **Setup first**: Initialize project structure, dependencies, configuration
-   - **Tests before code**: If you need to write tests for contracts, entities, and integration scenarios
-   - **Core development**: Implement models, services, CLI commands, endpoints
-   - **Integration work**: Database connections, middleware, logging, external services
-   - **Polish and validation**: Unit tests, performance optimization, documentation
+**Description**:
+- Integrate details through character perception
+- Use sensory details beyond just visual
+- Description should serve mood and tone
+- Avoid stopping the story for description blocks
 
-8. Progress tracking and error handling:
-   - Report progress after each completed task
-   - Halt execution if any non-parallel task fails
-   - For parallel tasks [P], continue with successful tasks, report failed ones
-   - Provide clear error messages with context for debugging
-   - Suggest next steps if implementation cannot proceed
-   - **IMPORTANT** For completed tasks, make sure to mark the task off as [X] in the tasks file.
+### Pacing
 
-9. Completion validation:
-   - Verify all required tasks are completed
-   - Check that implemented features match the original specification
-   - Validate that tests pass and coverage meets requirements
-   - Confirm the implementation follows the technical plan
-   - Report final status with summary of completed work
+**Scene Length Variation**:
+- Short scenes for high tension or quick transitions
+- Longer scenes for important moments or complex interactions
+- Mix lengths within chapters for rhythm
 
-Note: This command assumes a complete task breakdown exists in tasks.md. If tasks are incomplete or missing, suggest running `/speckit.tasks` first to regenerate the task list.
+**Sentence Structure**:
+- Vary sentence length for musicality
+- Short sentences increase pace
+- Longer sentences slow down and add detail
+- Use fragments sparingly for impact
 
+**Chapter Breaks**:
+- End chapters at moments of tension or question
+- Create desire to continue reading
+- Use breaks strategically for time/POV shifts
+
+## Quality Checks
+
+**Per Scene**:
+- [ ] Goal-Conflict-Outcome structure maintained
+- [ ] POV consistent throughout
+- [ ] Character voice authentic
+- [ ] Foundation rules respected
+- [ ] Sensory details included
+- [ ] Scene advances plot or develops character
+
+**Per Chapter**:
+- [ ] Chapter purpose achieved
+- [ ] Pacing appropriate
+- [ ] Transitions smooth
+- [ ] Chapter hook effective
+- [ ] Word count on target (±20%)
+- [ ] No plot holes or continuity errors
+
+**Overall Story**:
+- [ ] Character arcs tracking as planned
+- [ ] Plot beats being hit
+- [ ] Themes emerging naturally
+- [ ] Foundation consistently applied
+- [ ] Subplots progressing
+
+## Error Handling
+
+- **Writer's Block**: Skip to different scene, outline in more detail, or freewrite
+- **Scene Not Working**: Review Goal-Conflict-Outcome; may need replanning
+- **Character Off-Voice**: Reread character profile; do voice exercises
+- **Pacing Issues**: Check scene lengths; may need to combine or split scenes
+- **Plot Hole Discovered**: Document it; may need outline revision
+
+## Success Criteria
+
+- All planned scenes are drafted
+- Word count within 10% of target
+- Foundation consistency maintained
+- Character arcs developing as outlined
+- Story flows naturally scene to scene
+- Each chapter accomplishes its purpose
+- Writing quality meets genre standards
+
+## Final Notes
+
+**Writing is iterative**: First draft doesn't need to be perfect. The goal is to get the story down following the structure while maintaining consistency with your world foundation. Revision and polish come later.
+
+**Stay flexible**: If the story naturally evolves during writing in a way that serves it better, that's okay. Just document changes and maintain consistency.
+
+**Track everything**: Keep notes on character details, timeline, world elements used. This prevents continuity errors.

@@ -1,5 +1,5 @@
 ---
-description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+description: Execute the story outlining workflow using the outline template to generate plot structure.
 scripts:
   sh: scripts/bash/setup-plan.sh --json
   ps: scripts/powershell/setup-plan.ps1 -Json
@@ -18,70 +18,76 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Outline
 
-1. **Setup**: Run `{SCRIPT}` from repo root and parse JSON for FEATURE_SPEC, IMPL_PLAN, SPECS_DIR, BRANCH. For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+1. **Setup**: Run `{SCRIPT}` from repo root and parse JSON for WORLD_FILE, STORY_OUTLINE, WORLDS_DIR, BRANCH. For single quotes in args like "I'm writing", use escape syntax: e.g 'I'\''m writing' (or double-quote if possible: "I'm writing").
 
-2. **Load context**: Read FEATURE_SPEC and `/memory/constitution.md`. Load IMPL_PLAN template (already copied).
+2. **Load context**: Read WORLD_FILE and `/memory/foundation.md`. Load STORY_OUTLINE template (already copied).
 
-3. **Execute plan workflow**: Follow the structure in IMPL_PLAN template to:
-   - Fill Technical Context (mark unknowns as "NEEDS CLARIFICATION")
-   - Fill Constitution Check section from constitution
-   - Evaluate gates (ERROR if violations unjustified)
-   - Phase 0: Generate research.md (resolve all NEEDS CLARIFICATION)
-   - Phase 1: Generate data-model.md, contracts/, quickstart.md
+3. **Execute outline workflow**: Follow the structure in STORY_OUTLINE template to:
+   - Fill Story Structure Type (choose appropriate narrative structure)
+   - Fill Foundation Check section from foundation
+   - Evaluate consistency (ERROR if violations unjustified)
+   - Phase 0: Generate research.md (resolve all NEEDS EXPANSION)
+   - Phase 1: Generate character-arcs.md, plot-beats.md
    - Phase 1: Update agent context by running the agent script
-   - Re-evaluate Constitution Check post-design
+   - Re-evaluate Foundation Check post-outline
 
-4. **Stop and report**: Command ends after Phase 2 planning. Report branch, IMPL_PLAN path, and generated artifacts.
+4. **Stop and report**: Command ends after Phase 2 outlining. Report branch, STORY_OUTLINE path, and generated artifacts.
 
 ## Phases
 
-### Phase 0: Outline & Research
+### Phase 0: Research & Expansion
 
-1. **Extract unknowns from Technical Context** above:
-   - For each NEEDS CLARIFICATION → research task
-   - For each dependency → best practices task
-   - For each integration → patterns task
+1. **Extract unknowns from Story Context**:
+   - For each NEEDS EXPANSION → research task
+   - For each setting detail → reference research task
+   - For each character background → depth research task
 
 2. **Generate and dispatch research agents**:
 
    ```text
-   For each unknown in Technical Context:
-     Task: "Research {unknown} for {feature context}"
-   For each technology choice:
-     Task: "Find best practices for {tech} in {domain}"
+   For each unknown in Story Context:
+     Task: "Research {unknown} for {story context}"
+   For each genre element:
+     Task: "Find conventions for {genre} in {aspect}"
+   For each historical/technical detail:
+     Task: "Research {detail} for authenticity"
    ```
 
 3. **Consolidate findings** in `research.md` using format:
    - Decision: [what was chosen]
    - Rationale: [why chosen]
-   - Alternatives considered: [what else evaluated]
+   - Sources: [research sources consulted]
+   - Alternatives considered: [what else was evaluated]
 
-**Output**: research.md with all NEEDS CLARIFICATION resolved
+**Output**: research.md with all NEEDS EXPANSION resolved
 
-### Phase 1: Design & Contracts
+### Phase 1: Structure & Arcs
 
 **Prerequisites:** `research.md` complete
 
-1. **Extract entities from feature spec** → `data-model.md`:
-   - Entity name, fields, relationships
-   - Validation rules from requirements
-   - State transitions if applicable
+1. **Extract character arcs from world description** → `character-arcs.md`:
+   - Character starting point
+   - Growth trajectory
+   - Key transformation moments
+   - Ending state
 
-2. **Generate API contracts** from functional requirements:
-   - For each user action → endpoint
-   - Use standard REST/GraphQL patterns
-   - Output OpenAPI/GraphQL schema to `/contracts/`
+2. **Generate plot beats** from story outline:
+   - For each act → major plot points
+   - Use chosen narrative structure (Three-Act, Hero's Journey, etc.)
+   - Output detailed beat sheet to `plot-beats.md`
 
 3. **Agent context update**:
    - Run `{AGENT_SCRIPT}`
    - These scripts detect which AI agent is in use
    - Update the appropriate agent-specific context file
-   - Add only new technology from current plan
+   - Add genre conventions and story elements from current outline
    - Preserve manual additions between markers
 
-**Output**: data-model.md, /contracts/*, quickstart.md, agent-specific file
+**Output**: character-arcs.md, plot-beats.md, agent-specific file
 
-## Key rules
+## Key Rules
 
 - Use absolute paths
-- ERROR on gate failures or unresolved clarifications
+- ERROR on consistency failures or unresolved expansions
+- Respect established foundation elements
+- Maintain genre conventions

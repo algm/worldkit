@@ -202,13 +202,14 @@
 
 ## Pacing Visualization
 
-```
+```text
 Act I    Act II (Part 1)  Act II (Part 2)  Act III
 Setup    Rising Action    Complications    Resolution
 █████    ███████████      ███████████      █████
 ```
 
 **Tension Curve**:
+
 - Low: Chapters [X, Y]
 - Building: Chapters [X, Y]
 - High: Chapters [X, Y]
@@ -218,27 +219,32 @@ Setup    Rising Action    Complications    Resolution
 ## Writing Order Recommendations
 
 **Suggested Writing Sequence**:
+
 1. Chapter [X] - [Rationale for writing this first]
 2. Chapter [X] - [Why this should be next]
 3. Chapters [X-Y] - [Can be written in order or parallel]
 4. Chapter [X] - [Save for after others are drafted]
 
 **Parallel Writing Opportunities**:
+
 - [Chapters that can be drafted simultaneously]
 
 ## Research & Preparation Checklist
 
 ### Before Writing Act I
+
 - [ ] Research item 1
 - [ ] Character voice exercises for [Character Name]
 - [ ] Sketch or find reference for [Location]
 
 ### Before Writing Act II
+
 - [ ] Research item 2
 - [ ] Outline detailed action sequence for Chapter [X]
 - [ ] Finalize subplot integration points
 
 ### Before Writing Act III
+
 - [ ] Ensure all setups have payoffs
 - [ ] Verify character arc completions
 - [ ] Review theme integration
@@ -255,24 +261,28 @@ Setup    Rising Action    Complications    Resolution
 ## Review & Acceptance Checklist
 
 ### Chapter Completeness
+
 - [ ] All planned chapters have scene breakdowns
 - [ ] Each scene has clear purpose (plot or character)
 - [ ] Pacing is balanced across acts
 - [ ] POV distribution feels appropriate
 
 ### Scene Quality
+
 - [ ] Each scene has Goal-Conflict-Outcome structure
 - [ ] Scenes connect logically
 - [ ] Chapter hooks are compelling
 - [ ] Transitions between scenes are smooth
 
 ### Narrative Flow
+
 - [ ] Story beats from outline are all covered
 - [ ] Character arcs track through chapters
 - [ ] Subplots are integrated appropriately
 - [ ] Theme is woven throughout
 
 ### Ready for Writing
+
 - [ ] Research needs identified
 - [ ] Writing order determined
 - [ ] Word count targets set

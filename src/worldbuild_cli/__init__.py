@@ -873,8 +873,19 @@ def save_language_config(project_path: Path, language: str, tracker: StepTracker
         # Load existing config if it exists
         config = {}
         if config_file.exists():
-            with open(config_file, 'r', encoding='utf-8') as f:
-                config = json.load(f)
+            try:
+                with open(config_file, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+            except json.JSONDecodeError as e:
+                # If config file is corrupted, back it up and start fresh
+                backup_file = memory_dir / f"config.json.backup-{os.getpid()}"
+                shutil.copy2(config_file, backup_file)
+                if tracker:
+                    tracker.add("language", "Configure output language")
+                    tracker.error("language", f"corrupted config backed up to {backup_file.name}")
+                else:
+                    console.print(f"[yellow]Warning: Corrupted config file backed up to {backup_file.name}[/yellow]")
+                config = {}
         
         # Update language setting
         config['language'] = language
@@ -1030,6 +1041,14 @@ def init(
                 console.print()
                 console.print(error_panel)
                 raise typer.Exit(1)
+
+    # Validate language code format (basic validation for common ISO 639-1 codes)
+    if language:
+        # Allow 2-letter codes (ISO 639-1) or 2-letter with region (e.g., en-US)
+        # This is a lenient validation to allow flexibility
+        if not (len(language) >= 2 and language[0:2].isalpha()):
+            console.print(f"[yellow]Warning:[/yellow] Language code '{language}' may not be valid. Expected format: ISO 639-1 code (e.g., 'en', 'es', 'fr')")
+            console.print("[yellow]Proceeding anyway, but generated content may default to English if the AI doesn't recognize this code.[/yellow]")
 
     if script_type:
         if script_type not in SCRIPT_TYPE_CHOICES:

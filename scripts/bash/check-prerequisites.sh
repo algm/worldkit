@@ -15,9 +15,9 @@
 #   --help, -h          Show help message
 #
 # OUTPUTS:
-#   JSON mode: {"FEATURE_DIR":"...", "AVAILABLE_DOCS":["..."]}
-#   Text mode: FEATURE_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
-#   Paths only: REPO_ROOT: ... \n BRANCH: ... \n FEATURE_DIR: ... etc.
+#   JSON mode: {"WORLD_DIR":"...", "AVAILABLE_DOCS":["..."]}
+#   Text mode: WORLD_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
+#   Paths only: REPO_ROOT: ... \n BRANCH: ... \n WORLD_DIR: ... etc.
 
 set -e
 
@@ -79,43 +79,43 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 # Get feature paths and validate branch
-eval $(get_feature_paths)
+eval $(get_world_paths)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 
 # If paths-only mode, output paths and exit (support JSON + paths-only combined)
 if $PATHS_ONLY; then
     if $JSON_MODE; then
         # Minimal JSON paths payload (no validation performed)
-        printf '{"REPO_ROOT":"%s","BRANCH":"%s","FEATURE_DIR":"%s","FEATURE_SPEC":"%s","IMPL_PLAN":"%s","TASKS":"%s"}\n' \
-            "$REPO_ROOT" "$CURRENT_BRANCH" "$FEATURE_DIR" "$FEATURE_SPEC" "$IMPL_PLAN" "$TASKS"
+        printf '{"REPO_ROOT":"%s","BRANCH":"%s","WORLD_DIR":"%s","WORLD_FILE":"%s","STORY_OUTLINE":"%s","CHAPTERS":"%s"}\n' \
+            "$REPO_ROOT" "$CURRENT_BRANCH" "$WORLD_DIR" "$WORLD_FILE" "$STORY_OUTLINE" "$CHAPTERS"
     else
         echo "REPO_ROOT: $REPO_ROOT"
         echo "BRANCH: $CURRENT_BRANCH"
-        echo "FEATURE_DIR: $FEATURE_DIR"
-        echo "FEATURE_SPEC: $FEATURE_SPEC"
-        echo "IMPL_PLAN: $IMPL_PLAN"
-        echo "TASKS: $TASKS"
+        echo "WORLD_DIR: $WORLD_DIR"
+        echo "WORLD_FILE: $WORLD_FILE"
+        echo "STORY_OUTLINE: $STORY_OUTLINE"
+        echo "CHAPTERS: $CHAPTERS"
     fi
     exit 0
 fi
 
 # Validate required directories and files
-if [[ ! -d "$FEATURE_DIR" ]]; then
-    echo "ERROR: Feature directory not found: $FEATURE_DIR" >&2
-    echo "Run /worldkit.worldbuild first to create the feature structure." >&2
+if [[ ! -d "$WORLD_DIR" ]]; then
+    echo "ERROR: World directory not found: $WORLD_DIR" >&2
+    echo "Run /worldkit.worldbuild first to create the world structure." >&2
     exit 1
 fi
 
-if [[ ! -f "$IMPL_PLAN" ]]; then
-    echo "ERROR: plan.md not found in $FEATURE_DIR" >&2
-    echo "Run /worldkit.plan first to create the implementation plan." >&2
+if [[ ! -f "$STORY_OUTLINE" ]]; then
+    echo "ERROR: outline.md not found in $WORLD_DIR" >&2
+    echo "Run /worldkit.outline first to create the story outline." >&2
     exit 1
 fi
 
 # Check for chapters.md if required
-if $REQUIRE_TASKS && [[ ! -f "$TASKS" ]]; then
-    echo "ERROR: chapters.md not found in $FEATURE_DIR" >&2
-    echo "Run /worldkit.tasks first to create the task list." >&2
+if $REQUIRE_TASKS && [[ ! -f "$CHAPTERS" ]]; then
+    echo "ERROR: chapters.md not found in $WORLD_DIR" >&2
+    echo "Run /worldkit.chapters first to create the chapter breakdown." >&2
     exit 1
 fi
 
@@ -148,10 +148,10 @@ if $JSON_MODE; then
         json_docs="[${json_docs%,}]"
     fi
     
-    printf '{"FEATURE_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$FEATURE_DIR" "$json_docs"
+    printf '{"WORLD_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$WORLD_DIR" "$json_docs"
 else
     # Text output
-    echo "FEATURE_DIR:$FEATURE_DIR"
+    echo "WORLD_DIR:$WORLD_DIR"
     echo "AVAILABLE_DOCS:"
     
     # Show status of each potential document

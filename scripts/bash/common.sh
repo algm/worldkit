@@ -124,7 +124,14 @@ find_feature_dir_by_prefix() {
     fi
 }
 
+# Legacy function name for backward compatibility
+# DEPRECATED: Use get_world_paths() instead. This alias will be maintained for 
+# backward compatibility but may be removed in a future version.
 get_feature_paths() {
+    get_world_paths
+}
+
+get_world_paths() {
     local repo_root=$(get_repo_root)
     local current_branch=$(get_current_branch)
     local has_git_repo="false"
@@ -133,21 +140,21 @@ get_feature_paths() {
         has_git_repo="true"
     fi
 
-    # Use prefix-based lookup to support multiple branches per spec
-    local feature_dir=$(find_feature_dir_by_prefix "$repo_root" "$current_branch")
+    # Use prefix-based lookup to support multiple branches per world
+    local world_dir=$(find_feature_dir_by_prefix "$repo_root" "$current_branch")
 
     cat <<EOF
 REPO_ROOT='$repo_root'
 CURRENT_BRANCH='$current_branch'
 HAS_GIT='$has_git_repo'
-FEATURE_DIR='$feature_dir'
-FEATURE_SPEC='$feature_dir/spec.md'
-IMPL_PLAN='$feature_dir/plan.md'
-TASKS='$feature_dir/tasks.md'
-RESEARCH='$feature_dir/research.md'
-DATA_MODEL='$feature_dir/data-model.md'
-QUICKSTART='$feature_dir/quickstart.md'
-CONTRACTS_DIR='$feature_dir/contracts'
+WORLD_DIR='$world_dir'
+WORLD_FILE='$world_dir/world.md'
+STORY_OUTLINE='$world_dir/outline.md'
+CHAPTERS='$world_dir/chapters.md'
+RESEARCH='$world_dir/research.md'
+DATA_MODEL='$world_dir/data-model.md'
+QUICKSTART='$world_dir/quickstart.md'
+CONTRACTS_DIR='$world_dir/contracts'
 EOF
 }
 

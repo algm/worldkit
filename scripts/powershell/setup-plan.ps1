@@ -21,41 +21,41 @@ if ($Help) {
 . "$PSScriptRoot/common.ps1"
 
 # Get all paths and variables from common functions
-$paths = Get-StoryPathsEnv
+$paths = Get-WorldPathsEnv
 
 # Check if we're on a proper feature branch (only for git repos)
-if (-not (Test-StoryBranch -Branch $paths.CURRENT_BRANCH -HasGit $paths.HAS_GIT)) { 
+if (-not (Test-FeatureBranch -Branch $paths.CURRENT_BRANCH -HasGit $paths.HAS_GIT)) { 
     exit 1 
 }
 
-# Ensure the feature directory exists
-New-Item -ItemType Directory -Path $paths.FEATURE_DIR -Force | Out-Null
+# Ensure the world directory exists
+New-Item -ItemType Directory -Path $paths.WORLD_DIR -Force | Out-Null
 
-# Copy plan template if it exists, otherwise note it or create empty file
-$template = Join-Path $paths.REPO_ROOT '.worldbuild/templates/plan-template.md'
+# Copy outline template if it exists, otherwise note it or create empty file
+$template = Join-Path $paths.REPO_ROOT '.worldbuild/templates/outline-template.md'
 if (Test-Path $template) { 
-    Copy-Item $template $paths.IMPL_PLAN -Force
-    Write-Output "Copied plan template to $($paths.IMPL_PLAN)"
+    Copy-Item $template $paths.STORY_OUTLINE -Force
+    Write-Output "Copied outline template to $($paths.STORY_OUTLINE)"
 } else {
-    Write-Warning "Plan template not found at $template"
-    # Create a basic plan file if template doesn't exist
-    New-Item -ItemType File -Path $paths.IMPL_PLAN -Force | Out-Null
+    Write-Warning "Outline template not found at $template"
+    # Create a basic outline file if template doesn't exist
+    New-Item -ItemType File -Path $paths.STORY_OUTLINE -Force | Out-Null
 }
 
 # Output results
 if ($Json) {
     $result = [PSCustomObject]@{ 
-        FEATURE_SPEC = $paths.FEATURE_SPEC
-        IMPL_PLAN = $paths.IMPL_PLAN
-        SPECS_DIR = $paths.FEATURE_DIR
+        WORLD_FILE = $paths.WORLD_FILE
+        STORY_OUTLINE = $paths.STORY_OUTLINE
+        WORLD_DIR = $paths.WORLD_DIR
         BRANCH = $paths.CURRENT_BRANCH
         HAS_GIT = $paths.HAS_GIT
     }
     $result | ConvertTo-Json -Compress
 } else {
-    Write-Output "FEATURE_SPEC: $($paths.FEATURE_SPEC)"
-    Write-Output "IMPL_PLAN: $($paths.IMPL_PLAN)"
-    Write-Output "SPECS_DIR: $($paths.FEATURE_DIR)"
+    Write-Output "WORLD_FILE: $($paths.WORLD_FILE)"
+    Write-Output "STORY_OUTLINE: $($paths.STORY_OUTLINE)"
+    Write-Output "WORLD_DIR: $($paths.WORLD_DIR)"
     Write-Output "BRANCH: $($paths.CURRENT_BRANCH)"
     Write-Output "HAS_GIT: $($paths.HAS_GIT)"
 }

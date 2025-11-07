@@ -243,9 +243,9 @@ if ($branchName.Length -gt $maxBranchLength) {
     $originalBranchName = $branchName
     $branchName = "$featureNum-$truncatedSuffix"
     
-    Write-Warning "[specify] Branch name exceeded GitHub's 244-byte limit"
-    Write-Warning "[specify] Original: $originalBranchName ($($originalBranchName.Length) bytes)"
-    Write-Warning "[specify] Truncated to: $branchName ($($branchName.Length) bytes)"
+    Write-Warning "[worldbuild] Branch name exceeded GitHub's 244-byte limit"
+    Write-Warning "[worldbuild] Original: $originalBranchName ($($originalBranchName.Length) bytes)"
+    Write-Warning "[worldbuild] Truncated to: $branchName ($($branchName.Length) bytes)"
 }
 
 if ($hasGit) {
@@ -255,18 +255,18 @@ if ($hasGit) {
         Write-Warning "Failed to create git branch: $branchName"
     }
 } else {
-    Write-Warning "[specify] Warning: Git repository not detected; skipped branch creation for $branchName"
+    Write-Warning "[worldbuild] Warning: Git repository not detected; skipped branch creation for $branchName"
 }
 
-$featureDir = Join-Path $worldsDir $branchName
-New-Item -ItemType Directory -Path $featureDir -Force | Out-Null
+$worldDir = Join-Path $worldsDir $branchName
+New-Item -ItemType Directory -Path $worldDir -Force | Out-Null
 
-$template = Join-Path $repoRoot '.worldbuild/templates/spec-template.md'
-$specFile = Join-Path $featureDir 'world.md'
+$template = Join-Path $repoRoot '.worldbuild/templates/world-template.md'
+$worldFile = Join-Path $worldDir 'world.md'
 if (Test-Path $template) { 
-    Copy-Item $template $specFile -Force 
+    Copy-Item $template $worldFile -Force 
 } else { 
-    New-Item -ItemType File -Path $specFile | Out-Null 
+    New-Item -ItemType File -Path $worldFile | Out-Null 
 }
 
 # Set the WORLDBUILD_STORY environment variable for the current session
@@ -275,14 +275,14 @@ $env:WORLDBUILD_STORY = $branchName
 if ($Json) {
     $obj = [PSCustomObject]@{ 
         BRANCH_NAME = $branchName
-        SPEC_FILE = $specFile
+        WORLD_FILE = $worldFile
         FEATURE_NUM = $featureNum
         HAS_GIT = $hasGit
     }
     $obj | ConvertTo-Json -Compress
 } else {
     Write-Output "BRANCH_NAME: $branchName"
-    Write-Output "SPEC_FILE: $specFile"
+    Write-Output "WORLD_FILE: $worldFile"
     Write-Output "FEATURE_NUM: $featureNum"
     Write-Output "HAS_GIT: $hasGit"
     Write-Output "WORLDBUILD_STORY environment variable set to: $branchName"

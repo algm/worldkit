@@ -36,12 +36,12 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 . (Join-Path $ScriptDir 'common.ps1')
 
 # Acquire environment paths
-$envData = Get-FeaturePathsEnv
+$envData = Get-WorldPathsEnv
 $REPO_ROOT     = $envData.REPO_ROOT
 $CURRENT_BRANCH = $envData.CURRENT_BRANCH
 $HAS_GIT       = $envData.HAS_GIT
-$IMPL_PLAN     = $envData.IMPL_PLAN
-$NEW_PLAN = $IMPL_PLAN
+$STORY_OUTLINE = $envData.STORY_OUTLINE
+$NEW_PLAN = $STORY_OUTLINE
 
 # Agent file paths
 $CLAUDE_FILE   = Join-Path $REPO_ROOT 'CLAUDE.md'

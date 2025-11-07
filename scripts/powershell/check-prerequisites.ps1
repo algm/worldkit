@@ -57,9 +57,9 @@ EXAMPLES:
 . "$PSScriptRoot/common.ps1"
 
 # Get feature paths and validate branch
-$paths = Get-StoryPathsEnv
+$paths = Get-WorldPathsEnv
 
-if (-not (Test-StoryBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)) { 
+if (-not (Test-FeatureBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)) { 
     exit 1 
 }
 
@@ -67,41 +67,41 @@ if (-not (Test-StoryBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)
 if ($PathsOnly) {
     if ($Json) {
         [PSCustomObject]@{
-            REPO_ROOT    = $paths.REPO_ROOT
-            BRANCH       = $paths.CURRENT_BRANCH
-            FEATURE_DIR  = $paths.FEATURE_DIR
-            FEATURE_SPEC = $paths.FEATURE_SPEC
-            IMPL_PLAN    = $paths.IMPL_PLAN
-            TASKS        = $paths.TASKS
+            REPO_ROOT     = $paths.REPO_ROOT
+            BRANCH        = $paths.CURRENT_BRANCH
+            WORLD_DIR     = $paths.WORLD_DIR
+            WORLD_FILE    = $paths.WORLD_FILE
+            STORY_OUTLINE = $paths.STORY_OUTLINE
+            CHAPTERS      = $paths.CHAPTERS
         } | ConvertTo-Json -Compress
     } else {
         Write-Output "REPO_ROOT: $($paths.REPO_ROOT)"
         Write-Output "BRANCH: $($paths.CURRENT_BRANCH)"
-        Write-Output "FEATURE_DIR: $($paths.FEATURE_DIR)"
-        Write-Output "FEATURE_SPEC: $($paths.FEATURE_SPEC)"
-        Write-Output "IMPL_PLAN: $($paths.IMPL_PLAN)"
-        Write-Output "TASKS: $($paths.TASKS)"
+        Write-Output "WORLD_DIR: $($paths.WORLD_DIR)"
+        Write-Output "WORLD_FILE: $($paths.WORLD_FILE)"
+        Write-Output "STORY_OUTLINE: $($paths.STORY_OUTLINE)"
+        Write-Output "CHAPTERS: $($paths.CHAPTERS)"
     }
     exit 0
 }
 
 # Validate required directories and files
-if (-not (Test-Path $paths.FEATURE_DIR -PathType Container)) {
-    Write-Output "ERROR: Story directory not found: $($paths.FEATURE_DIR)"
-    Write-Output "Run /worldkit.worldbuild first to create the feature structure."
+if (-not (Test-Path $paths.WORLD_DIR -PathType Container)) {
+    Write-Output "ERROR: World directory not found: $($paths.WORLD_DIR)"
+    Write-Output "Run /worldkit.worldbuild first to create the world structure."
     exit 1
 }
 
-if (-not (Test-Path $paths.IMPL_PLAN -PathType Leaf)) {
-    Write-Output "ERROR: outline.md not found in $($paths.FEATURE_DIR)"
-    Write-Output "Run /worldkit.plan first to create the implementation plan."
+if (-not (Test-Path $paths.STORY_OUTLINE -PathType Leaf)) {
+    Write-Output "ERROR: outline.md not found in $($paths.WORLD_DIR)"
+    Write-Output "Run /worldkit.outline first to create the story outline."
     exit 1
 }
 
 # Check for chapters.md if required
-if ($RequireTasks -and -not (Test-Path $paths.TASKS -PathType Leaf)) {
-    Write-Output "ERROR: chapters.md not found in $($paths.FEATURE_DIR)"
-    Write-Output "Run /worldkit.tasks first to create the task list."
+if ($RequireTasks -and -not (Test-Path $paths.CHAPTERS -PathType Leaf)) {
+    Write-Output "ERROR: chapters.md not found in $($paths.WORLD_DIR)"
+    Write-Output "Run /worldkit.chapters first to create the chapter breakdown."
     exit 1
 }
 
@@ -120,7 +120,7 @@ if ((Test-Path $paths.CONTRACTS_DIR) -and (Get-ChildItem -Path $paths.CONTRACTS_
 if (Test-Path $paths.QUICKSTART) { $docs += 'quickstart.md' }
 
 # Include chapters.md if requested and it exists
-if ($IncludeTasks -and (Test-Path $paths.TASKS)) { 
+if ($IncludeTasks -and (Test-Path $paths.CHAPTERS)) { 
     $docs += 'chapters.md' 
 }
 
@@ -128,12 +128,12 @@ if ($IncludeTasks -and (Test-Path $paths.TASKS)) {
 if ($Json) {
     # JSON output
     [PSCustomObject]@{ 
-        FEATURE_DIR = $paths.FEATURE_DIR
+        WORLD_DIR = $paths.WORLD_DIR
         AVAILABLE_DOCS = $docs 
     } | ConvertTo-Json -Compress
 } else {
     # Text output
-    Write-Output "FEATURE_DIR:$($paths.FEATURE_DIR)"
+    Write-Output "WORLD_DIR:$($paths.WORLD_DIR)"
     Write-Output "AVAILABLE_DOCS:"
     
     # Show status of each potential document
@@ -143,6 +143,6 @@ if ($Json) {
     Test-FileExists -Path $paths.QUICKSTART -Description 'quickstart.md' | Out-Null
     
     if ($IncludeTasks) {
-        Test-FileExists -Path $paths.TASKS -Description 'chapters.md' | Out-Null
+        Test-FileExists -Path $paths.CHAPTERS -Description 'chapters.md' | Out-Null
     }
 }

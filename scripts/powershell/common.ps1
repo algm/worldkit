@@ -92,25 +92,32 @@ function Get-FeatureDir {
     Join-Path $RepoRoot "worlds/$Branch"
 }
 
-function Get-FeaturePathsEnv {
+function Get-WorldPathsEnv {
     $repoRoot = Get-RepoRoot
     $currentBranch = Get-CurrentBranch
     $hasGit = Test-HasGit
-    $featureDir = Get-FeatureDir -RepoRoot $repoRoot -Branch $currentBranch
+    $worldDir = Get-FeatureDir -RepoRoot $repoRoot -Branch $currentBranch
     
     [PSCustomObject]@{
         REPO_ROOT     = $repoRoot
         CURRENT_BRANCH = $currentBranch
         HAS_GIT       = $hasGit
-        FEATURE_DIR   = $featureDir
-        FEATURE_SPEC  = Join-Path $featureDir 'spec.md'
-        IMPL_PLAN     = Join-Path $featureDir 'plan.md'
-        TASKS         = Join-Path $featureDir 'tasks.md'
-        RESEARCH      = Join-Path $featureDir 'research.md'
-        DATA_MODEL    = Join-Path $featureDir 'data-model.md'
-        QUICKSTART    = Join-Path $featureDir 'quickstart.md'
-        CONTRACTS_DIR = Join-Path $featureDir 'contracts'
+        WORLD_DIR     = $worldDir
+        WORLD_FILE    = Join-Path $worldDir 'world.md'
+        STORY_OUTLINE = Join-Path $worldDir 'outline.md'
+        CHAPTERS      = Join-Path $worldDir 'chapters.md'
+        RESEARCH      = Join-Path $worldDir 'research.md'
+        DATA_MODEL    = Join-Path $worldDir 'data-model.md'
+        QUICKSTART    = Join-Path $worldDir 'quickstart.md'
+        CONTRACTS_DIR = Join-Path $worldDir 'contracts'
     }
+}
+
+# Legacy function name for backward compatibility
+# DEPRECATED: Use Get-WorldPathsEnv instead. This alias will be maintained for 
+# backward compatibility but may be removed in a future version.
+function Get-FeaturePathsEnv {
+    Get-WorldPathsEnv
 }
 
 function Test-FileExists {

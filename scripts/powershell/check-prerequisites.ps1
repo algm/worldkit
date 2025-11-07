@@ -9,8 +9,8 @@
 #
 # OPTIONS:
 #   -Json               Output in JSON format
-#   -RequireTasks       Require tasks.md to exist (for implementation phase)
-#   -IncludeTasks       Include tasks.md in AVAILABLE_DOCS list
+#   -RequireTasks       Require chapters.md to exist (for implementation phase)
+#   -IncludeTasks       Include chapters.md in AVAILABLE_DOCS list
 #   -PathsOnly          Only output path variables (no validation)
 #   -Help, -h           Show help message
 
@@ -34,16 +34,16 @@ Consolidated prerequisite checking for Spec-Driven Development workflow.
 
 OPTIONS:
   -Json               Output in JSON format
-  -RequireTasks       Require tasks.md to exist (for implementation phase)
-  -IncludeTasks       Include tasks.md in AVAILABLE_DOCS list
+  -RequireTasks       Require chapters.md to exist (for implementation phase)
+  -IncludeTasks       Include chapters.md in AVAILABLE_DOCS list
   -PathsOnly          Only output path variables (no prerequisite validation)
   -Help, -h           Show this help message
 
 EXAMPLES:
-  # Check task prerequisites (plan.md required)
+  # Check task prerequisites (outline.md required)
   .\check-prerequisites.ps1 -Json
   
-  # Check implementation prerequisites (plan.md + tasks.md required)
+  # Check implementation prerequisites (outline.md + chapters.md required)
   .\check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
   
   # Get feature paths only (no validation)
@@ -57,9 +57,9 @@ EXAMPLES:
 . "$PSScriptRoot/common.ps1"
 
 # Get feature paths and validate branch
-$paths = Get-FeaturePathsEnv
+$paths = Get-StoryPathsEnv
 
-if (-not (Test-FeatureBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)) { 
+if (-not (Test-StoryBranch -Branch $paths.CURRENT_BRANCH -HasGit:$paths.HAS_GIT)) { 
     exit 1 
 }
 
@@ -87,20 +87,20 @@ if ($PathsOnly) {
 
 # Validate required directories and files
 if (-not (Test-Path $paths.FEATURE_DIR -PathType Container)) {
-    Write-Output "ERROR: Feature directory not found: $($paths.FEATURE_DIR)"
+    Write-Output "ERROR: Story directory not found: $($paths.FEATURE_DIR)"
     Write-Output "Run /speckit.specify first to create the feature structure."
     exit 1
 }
 
 if (-not (Test-Path $paths.IMPL_PLAN -PathType Leaf)) {
-    Write-Output "ERROR: plan.md not found in $($paths.FEATURE_DIR)"
+    Write-Output "ERROR: outline.md not found in $($paths.FEATURE_DIR)"
     Write-Output "Run /speckit.plan first to create the implementation plan."
     exit 1
 }
 
-# Check for tasks.md if required
+# Check for chapters.md if required
 if ($RequireTasks -and -not (Test-Path $paths.TASKS -PathType Leaf)) {
-    Write-Output "ERROR: tasks.md not found in $($paths.FEATURE_DIR)"
+    Write-Output "ERROR: chapters.md not found in $($paths.FEATURE_DIR)"
     Write-Output "Run /speckit.tasks first to create the task list."
     exit 1
 }
@@ -119,9 +119,9 @@ if ((Test-Path $paths.CONTRACTS_DIR) -and (Get-ChildItem -Path $paths.CONTRACTS_
 
 if (Test-Path $paths.QUICKSTART) { $docs += 'quickstart.md' }
 
-# Include tasks.md if requested and it exists
+# Include chapters.md if requested and it exists
 if ($IncludeTasks -and (Test-Path $paths.TASKS)) { 
-    $docs += 'tasks.md' 
+    $docs += 'chapters.md' 
 }
 
 # Output results
@@ -143,6 +143,6 @@ if ($Json) {
     Test-FileExists -Path $paths.QUICKSTART -Description 'quickstart.md' | Out-Null
     
     if ($IncludeTasks) {
-        Test-FileExists -Path $paths.TASKS -Description 'tasks.md' | Out-Null
+        Test-FileExists -Path $paths.TASKS -Description 'chapters.md' | Out-Null
     }
 }

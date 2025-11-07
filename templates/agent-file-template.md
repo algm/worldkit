@@ -1,28 +1,28 @@
-# [PROJECT NAME] Development Guidelines
+# [WORLD NAME] Writing Guidelines
 
-Auto-generated from all feature plans. Last updated: [DATE]
+Auto-generated from all story outlines. Last updated: [DATE]
 
-## Active Technologies
+## Active Story Elements
 
-[EXTRACTED FROM ALL PLAN.MD FILES]
+[EXTRACTED FROM ALL OUTLINE.MD FILES]
 
-## Project Structure
+## Story Structure
 
 ```text
-[ACTUAL STRUCTURE FROM PLANS]
+[ACTUAL STRUCTURE FROM OUTLINES]
 ```
 
-## Commands
+## Worldbuilding Commands
 
-[ONLY COMMANDS FOR ACTIVE TECHNOLOGIES]
+[ONLY COMMANDS RELEVANT TO CURRENT STORIES]
 
-## Code Style
+## Writing Style
 
-[LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE]
+[GENRE-SPECIFIC, ONLY FOR GENRES IN USE]
 
-## Recent Changes
+## Recent Story Development
 
-[LAST 3 FEATURES AND WHAT THEY ADDED]
+[LAST 3 STORIES AND WHAT THEY ADDED TO THE WORLD]
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

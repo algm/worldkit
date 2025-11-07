@@ -93,10 +93,10 @@ check_existing_branches() {
     # Also check local branches
     local local_branches=$(git branch 2>/dev/null | grep -E "^[* ]*[0-9]+-${short_name}$" | sed 's/^[* ]*//' | sed 's/-.*//' | sort -n)
     
-    # Check specs directory as well
+    # Check worlds directory as well
     local spec_dirs=""
-    if [ -d "$SPECS_DIR" ]; then
-        spec_dirs=$(find "$SPECS_DIR" -maxdepth 1 -type d -name "[0-9]*-${short_name}" 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/-.*//' | sort -n)
+    if [ -d "$WORLDS_DIR" ]; then
+        spec_dirs=$(find "$WORLDS_DIR" -maxdepth 1 -type d -name "[0-9]*-${short_name}" 2>/dev/null | xargs -n1 basename 2>/dev/null | sed 's/-.*//' | sort -n)
     fi
     
     # Combine all sources and get the highest number
@@ -130,8 +130,8 @@ fi
 
 cd "$REPO_ROOT"
 
-SPECS_DIR="$REPO_ROOT/specs"
-mkdir -p "$SPECS_DIR"
+WORLDS_DIR="$REPO_ROOT/worlds"
+mkdir -p "$WORLDS_DIR"
 
 # Function to generate branch name with stop word filtering and length filtering
 generate_branch_name() {
@@ -197,8 +197,8 @@ if [ -z "$BRANCH_NUMBER" ]; then
     else
         # Fall back to local directory check
         HIGHEST=0
-        if [ -d "$SPECS_DIR" ]; then
-            for dir in "$SPECS_DIR"/*; do
+        if [ -d "$WORLDS_DIR" ]; then
+            for dir in "$WORLDS_DIR"/*; do
                 [ -d "$dir" ] || continue
                 dirname=$(basename "$dir")
                 number=$(echo "$dirname" | grep -o '^[0-9]\+' || echo "0")
@@ -240,21 +240,21 @@ else
     >&2 echo "[specify] Warning: Git repository not detected; skipped branch creation for $BRANCH_NAME"
 fi
 
-FEATURE_DIR="$SPECS_DIR/$BRANCH_NAME"
+FEATURE_DIR="$WORLDS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
 TEMPLATE="$REPO_ROOT/.specify/templates/spec-template.md"
-SPEC_FILE="$FEATURE_DIR/spec.md"
-if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$SPEC_FILE"; else touch "$SPEC_FILE"; fi
+WORLD_FILE="$FEATURE_DIR/world.md"
+if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$WORLD_FILE"; else touch "$WORLD_FILE"; fi
 
-# Set the SPECIFY_FEATURE environment variable for the current session
-export SPECIFY_FEATURE="$BRANCH_NAME"
+# Set the WORLDBUILD_STORY environment variable for the current session
+export WORLDBUILD_STORY="$BRANCH_NAME"
 
 if $JSON_MODE; then
-    printf '{"BRANCH_NAME":"%s","SPEC_FILE":"%s","FEATURE_NUM":"%s"}\n' "$BRANCH_NAME" "$SPEC_FILE" "$FEATURE_NUM"
+    printf '{"BRANCH_NAME":"%s","WORLD_FILE":"%s","FEATURE_NUM":"%s"}\n' "$BRANCH_NAME" "$WORLD_FILE" "$FEATURE_NUM"
 else
     echo "BRANCH_NAME: $BRANCH_NAME"
-    echo "SPEC_FILE: $SPEC_FILE"
+    echo "WORLD_FILE: $WORLD_FILE"
     echo "FEATURE_NUM: $FEATURE_NUM"
-    echo "SPECIFY_FEATURE environment variable set to: $BRANCH_NAME"
+    echo "WORLDBUILD_STORY environment variable set to: $BRANCH_NAME"
 fi

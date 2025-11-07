@@ -124,7 +124,7 @@ validate_environment() {
         if [[ "$HAS_GIT" == "true" ]]; then
             log_info "Make sure you're on a feature branch"
         else
-            log_info "Set SPECIFY_FEATURE environment variable or create a feature first"
+            log_info "Set WORLDBUILD_STORY environment variable or create a feature first"
         fi
         exit 1
     fi
@@ -134,7 +134,7 @@ validate_environment() {
         log_error "No plan.md found at $NEW_PLAN"
         log_info "Make sure you're working on a feature with a corresponding spec directory"
         if [[ "$HAS_GIT" != "true" ]]; then
-            log_info "Use: export SPECIFY_FEATURE=your-feature-name or create a new feature first"
+            log_info "Use: export WORLDBUILD_STORY=your-feature-name or create a new feature first"
         fi
         exit 1
     fi

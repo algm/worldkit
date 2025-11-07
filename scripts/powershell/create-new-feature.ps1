@@ -62,7 +62,7 @@ function Find-RepositoryRoot {
 function Get-NextBranchNumber {
     param(
         [string]$ShortName,
-        [string]$SpecsDir
+        [string]$WorldsDir
     )
     
     # Fetch all remotes to get latest branch info (suppress errors if no remotes)
@@ -102,11 +102,11 @@ function Get-NextBranchNumber {
         # Ignore errors
     }
     
-    # Check specs directory
+    # Check worlds directory
     $specDirs = @()
-    if (Test-Path $SpecsDir) {
+    if (Test-Path $WorldsDir) {
         try {
-            $specDirs = Get-ChildItem -Path $SpecsDir -Directory | Where-Object { $_.Name -match "^(\d+)-$([regex]::Escape($ShortName))$" } | ForEach-Object {
+            $specDirs = Get-ChildItem -Path $WorldsDir -Directory | Where-Object { $_.Name -match "^(\d+)-$([regex]::Escape($ShortName))$" } | ForEach-Object {
                 if ($_.Name -match "^(\d+)-") {
                     [int]$matches[1]
                 }
@@ -147,8 +147,8 @@ try {
 
 Set-Location $repoRoot
 
-$specsDir = Join-Path $repoRoot 'specs'
-New-Item -ItemType Directory -Path $specsDir -Force | Out-Null
+$worldsDir = Join-Path $repoRoot 'worlds'
+New-Item -ItemType Directory -Path $worldsDir -Force | Out-Null
 
 # Function to generate branch name with stop word filtering and length filtering
 function Get-BranchName {
@@ -208,12 +208,12 @@ if ($ShortName) {
 if ($Number -eq 0) {
     if ($hasGit) {
         # Check existing branches on remotes
-        $Number = Get-NextBranchNumber -ShortName $branchSuffix -SpecsDir $specsDir
+        $Number = Get-NextBranchNumber -ShortName $branchSuffix -WorldsDir $worldsDir
     } else {
         # Fall back to local directory check
         $highest = 0
-        if (Test-Path $specsDir) {
-            Get-ChildItem -Path $specsDir -Directory | ForEach-Object {
+        if (Test-Path $worldsDir) {
+            Get-ChildItem -Path $worldsDir -Directory | ForEach-Object {
                 if ($_.Name -match '^(\d{3})') {
                     $num = [int]$matches[1]
                     if ($num -gt $highest) { $highest = $num }
@@ -258,19 +258,19 @@ if ($hasGit) {
     Write-Warning "[specify] Warning: Git repository not detected; skipped branch creation for $branchName"
 }
 
-$featureDir = Join-Path $specsDir $branchName
+$featureDir = Join-Path $worldsDir $branchName
 New-Item -ItemType Directory -Path $featureDir -Force | Out-Null
 
 $template = Join-Path $repoRoot '.specify/templates/spec-template.md'
-$specFile = Join-Path $featureDir 'spec.md'
+$specFile = Join-Path $featureDir 'world.md'
 if (Test-Path $template) { 
     Copy-Item $template $specFile -Force 
 } else { 
     New-Item -ItemType File -Path $specFile | Out-Null 
 }
 
-# Set the SPECIFY_FEATURE environment variable for the current session
-$env:SPECIFY_FEATURE = $branchName
+# Set the WORLDBUILD_STORY environment variable for the current session
+$env:WORLDBUILD_STORY = $branchName
 
 if ($Json) {
     $obj = [PSCustomObject]@{ 
@@ -285,6 +285,6 @@ if ($Json) {
     Write-Output "SPEC_FILE: $specFile"
     Write-Output "FEATURE_NUM: $featureNum"
     Write-Output "HAS_GIT: $hasGit"
-    Write-Output "SPECIFY_FEATURE environment variable set to: $branchName"
+    Write-Output "WORLDBUILD_STORY environment variable set to: $branchName"
 }
 

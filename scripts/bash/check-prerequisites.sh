@@ -9,15 +9,15 @@
 #
 # OPTIONS:
 #   --json              Output in JSON format
-#   --require-tasks     Require tasks.md to exist (for implementation phase)
-#   --include-tasks     Include tasks.md in AVAILABLE_DOCS list
+#   --require-tasks     Require chapters.md to exist (for implementation phase)
+#   --include-tasks     Include chapters.md in AVAILABLE_DOCS list
 #   --paths-only        Only output path variables (no validation)
 #   --help, -h          Show help message
 #
 # OUTPUTS:
-#   JSON mode: {"FEATURE_DIR":"...", "AVAILABLE_DOCS":["..."]}
-#   Text mode: FEATURE_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
-#   Paths only: REPO_ROOT: ... \n BRANCH: ... \n FEATURE_DIR: ... etc.
+#   JSON mode: {"STORY_DIR":"...", "AVAILABLE_DOCS":["..."]}
+#   Text mode: STORY_DIR:... \n AVAILABLE_DOCS: \n ✓/✗ file.md
+#   Paths only: REPO_ROOT: ... \n BRANCH: ... \n STORY_DIR: ... etc.
 
 set -e
 
@@ -49,16 +49,16 @@ Consolidated prerequisite checking for Spec-Driven Development workflow.
 
 OPTIONS:
   --json              Output in JSON format
-  --require-tasks     Require tasks.md to exist (for implementation phase)
-  --include-tasks     Include tasks.md in AVAILABLE_DOCS list
+  --require-tasks     Require chapters.md to exist (for implementation phase)
+  --include-tasks     Include chapters.md in AVAILABLE_DOCS list
   --paths-only        Only output path variables (no prerequisite validation)
   --help, -h          Show this help message
 
 EXAMPLES:
-  # Check task prerequisites (plan.md required)
+  # Check task prerequisites (outline.md required)
   ./check-prerequisites.sh --json
   
-  # Check implementation prerequisites (plan.md + tasks.md required)
+  # Check implementation prerequisites (outline.md + chapters.md required)
   ./check-prerequisites.sh --json --require-tasks --include-tasks
   
   # Get feature paths only (no validation)
@@ -86,35 +86,35 @@ check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 if $PATHS_ONLY; then
     if $JSON_MODE; then
         # Minimal JSON paths payload (no validation performed)
-        printf '{"REPO_ROOT":"%s","BRANCH":"%s","FEATURE_DIR":"%s","FEATURE_SPEC":"%s","IMPL_PLAN":"%s","TASKS":"%s"}\n' \
-            "$REPO_ROOT" "$CURRENT_BRANCH" "$FEATURE_DIR" "$FEATURE_SPEC" "$IMPL_PLAN" "$TASKS"
+        printf '{"REPO_ROOT":"%s","BRANCH":"%s","STORY_DIR":"%s","STORY_SPEC":"%s","STORY_OUTLINE":"%s","TASKS":"%s"}\n' \
+            "$REPO_ROOT" "$CURRENT_BRANCH" "$STORY_DIR" "$STORY_SPEC" "$STORY_OUTLINE" "$TASKS"
     else
         echo "REPO_ROOT: $REPO_ROOT"
         echo "BRANCH: $CURRENT_BRANCH"
-        echo "FEATURE_DIR: $FEATURE_DIR"
-        echo "FEATURE_SPEC: $FEATURE_SPEC"
-        echo "IMPL_PLAN: $IMPL_PLAN"
+        echo "STORY_DIR: $STORY_DIR"
+        echo "STORY_SPEC: $STORY_SPEC"
+        echo "STORY_OUTLINE: $STORY_OUTLINE"
         echo "TASKS: $TASKS"
     fi
     exit 0
 fi
 
 # Validate required directories and files
-if [[ ! -d "$FEATURE_DIR" ]]; then
-    echo "ERROR: Feature directory not found: $FEATURE_DIR" >&2
+if [[ ! -d "$STORY_DIR" ]]; then
+    echo "ERROR: Feature directory not found: $STORY_DIR" >&2
     echo "Run /speckit.specify first to create the feature structure." >&2
     exit 1
 fi
 
-if [[ ! -f "$IMPL_PLAN" ]]; then
-    echo "ERROR: plan.md not found in $FEATURE_DIR" >&2
+if [[ ! -f "$STORY_OUTLINE" ]]; then
+    echo "ERROR: outline.md not found in $STORY_DIR" >&2
     echo "Run /speckit.plan first to create the implementation plan." >&2
     exit 1
 fi
 
-# Check for tasks.md if required
+# Check for chapters.md if required
 if $REQUIRE_TASKS && [[ ! -f "$TASKS" ]]; then
-    echo "ERROR: tasks.md not found in $FEATURE_DIR" >&2
+    echo "ERROR: chapters.md not found in $STORY_DIR" >&2
     echo "Run /speckit.tasks first to create the task list." >&2
     exit 1
 fi
@@ -133,9 +133,9 @@ fi
 
 [[ -f "$QUICKSTART" ]] && docs+=("quickstart.md")
 
-# Include tasks.md if requested and it exists
+# Include chapters.md if requested and it exists
 if $INCLUDE_TASKS && [[ -f "$TASKS" ]]; then
-    docs+=("tasks.md")
+    docs+=("chapters.md")
 fi
 
 # Output results
@@ -148,10 +148,10 @@ if $JSON_MODE; then
         json_docs="[${json_docs%,}]"
     fi
     
-    printf '{"FEATURE_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$FEATURE_DIR" "$json_docs"
+    printf '{"STORY_DIR":"%s","AVAILABLE_DOCS":%s}\n' "$STORY_DIR" "$json_docs"
 else
     # Text output
-    echo "FEATURE_DIR:$FEATURE_DIR"
+    echo "STORY_DIR:$STORY_DIR"
     echo "AVAILABLE_DOCS:"
     
     # Show status of each potential document
@@ -161,6 +161,6 @@ else
     check_file "$QUICKSTART" "quickstart.md"
     
     if $INCLUDE_TASKS; then
-        check_file "$TASKS" "tasks.md"
+        check_file "$TASKS" "chapters.md"
     fi
 fi

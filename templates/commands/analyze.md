@@ -1,5 +1,5 @@
 ---
-description: Perform a non-destructive cross-artifact consistency and quality analysis across spec.md, plan.md, and tasks.md after task generation.
+description: Perform cross-element consistency and quality analysis across world.md, outline.md, and chapters.md.
 scripts:
   sh: scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks
   ps: scripts/powershell/check-prerequisites.ps1 -Json -RequireTasks -IncludeTasks
@@ -15,173 +15,247 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 ## Goal
 
-Identify inconsistencies, duplications, ambiguities, and underspecified items across the three core artifacts (`spec.md`, `plan.md`, `tasks.md`) before implementation. This command MUST run only after `/speckit.tasks` has successfully produced a complete `tasks.md`.
+Identify inconsistencies, continuity errors, plot holes, and underspecified elements across the three core documents (`world.md`, `outline.md`, `chapters.md`) before writing. This command should run after `/worldkit.chapters` has successfully produced a complete `chapters.md`.
 
 ## Operating Constraints
 
-**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing commands would be invoked manually).
+**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report. Offer an optional remediation plan (user must explicitly approve before any follow-up editing).
 
-**Constitution Authority**: The project constitution (`/memory/constitution.md`) is **non-negotiable** within this analysis scope. Constitution conflicts are automatically CRITICAL and require adjustment of the spec, plan, or tasks—not dilution, reinterpretation, or silent ignoring of the principle. If a principle itself needs to change, that must occur in a separate, explicit constitution update outside `/speckit.analyze`.
+**Foundation Authority**: The world foundation (`/memory/foundation.md`) is **non-negotiable** within this analysis scope. Foundation conflicts are automatically CRITICAL and require adjustment of the world, outline, or chapters—not reinterpretation or ignoring of established rules.
 
 ## Execution Steps
 
 ### 1. Initialize Analysis Context
 
-Run `{SCRIPT}` once from repo root and parse JSON for FEATURE_DIR and AVAILABLE_DOCS. Derive absolute paths:
+Run `{SCRIPT}` once from repo root and parse JSON for STORY_DIR and AVAILABLE_DOCS. Derive absolute paths:
 
-- SPEC = FEATURE_DIR/spec.md
-- PLAN = FEATURE_DIR/plan.md
-- TASKS = FEATURE_DIR/tasks.md
+- WORLD = STORY_DIR/world.md
+- OUTLINE = STORY_DIR/outline.md
+- CHAPTERS = STORY_DIR/chapters.md
+- FOUNDATION = /memory/foundation.md (if exists)
 
-Abort with an error message if any required file is missing (instruct the user to run missing prerequisite command).
-For single quotes in args like "I'm Groot", use escape syntax: e.g 'I'\''m Groot' (or double-quote if possible: "I'm Groot").
+Abort with error message if any required file is missing.
 
-### 2. Load Artifacts (Progressive Disclosure)
+### 2. Load Story Elements
 
-Load only the minimal necessary context from each artifact:
+**From world.md:**
+- Characters (names, traits, motivations, arcs)
+- Settings (locations, geography, culture)
+- Conflicts (external and internal)
+- Themes
+- World Rules (magic systems, technology, etc.)
 
-**From spec.md:**
+**From outline.md:**
+- Act structure
+- Major plot points
+- Character arcs
+- Subplot outlines
+- Theme integration
 
-- Overview/Context
-- Functional Requirements
-- Non-Functional Requirements
-- User Stories
-- Edge Cases (if present)
+**From chapters.md:**
+- Chapter breakdown
+- Scene details
+- POV distribution
+- Pacing
 
-**From plan.md:**
+**From foundation.md (if exists):**
+- Established world rules
+- Core foundation elements
+- Consistency requirements
 
-- Architecture/stack choices
-- Data Model references
-- Phases
-- Technical constraints
+### 3. Consistency Analysis
 
-**From tasks.md:**
+#### A. Foundation Consistency Check
 
-- Task IDs
-- Descriptions
-- Phase grouping
-- Parallel markers [P]
-- Referenced file paths
+For each foundation rule:
+- [ ] Is it respected in world.md?
+- [ ] Does outline.md violate any rules?
+- [ ] Do chapter scenes follow established rules?
+- [ ] Are magic/technology uses consistent?
 
-**From constitution:**
+**Output**: List any foundation violations with:
+- Element that violates
+- Specific rule violated
+- Location (file, section)
+- Severity (Critical/Major/Minor)
 
-- Load `/memory/constitution.md` for principle validation
+#### B. Character Consistency Check
 
-### 3. Build Semantic Models
+For each main character:
+- [ ] Physical descriptions match across documents?
+- [ ] Motivations consistent?
+- [ ] Character voice maintained?
+- [ ] Arc progression logical?
+- [ ] Actions consistent with established traits?
+- [ ] Relationships tracked consistently?
 
-Create internal representations (do not include raw artifacts in output):
+**Output**: Character consistency report with any discrepancies found.
 
-- **Requirements inventory**: Each functional + non-functional requirement with a stable key (derive slug based on imperative phrase; e.g., "User can upload file" → `user-can-upload-file`)
-- **User story/action inventory**: Discrete user actions with acceptance criteria
-- **Task coverage mapping**: Map each task to one or more requirements or stories (inference by keyword / explicit reference patterns like IDs or key phrases)
-- **Constitution rule set**: Extract principle names and MUST/SHOULD normative statements
+#### C. Plot Continuity Check
 
-### 4. Detection Passes (Token-Efficient Analysis)
+- [ ] All plot points from outline appear in chapters?
+- [ ] Scene order makes logical sense?
+- [ ] Cause and effect relationships clear?
+- [ ] No plot holes or logical gaps?
+- [ ] All setups have payoffs?
+- [ ] Timeline is consistent?
 
-Focus on high-signal findings. Limit to 50 findings total; aggregate remainder in overflow summary.
+**Output**: Plot continuity issues with specific locations.
 
-#### A. Duplication Detection
+#### D. Setting Consistency Check
 
-- Identify near-duplicate requirements
-- Mark lower-quality phrasing for consolidation
+For each location:
+- [ ] Physical descriptions match?
+- [ ] Geography makes sense?
+- [ ] Cultural elements consistent?
+- [ ] Technology/magic level maintained?
+- [ ] Historical references align?
 
-#### B. Ambiguity Detection
+**Output**: Setting inconsistencies found.
 
-- Flag vague adjectives (fast, scalable, secure, intuitive, robust) lacking measurable criteria
-- Flag unresolved placeholders (TODO, TKTK, ???, `<placeholder>`, etc.)
+#### E. Theme Tracking
 
-#### C. Underspecification
+- [ ] Themes from world.md are explored in outline?
+- [ ] Chapter scenes support thematic development?
+- [ ] Theme integration feels natural, not forced?
+- [ ] Thematic resolution aligns with ending?
 
-- Requirements with verbs but missing object or measurable outcome
-- User stories missing acceptance criteria alignment
-- Tasks referencing files or components not defined in spec/plan
+**Output**: Theme integration analysis.
 
-#### D. Constitution Alignment
+### 4. Quality Analysis
 
-- Any requirement or plan element conflicting with a MUST principle
-- Missing mandated sections or quality gates from constitution
+#### A. Completeness Check
 
-#### E. Coverage Gaps
+**Characters**:
+- [ ] All major characters have clear motivations?
+- [ ] Character arcs are complete?
+- [ ] Supporting characters serve clear purposes?
 
-- Requirements with zero associated tasks
-- Tasks with no mapped requirement/story
-- Non-functional requirements not reflected in tasks (e.g., performance, security)
+**Plot**:
+- [ ] Beginning, middle, end all present?
+- [ ] Climax is clearly defined?
+- [ ] All conflicts are resolved (or deliberately left open)?
 
-#### F. Inconsistency
+**Scenes**:
+- [ ] All scenes have Goal-Conflict-Outcome?
+- [ ] Each scene serves a purpose?
+- [ ] Pacing is appropriate?
 
-- Terminology drift (same concept named differently across files)
-- Data entities referenced in plan but absent in spec (or vice versa)
-- Task ordering contradictions (e.g., integration tasks before foundational setup tasks without dependency note)
-- Conflicting requirements (e.g., one requires Next.js while other specifies Vue)
+**Output**: Completeness gaps identified.
 
-### 5. Severity Assignment
+#### B. Depth Analysis
 
-Use this heuristic to prioritize findings:
+- Are characters three-dimensional or flat?
+- Is setting vivid or generic?
+- Are conflicts compelling or weak?
+- Do themes emerge naturally or feel tacked on?
 
-- **CRITICAL**: Violates constitution MUST, missing core spec artifact, or requirement with zero coverage that blocks baseline functionality
-- **HIGH**: Duplicate or conflicting requirement, ambiguous security/performance attribute, untestable acceptance criterion
-- **MEDIUM**: Terminology drift, missing non-functional task coverage, underspecified edge case
-- **LOW**: Style/wording improvements, minor redundancy not affecting execution order
+**Output**: Depth assessment with suggestions.
 
-### 6. Produce Compact Analysis Report
+#### C. Genre Convention Check
 
-Output a Markdown report (no file writes) with the following structure:
+Based on stated genre:
+- [ ] Story follows or deliberately subverts genre conventions?
+- [ ] Tone is consistent?
+- [ ] Pacing appropriate for genre?
+- [ ] Reader expectations addressed?
 
-## Specification Analysis Report
+**Output**: Genre alignment analysis.
 
-| ID | Category | Severity | Location(s) | Summary | Recommendation |
-|----|----------|----------|-------------|---------|----------------|
-| A1 | Duplication | HIGH | spec.md:L120-134 | Two similar requirements ... | Merge phrasing; keep clearer version |
+### 5. Generate Analysis Report
 
-(Add one row per finding; generate stable IDs prefixed by category initial.)
+Create detailed report in `STORY_DIR/analysis-report.md`:
 
-**Coverage Summary Table:**
+```markdown
+# Story Analysis Report
 
-| Requirement Key | Has Task? | Task IDs | Notes |
-|-----------------|-----------|----------|-------|
+**Story**: [Name]
+**Date**: [Date]
+**Status**: [Summary - Ready/Needs Revision/Major Issues]
 
-**Constitution Alignment Issues:** (if any)
+## Executive Summary
 
-**Unmapped Tasks:** (if any)
+[3-4 sentence overview of analysis results]
 
-**Metrics:**
+## Critical Issues (Must Fix)
 
-- Total Requirements
-- Total Tasks
-- Coverage % (requirements with >=1 task)
-- Ambiguity Count
-- Duplication Count
-- Critical Issues Count
+[Issues that break foundation rules or create plot holes]
 
-### 7. Provide Next Actions
+## Major Issues (Should Fix)
 
-At end of report, output a concise Next Actions block:
+[Significant inconsistencies or quality concerns]
 
-- If CRITICAL issues exist: Recommend resolving before `/speckit.implement`
-- If only LOW/MEDIUM: User may proceed, but provide improvement suggestions
-- Provide explicit command suggestions: e.g., "Run /speckit.specify with refinement", "Run /speckit.plan to adjust architecture", "Manually edit tasks.md to add coverage for 'performance-metrics'"
+## Minor Issues (Consider Fixing)
 
-### 8. Offer Remediation
+[Small inconsistencies or optimization opportunities]
 
-Ask the user: "Would you like me to suggest concrete remediation edits for the top N issues?" (Do NOT apply them automatically.)
+## Strengths
 
-## Operating Principles
+[Elements that are working well]
 
-### Context Efficiency
+## Foundation Consistency: [PASS/FAIL]
 
-- **Minimal high-signal tokens**: Focus on actionable findings, not exhaustive documentation
-- **Progressive disclosure**: Load artifacts incrementally; don't dump all content into analysis
-- **Token-efficient output**: Limit findings table to 50 rows; summarize overflow
-- **Deterministic results**: Rerunning without changes should produce consistent IDs and counts
+[Details of foundation check]
 
-### Analysis Guidelines
+## Character Consistency: [PASS/NEEDS WORK]
 
-- **NEVER modify files** (this is read-only analysis)
-- **NEVER hallucinate missing sections** (if absent, report them accurately)
-- **Prioritize constitution violations** (these are always CRITICAL)
-- **Use examples over exhaustive rules** (cite specific instances, not generic patterns)
-- **Report zero issues gracefully** (emit success report with coverage statistics)
+[Character analysis details]
 
-## Context
+## Plot Continuity: [PASS/NEEDS WORK]
 
-{ARGS}
+[Plot continuity findings]
+
+## Setting Consistency: [PASS/NEEDS WORK]
+
+[Setting consistency findings]
+
+## Theme Integration: [STRONG/ADEQUATE/WEAK]
+
+[Theme tracking results]
+
+## Completeness Score: [X/100]
+
+[Breakdown of completeness metrics]
+
+## Recommendations
+
+1. [Priority 1 recommendation]
+2. [Priority 2 recommendation]
+3. [Priority 3 recommendation]
+
+## Optional Remediation Plan
+
+[If issues found, outline steps to fix them]
+```
+
+### 6. Present Report to User
+
+Show key findings:
+- Critical issues count
+- Major issues count
+- Overall readiness assessment
+- Top 3 recommendations
+
+Ask user if they want to:
+- Review full report
+- Proceed with writing anyway
+- Request remediation suggestions
+- Make fixes before proceeding
+
+## Error Handling
+
+- **Missing Files**: Identify which prerequisite command to run
+- **Malformed Documents**: Point out sections that couldn't be parsed
+- **Empty Sections**: Flag as potential gaps to fill
+
+## Success Criteria
+
+- All three documents analyzed
+- Consistency checked against foundation
+- Specific issues identified with locations
+- Clear remediation priorities provided
+- User knows exact next steps
+
+## Notes
+
+This analysis is a quality gate before writing. It catches problems early when they're easier to fix than during or after writing. However, it's not required—some writers prefer to discover and fix issues during revision.

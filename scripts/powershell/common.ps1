@@ -16,9 +16,9 @@ function Get-RepoRoot {
 }
 
 function Get-CurrentBranch {
-    # First check if SPECIFY_FEATURE environment variable is set
-    if ($env:SPECIFY_FEATURE) {
-        return $env:SPECIFY_FEATURE
+    # First check if WORLDBUILD_STORY environment variable is set
+    if ($env:WORLDBUILD_STORY) {
+        return $env:WORLDBUILD_STORY
     }
     
     # Then check git if available
@@ -33,13 +33,13 @@ function Get-CurrentBranch {
     
     # For non-git repos, try to find the latest feature directory
     $repoRoot = Get-RepoRoot
-    $specsDir = Join-Path $repoRoot "specs"
+    $worldsDir = Join-Path $repoRoot "worlds"
     
-    if (Test-Path $specsDir) {
+    if (Test-Path $worldsDir) {
         $latestFeature = ""
         $highest = 0
         
-        Get-ChildItem -Path $specsDir -Directory | ForEach-Object {
+        Get-ChildItem -Path $worldsDir -Directory | ForEach-Object {
             if ($_.Name -match '^(\d{3})-') {
                 $num = [int]$matches[1]
                 if ($num -gt $highest) {
@@ -75,7 +75,7 @@ function Test-FeatureBranch {
     
     # For non-git repos, we can't enforce branch naming but still provide output
     if (-not $HasGit) {
-        Write-Warning "[specify] Warning: Git repository not detected; skipped branch validation"
+        Write-Warning "[worldbuild] Warning: Git repository not detected; skipped branch validation"
         return $true
     }
     
@@ -89,7 +89,7 @@ function Test-FeatureBranch {
 
 function Get-FeatureDir {
     param([string]$RepoRoot, [string]$Branch)
-    Join-Path $RepoRoot "specs/$Branch"
+    Join-Path $RepoRoot "worlds/$Branch"
 }
 
 function Get-FeaturePathsEnv {

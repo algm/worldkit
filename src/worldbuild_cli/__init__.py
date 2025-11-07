@@ -10,18 +10,18 @@
 # ]
 # ///
 """
-Specify CLI - Setup tool for Specify projects
+Worldbuild CLI - Setup tool for Worldbuilding projects
 
 Usage:
-    uvx specify-cli.py init <project-name>
-    uvx specify-cli.py init .
-    uvx specify-cli.py init --here
+    uvx worldbuild-cli.py init <project-name>
+    uvx worldbuild-cli.py init .
+    uvx worldbuild-cli.py init --here
 
 Or install globally:
-    uv tool install --from specify-cli.py specify-cli
-    specify init <project-name>
-    specify init .
-    specify init --here
+    uv tool install --from worldbuild-cli.py worldbuild-cli
+    worldbuild init <project-name>
+    worldbuild init .
+    worldbuild init --here
 """
 
 import os
@@ -157,15 +157,15 @@ SCRIPT_TYPE_CHOICES = {"sh": "POSIX Shell (bash/zsh)", "ps": "PowerShell"}
 CLAUDE_LOCAL_PATH = Path.home() / ".claude" / "local" / "claude"
 
 BANNER = """
-███████╗██████╗ ███████╗ ██████╗██╗███████╗██╗   ██╗
-██╔════╝██╔══██╗██╔════╝██╔════╝██║██╔════╝╚██╗ ██╔╝
-███████╗██████╔╝█████╗  ██║     ██║█████╗   ╚████╔╝ 
-╚════██║██╔═══╝ ██╔══╝  ██║     ██║██╔══╝    ╚██╔╝  
-███████║██║     ███████╗╚██████╗██║██║        ██║   
-╚══════╝╚═╝     ╚══════╝ ╚═════╝╚═╝╚═╝        ╚═╝   
+██╗    ██╗ ██████╗ ██████╗ ██╗     ██████╗ ██████╗ ██╗   ██╗██╗██╗     ██████╗ 
+██║    ██║██╔═══██╗██╔══██╗██║     ██╔══██╗██╔══██╗██║   ██║██║██║     ██╔══██╗
+██║ █╗ ██║██║   ██║██████╔╝██║     ██║  ██║██████╔╝██║   ██║██║██║     ██║  ██║
+██║███╗██║██║   ██║██╔══██╗██║     ██║  ██║██╔══██╗██║   ██║██║██║     ██║  ██║
+╚███╔███╔╝╚██████╔╝██║  ██║███████╗██████╔╝██████╔╝╚██████╔╝██║███████╗██████╔╝
+ ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═════╝ ╚═════╝  ╚═════╝ ╚═╝╚══════╝╚═════╝ 
 """
 
-TAGLINE = "GitHub Spec Kit - Spec-Driven Development Toolkit"
+TAGLINE = "Worldbuilding Kit - World-Driven Fiction Writing Toolkit"
 class StepTracker:
     """Track and render hierarchical steps without emojis, similar to Claude Code tree output.
     Supports live auto-refresh via an attached refresh callback.
@@ -358,8 +358,8 @@ class BannerGroup(TyperGroup):
 
 
 app = typer.Typer(
-    name="specify",
-    help="Setup tool for Specify spec-driven development projects",
+    name="worldbuild",
+    help="Setup tool for Worldbuilding Kit world-driven fiction writing projects",
     add_completion=False,
     invoke_without_command=True,
     cls=BannerGroup,
@@ -473,7 +473,7 @@ def init_git_repo(project_path: Path, quiet: bool = False) -> Tuple[bool, Option
             console.print("[cyan]Initializing git repository...[/cyan]")
         subprocess.run(["git", "init"], check=True, capture_output=True, text=True)
         subprocess.run(["git", "add", "."], check=True, capture_output=True, text=True)
-        subprocess.run(["git", "commit", "-m", "Initial commit from Specify template"], check=True, capture_output=True, text=True)
+        subprocess.run(["git", "commit", "-m", "Initial commit from Worldbuilding template"], check=True, capture_output=True, text=True)
         if not quiet:
             console.print("[green]✓[/green] Git repository initialized")
         return True, None
@@ -876,7 +876,7 @@ def init(
     github_token: str = typer.Option(None, "--github-token", help="GitHub token to use for API requests (or set GH_TOKEN or GITHUB_TOKEN environment variable)"),
 ):
     """
-    Initialize a new Specify project from the latest template.
+    Initialize a new Worldbuilding project from the latest template.
     
     This command will:
     1. Check that required tools are installed (git is optional)
@@ -887,17 +887,17 @@ def init(
     6. Optionally set up AI assistant commands
     
     Examples:
-        specify init my-project
-        specify init my-project --ai claude
-        specify init my-project --ai copilot --no-git
-        specify init --ignore-agent-tools my-project
-        specify init . --ai claude         # Initialize in current directory
-        specify init .                     # Initialize in current directory (interactive AI selection)
-        specify init --here --ai claude    # Alternative syntax for current directory
-        specify init --here --ai codex
-        specify init --here --ai codebuddy
-        specify init --here
-        specify init --here --force  # Skip confirmation when current directory not empty
+        worldbuild init my-story
+        worldbuild init my-story --ai claude
+        worldbuild init my-story --ai copilot --no-git
+        worldbuild init --ignore-agent-tools my-story
+        worldbuild init . --ai claude         # Initialize in current directory
+        worldbuild init .                     # Initialize in current directory (interactive AI selection)
+        worldbuild init --here --ai claude    # Alternative syntax for current directory
+        worldbuild init --here --ai codex
+        worldbuild init --here --ai codebuddy
+        worldbuild init --here
+        worldbuild init --here --force  # Skip confirmation when current directory not empty
     """
 
     show_banner()
@@ -1139,22 +1139,22 @@ def init(
 
     steps_lines.append(f"{step_num}. Start using slash commands with your AI agent:")
 
-    steps_lines.append("   2.1 [cyan]/speckit.constitution[/] - Establish project principles")
-    steps_lines.append("   2.2 [cyan]/speckit.specify[/] - Create baseline specification")
-    steps_lines.append("   2.3 [cyan]/speckit.plan[/] - Create implementation plan")
-    steps_lines.append("   2.4 [cyan]/speckit.tasks[/] - Generate actionable tasks")
-    steps_lines.append("   2.5 [cyan]/speckit.implement[/] - Execute implementation")
+    steps_lines.append("   2.1 [cyan]/worldkit.foundation[/] - Establish world foundation and rules")
+    steps_lines.append("   2.2 [cyan]/worldkit.worldbuild[/] - Create baseline world and story description")
+    steps_lines.append("   2.3 [cyan]/worldkit.outline[/] - Create story outline and plot structure")
+    steps_lines.append("   2.4 [cyan]/worldkit.chapters[/] - Generate chapter and scene breakdown")
+    steps_lines.append("   2.5 [cyan]/worldkit.write[/] - Execute writing")
 
     steps_panel = Panel("\n".join(steps_lines), title="Next Steps", border_style="cyan", padding=(1,2))
     console.print()
     console.print(steps_panel)
 
     enhancement_lines = [
-        "Optional commands that you can use for your specs [bright_black](improve quality & confidence)[/bright_black]",
+        "Optional commands that you can use for your story [bright_black](improve quality & depth)[/bright_black]",
         "",
-        f"○ [cyan]/speckit.clarify[/] [bright_black](optional)[/bright_black] - Ask structured questions to de-risk ambiguous areas before planning (run before [cyan]/speckit.plan[/] if used)",
-        f"○ [cyan]/speckit.analyze[/] [bright_black](optional)[/bright_black] - Cross-artifact consistency & alignment report (after [cyan]/speckit.tasks[/], before [cyan]/speckit.implement[/])",
-        f"○ [cyan]/speckit.checklist[/] [bright_black](optional)[/bright_black] - Generate quality checklists to validate requirements completeness, clarity, and consistency (after [cyan]/speckit.plan[/])"
+        f"○ [cyan]/worldkit.expand[/] [bright_black](optional)[/bright_black] - Ask structured questions to expand underspecified story elements (run before [cyan]/worldkit.outline[/] if used)",
+        f"○ [cyan]/worldkit.analyze[/] [bright_black](optional)[/bright_black] - Cross-element consistency & continuity check (after [cyan]/worldkit.chapters[/], before [cyan]/worldkit.write[/])",
+        f"○ [cyan]/worldkit.checklist[/] [bright_black](optional)[/bright_black] - Generate quality checklists to validate story completeness, clarity, and consistency (after [cyan]/worldkit.outline[/])"
     ]
     enhancements_panel = Panel("\n".join(enhancement_lines), title="Enhancement Commands", border_style="cyan", padding=(1,2))
     console.print()
@@ -1194,7 +1194,7 @@ def check():
 
     console.print(tracker.render())
 
-    console.print("\n[bold green]Specify CLI is ready to use![/bold green]")
+    console.print("\n[bold green]Worldbuild CLI is ready to use![/bold green]")
 
     if not git_ok:
         console.print("[dim]Tip: Install git for repository management[/dim]")

@@ -1,48 +1,45 @@
 <div align="center">
-    <img src="./media/logo_small.webp" alt="Spec Kit Logo"/>
-    <h1>🌱 Spec Kit</h1>
-    <h3><em>Build high-quality software faster.</em></h3>
+   <img src="./media/logo_small.webp" alt="Worldbuilding Kit Logo"/>
+   <h1>🌍 Worldbuilding Kit</h1>
+   <h3><em>Write better fiction faster.</em></h3>
 </div>
 
 <p align="center">
-    <strong>An open source toolkit that allows you to focus on product scenarios and predictable outcomes instead of vibe coding every piece from scratch.</strong>
+   <strong>An open source toolkit that helps you create rich, consistent worlds and compelling stories using structured worldbuilding and AI-assisted writing.</strong>
 </p>
 
 <p align="center">
-    <a href="https://github.com/github/spec-kit/actions/workflows/release.yml"><img src="https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg" alt="Release"/></a>
-    <a href="https://github.com/github/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/github/spec-kit?style=social" alt="GitHub stars"/></a>
-    <a href="https://github.com/github/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/github/spec-kit" alt="License"/></a>
-    <a href="https://github.github.io/spec-kit/"><img src="https://img.shields.io/badge/docs-GitHub_Pages-blue" alt="Documentation"/></a>
+   <a href="https://github.com/algm/spec-kit/actions/workflows/release.yml"><img src="https://github.com/algm/spec-kit/actions/workflows/release.yml/badge.svg" alt="Release"/></a>
+   <a href="https://github.com/algm/spec-kit/stargazers"><img src="https://img.shields.io/github/stars/algm/spec-kit?style=social" alt="GitHub stars"/></a>
+   <a href="https://github.com/algm/spec-kit/blob/main/LICENSE"><img src="https://img.shields.io/github/license/algm/spec-kit" alt="License"/></a>
 </p>
 
 ---
 
 ## Table of Contents
 
-- [🤔 What is Spec-Driven Development?](#-what-is-spec-driven-development)
+- [🤔 What is World-Driven Fiction Writing?](#-what-is-world-driven-fiction-writing)
 - [⚡ Get Started](#-get-started)
-- [📽️ Video Overview](#️-video-overview)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
-- [🔧 Specify CLI Reference](#-specify-cli-reference)
+- [🔧 Worldbuild CLI Reference](#-worldbuild-cli-reference)
 - [📚 Core Philosophy](#-core-philosophy)
-- [🌟 Development Phases](#-development-phases)
-- [🎯 Experimental Goals](#-experimental-goals)
+- [🌟 Writing Phases](#-writing-phases)
+- [🎯 Goals](#-goals)
 - [🔧 Prerequisites](#-prerequisites)
-- [📖 Learn More](#-learn-more)
 - [📋 Detailed Process](#-detailed-process)
-- [🔍 Troubleshooting](#-troubleshooting)
 - [👥 Maintainers](#-maintainers)
 - [💬 Support](#-support)
-- [🙏 Acknowledgements](#-acknowledgements)
 - [📄 License](#-license)
 
-## 🤔 What is Spec-Driven Development?
+## 🤔 What is World-Driven Fiction Writing?
 
-Spec-Driven Development **flips the script** on traditional software development. For decades, code has been king — specifications were just scaffolding we built and discarded once the "real work" of coding began. Spec-Driven Development changes this: **specifications become executable**, directly generating working implementations rather than just guiding them.
+World-Driven Fiction Writing **flips the script** on traditional storytelling. Instead of jumping straight into writing, you build a solid foundation first: your world's rules, characters, conflicts, and themes. Then you structure your story with clear outlines and chapter breakdowns—before writing a single paragraph.
+
+This methodology transforms how fiction is created: **worldbuilding becomes executable**, directly guiding your writing rather than being discovered along the way.
 
 ## ⚡ Get Started
 
-### 1. Install Specify CLI
+### 1. Install Worldbuild CLI
 
 Choose your preferred installation method:
 
@@ -51,20 +48,20 @@ Choose your preferred installation method:
 Install once and use everywhere:
 
 ```bash
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool install worldbuild-cli --from git+https://github.com/algm/spec-kit.git
 ```
 
 Then use the tool directly:
 
 ```bash
-specify init <PROJECT_NAME>
-specify check
+worldbuild init <STORY_NAME>
+worldbuild check
 ```
 
-To upgrade specify run:
+To upgrade worldbuild run:
 
 ```bash
-uv tool install specify-cli --force --from git+https://github.com/github/spec-kit.git
+uv tool install worldbuild-cli --force --from git+https://github.com/algm/spec-kit.git
 ```
 
 #### Option 2: One-time Usage
@@ -72,7 +69,7 @@ uv tool install specify-cli --force --from git+https://github.com/github/spec-ki
 Run directly without installing:
 
 ```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/algm/spec-kit.git worldbuild init <STORY_NAME>
 ```
 
 **Benefits of persistent installation:**
@@ -82,55 +79,47 @@ uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME
 - Better tool management with `uv tool list`, `uv tool upgrade`, `uv tool uninstall`
 - Cleaner shell configuration
 
-### 2. Establish project principles
+### 2. Establish world foundation
 
-Launch your AI assistant in the project directory. The `/speckit.*` commands are available in the assistant.
+Launch your AI assistant in the project directory. The `/worldkit.*` commands are available in the assistant.
 
-Use the **`/speckit.constitution`** command to create your project's governing principles and development guidelines that will guide all subsequent development.
-
-```bash
-/speckit.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
-```
-
-### 3. Create the spec
-
-Use the **`/speckit.specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+Use the **`/worldkit.foundation`** command to create your world's governing rules, magic systems, and fundamental principles that will guide all subsequent story development.
 
 ```bash
-/speckit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/worldkit.foundation Create a fantasy world foundation with a hereditary magic system, medieval technology level, and five kingdoms in uneasy alliance
 ```
 
-### 4. Create a technical implementation plan
+### 3. Create the world and story
 
-Use the **`/speckit.plan`** command to provide your tech stack and architecture choices.
+Use the **`/worldkit.worldbuild`** command to describe your story. Focus on characters, setting, conflicts, and themes—not the technical details of writing.
 
 ```bash
-/speckit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/worldkit.worldbuild I want to write a story about a young heir who discovers their family's magic is fading, threatening their kingdom's survival. They must journey to the cursed lands beyond the border to find the source of magic while avoiding court assassins who want to seize power during this weakness.
 ```
 
-### 5. Break down into tasks
+### 4. Create a story outline
 
-Use **`/speckit.tasks`** to create an actionable task list from your implementation plan.
+Use the **`/worldkit.outline`** command to structure your story with acts, plot points, and character arcs.
 
 ```bash
-/speckit.tasks
+/worldkit.outline The story follows a three-act structure. Act I introduces the protagonist discovering the fading magic. Act II shows their dangerous journey and growing powers. Act III brings them back for a climactic confrontation with both the magical threat and political enemies.
 ```
 
-### 6. Execute implementation
+### 5. Break down into chapters and scenes
 
-Use **`/speckit.implement`** to execute all tasks and build your feature according to the plan.
+Use **`/worldkit.chapters`** to create a detailed chapter-by-chapter and scene-by-scene breakdown.
 
 ```bash
-/speckit.implement
+/worldkit.chapters
 ```
 
-For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
+### 6. Execute writing
 
-## 📽️ Video Overview
+Use **`/worldkit.write`** to draft your story chapter by chapter according to your detailed breakdown.
 
-Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)!
-
-[![Spec Kit video header](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
+```bash
+/worldkit.write
+```
 
 ## 🤖 Supported AI Agents
 
@@ -151,22 +140,22 @@ Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.c
 | [Amazon Q Developer CLI](https://aws.amazon.com/developer/learning/q-developer-cli/) | ⚠️ | Amazon Q Developer CLI [does not support](https://github.com/aws/amazon-q-developer-cli/issues/3064) custom arguments for slash commands. |
 | [Amp](https://ampcode.com/) | ✅ | |
 
-## 🔧 Specify CLI Reference
+## 🔧 Worldbuild CLI Reference
 
-The `specify` command supports the following options:
+The `worldbuild` command supports the following options:
 
 ### Commands
 
 | Command     | Description                                                    |
 |-------------|----------------------------------------------------------------|
-| `init`      | Initialize a new Specify project from the latest template      |
+| `init`      | Initialize a new Worldbuilding project from the latest template |
 | `check`     | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `windsurf`, `qwen`, `opencode`, `codex`) |
 
-### `specify init` Arguments & Options
+### `worldbuild init` Arguments & Options
 
 | Argument/Option        | Type     | Description                                                                  |
 |------------------------|----------|------------------------------------------------------------------------------|
-| `<project-name>`       | Argument | Name for your new project directory (optional if using `--here`, or use `.` for current directory) |
+| `<story-name>`         | Argument | Name for your new story directory (optional if using `--here`, or use `.` for current directory) |
 | `--ai`                 | Option   | AI assistant to use: `claude`, `gemini`, `copilot`, `cursor-agent`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, `roo`, `codebuddy`, `amp`, or `q` |
 | `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                 |
 | `--ignore-agent-tools` | Flag     | Skip checks for AI agent tools like Claude Code                             |
@@ -180,136 +169,119 @@ The `specify` command supports the following options:
 ### Examples
 
 ```bash
-# Basic project initialization
-specify init my-project
+# Basic story initialization
+worldbuild init my-fantasy-novel
 
 # Initialize with specific AI assistant
-specify init my-project --ai claude
+worldbuild init my-fantasy-novel --ai claude
 
 # Initialize with Cursor support
-specify init my-project --ai cursor-agent
-
-# Initialize with Windsurf support
-specify init my-project --ai windsurf
-
-# Initialize with Amp support
-specify init my-project --ai amp
+worldbuild init my-fantasy-novel --ai cursor-agent
 
 # Initialize with PowerShell scripts (Windows/cross-platform)
-specify init my-project --ai copilot --script ps
+worldbuild init my-fantasy-novel --ai copilot --script ps
 
 # Initialize in current directory
-specify init . --ai copilot
+worldbuild init . --ai copilot
 # or use the --here flag
-specify init --here --ai copilot
-
-# Force merge into current (non-empty) directory without confirmation
-specify init . --force --ai copilot
-# or 
-specify init --here --force --ai copilot
-
-# Skip git initialization
-specify init my-project --ai gemini --no-git
-
-# Enable debug output for troubleshooting
-specify init my-project --ai claude --debug
-
-# Use GitHub token for API requests (helpful for corporate environments)
-specify init my-project --ai claude --github-token ghp_your_token_here
+worldbuild init --here --ai copilot
 
 # Check system requirements
-specify check
+worldbuild check
 ```
 
 ### Available Slash Commands
 
-After running `specify init`, your AI coding agent will have access to these slash commands for structured development:
+After running `worldbuild init`, your AI coding agent will have access to these slash commands for structured worldbuilding:
 
 #### Core Commands
 
-Essential commands for the Spec-Driven Development workflow:
+Essential commands for the World-Driven Fiction Writing workflow:
 
 | Command                  | Description                                                           |
 |--------------------------|-----------------------------------------------------------------------|
-| `/speckit.constitution`  | Create or update project governing principles and development guidelines |
-| `/speckit.specify`       | Define what you want to build (requirements and user stories)        |
-| `/speckit.plan`          | Create technical implementation plans with your chosen tech stack     |
-| `/speckit.tasks`         | Generate actionable task lists for implementation                     |
-| `/speckit.implement`     | Execute all tasks to build the feature according to the plan         |
+| `/worldkit.foundation`   | Create or update world foundation rules and principles                |
+| `/worldkit.worldbuild`   | Define your world, characters, setting, and conflicts                |
+| `/worldkit.outline`      | Create story structure with acts, plot points, and character arcs    |
+| `/worldkit.chapters`     | Generate detailed chapter and scene breakdown                         |
+| `/worldkit.write`        | Execute writing chapter by chapter according to your breakdown        |
 
 #### Optional Commands
 
-Additional commands for enhanced quality and validation:
+Additional commands for enhanced quality and depth:
 
 | Command              | Description                                                           |
 |----------------------|-----------------------------------------------------------------------|
-| `/speckit.clarify`   | Clarify underspecified areas (recommended before `/speckit.plan`; formerly `/quizme`) |
-| `/speckit.analyze`   | Cross-artifact consistency & coverage analysis (run after `/speckit.tasks`, before `/speckit.implement`) |
-| `/speckit.checklist` | Generate custom quality checklists that validate requirements completeness, clarity, and consistency (like "unit tests for English") |
+| `/worldkit.expand`   | Expand underspecified story elements (recommended before `/worldkit.outline`) |
+| `/worldkit.analyze`  | Cross-element consistency & continuity check (run after `/worldkit.chapters`, before `/worldkit.write`) |
+| `/worldkit.checklist`| Generate custom quality checklists to validate story completeness, clarity, and consistency |
 
 ### Environment Variables
 
-| Variable         | Description                                                                                    |
-|------------------|------------------------------------------------------------------------------------------------|
-| `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>**Must be set in the context of the agent you're working with prior to using `/speckit.plan` or follow-up commands. |
+| Variable            | Description                                                                                    |
+|---------------------|------------------------------------------------------------------------------------------------|
+| `WORLDBUILD_STORY`  | Override story detection for non-Git repositories. Set to the story directory name (e.g., `001-dying-magic`) to work on a specific story when not using Git branches.<br/>**Must be set in the context of the agent you're working with prior to using `/worldkit.outline` or follow-up commands. |
 
 ## 📚 Core Philosophy
 
-Spec-Driven Development is a structured process that emphasizes:
+World-Driven Fiction Writing is a structured process that emphasizes:
 
-- **Intent-driven development** where specifications define the "*what*" before the "*how*"
-- **Rich specification creation** using guardrails and organizational principles
-- **Multi-step refinement** rather than one-shot code generation from prompts
-- **Heavy reliance** on advanced AI model capabilities for specification interpretation
+- **Foundation-first worldbuilding** where world rules define what's possible
+- **Character-driven plots** where motivations create conflict
+- **Structured storytelling** using proven narrative frameworks
+- **Iterative refinement** rather than one-shot story generation
+- **AI-assisted creativity** that enhances rather than replaces your vision
 
-## 🌟 Development Phases
+## 🌟 Writing Phases
 
 | Phase | Focus | Key Activities |
 |-------|-------|----------------|
-| **0-to-1 Development** ("Greenfield") | Generate from scratch | <ul><li>Start with high-level requirements</li><li>Generate specifications</li><li>Plan implementation steps</li><li>Build production-ready applications</li></ul> |
-| **Creative Exploration** | Parallel implementations | <ul><li>Explore diverse solutions</li><li>Support multiple technology stacks & architectures</li><li>Experiment with UX patterns</li></ul> |
-| **Iterative Enhancement** ("Brownfield") | Brownfield modernization | <ul><li>Add features iteratively</li><li>Modernize legacy systems</li><li>Adapt processes</li></ul> |
+| **Foundation Building** | World rules & principles | <ul><li>Define magic/technology systems</li><li>Establish world constraints</li><li>Set genre conventions</li><li>Create consistency guidelines</li></ul> |
+| **World Creation** | Characters & setting | <ul><li>Develop compelling characters</li><li>Design vivid settings</li><li>Identify central conflicts</li><li>Explore themes</li></ul> |
+| **Story Outlining** | Plot structure | <ul><li>Apply narrative frameworks</li><li>Map character arcs</li><li>Plan plot points</li><li>Integrate subplots</li></ul> |
+| **Scene Breakdown** | Detailed planning | <ul><li>Break story into chapters</li><li>Define scene goals</li><li>Track POV and pacing</li><li>Prepare for writing</li></ul> |
+| **Writing** | Execution | <ul><li>Draft chapters in order</li><li>Maintain voice and style</li><li>Follow the structure</li><li>Preserve consistency</li></ul> |
 
-## 🎯 Experimental Goals
+## 🎯 Goals
 
 Our research and experimentation focus on:
 
-### Technology independence
+### Genre flexibility
 
-- Create applications using diverse technology stacks
-- Validate the hypothesis that Spec-Driven Development is a process not tied to specific technologies, programming languages, or frameworks
+- Create stories across diverse genres
+- Support fantasy, sci-fi, mystery, romance, thriller, and more
+- Adapt to different formats (novels, short stories, series)
 
-### Enterprise constraints
+### Consistency at scale
 
-- Demonstrate mission-critical application development
-- Incorporate organizational constraints (cloud providers, tech stacks, engineering practices)
-- Support enterprise design systems and compliance requirements
+- Maintain world rules across long stories or series
+- Track character development and relationships
+- Ensure continuity in complex worldbuilding
+- Support multiple interconnected stories in the same world
 
-### User-centric development
+### Creative enhancement
 
-- Build applications for different user cohorts and preferences
-- Support various development approaches (from vibe-coding to AI-native development)
+- Provide structure without constraining creativity
+- Support both pantsers and plotters with flexible workflows
+- Enable exploration of alternative story directions
+- Maintain depth while staying organized
 
-### Creative & iterative processes
+### Iterative refinement
 
-- Validate the concept of parallel implementation exploration
-- Provide robust iterative feature development workflows
-- Extend processes to handle upgrades and modernization tasks
+- Support expansion and clarification at any stage
+- Allow for discovery during writing while maintaining consistency
+- Enable revision and restructuring
+- Track story evolution over time
 
 ## 🔧 Prerequisites
 
 - **Linux/macOS/Windows**
-- [Supported](#-supported-ai-agents) AI coding agent.
+- [Supported](#-supported-ai-agents) AI coding agent
 - [uv](https://docs.astral.sh/uv/) for package management
 - [Python 3.11+](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
 If you encounter issues with an agent, please open an issue so we can refine the integration.
-
-## 📖 Learn More
-
-- **[Complete Spec-Driven Development Methodology](./spec-driven.md)** - Deep dive into the full process
-- **[Detailed Walkthrough](#-detailed-process)** - Step-by-step implementation guide
 
 ---
 
@@ -318,302 +290,108 @@ If you encounter issues with an agent, please open an issue so we can refine the
 <details>
 <summary>Click to expand the detailed step-by-step walkthrough</summary>
 
-You can use the Specify CLI to bootstrap your project, which will bring in the required artifacts in your environment. Run:
+You can use the Worldbuild CLI to bootstrap your writing project. Run:
 
 ```bash
-specify init <project_name>
+worldbuild init <story_name>
 ```
 
 Or initialize in the current directory:
 
 ```bash
-specify init .
+worldbuild init .
 # or use the --here flag
-specify init --here
-# Skip confirmation when the directory already has files
-specify init . --force
-# or
-specify init --here --force
+worldbuild init --here
 ```
 
-![Specify CLI bootstrapping a new project in the terminal](./media/specify_cli.gif)
-
-You will be prompted to select the AI agent you are using. You can also proactively specify it directly in the terminal:
+You will be prompted to select the AI agent you are using. You can also specify it directly:
 
 ```bash
-specify init <project_name> --ai claude
-specify init <project_name> --ai gemini
-specify init <project_name> --ai copilot
-
-# Or in current directory:
-specify init . --ai claude
-specify init . --ai codex
-
-# or use --here flag
-specify init --here --ai claude
-specify init --here --ai codex
-
-# Force merge into a non-empty current directory
-specify init . --force --ai claude
-
-# or
-specify init --here --force --ai claude
+worldbuild init <story_name> --ai claude
+worldbuild init <story_name> --ai gemini
+worldbuild init <story_name> --ai copilot
 ```
 
-The CLI will check if you have Claude Code, Gemini CLI, Cursor CLI, Qwen CLI, opencode, Codex CLI, or Amazon Q Developer CLI installed. If you do not, or you prefer to get the templates without checking for the right tools, use `--ignore-agent-tools` with your command:
+### **STEP 1:** Establish world foundation
 
-```bash
-specify init <project_name> --ai claude --ignore-agent-tools
-```
+Go to the project folder and run your AI agent (e.g., `claude`).
 
-### **STEP 1:** Establish project principles
+You will know things are configured correctly if you see the `/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, and `/worldkit.write` commands available.
 
-Go to the project folder and run your AI agent. In our example, we're using `claude`.
-
-![Bootstrapping Claude Code environment](./media/bootstrap-claude-code.gif)
-
-You will know that things are configured correctly if you see the `/speckit.constitution`, `/speckit.specify`, `/speckit.plan`, `/speckit.tasks`, and `/speckit.implement` commands available.
-
-The first step should be establishing your project's governing principles using the `/speckit.constitution` command. This helps ensure consistent decision-making throughout all subsequent development phases:
+Start by establishing your world's foundation using the `/worldkit.foundation` command:
 
 ```text
-/speckit.constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements. Include governance for how these principles should guide technical decisions and implementation choices.
+/worldkit.foundation Create foundation for a space opera setting with faster-than-light travel via jump gates, energy-based weapons, and three competing galactic factions
 ```
 
-This step creates or updates the `.specify/memory/constitution.md` file with your project's foundational guidelines that the AI agent will reference during specification, planning, and implementation phases.
+This creates or updates the `/memory/foundation.md` file with your world's fundamental rules.
 
-### **STEP 2:** Create project specifications
+### **STEP 2:** Create world and story description
 
-With your project principles established, you can now create the functional specifications. Use the `/speckit.specify` command and then provide the concrete requirements for the project you want to develop.
+Use the `/worldkit.worldbuild` command to describe your story:
 
 >[!IMPORTANT]
->Be as explicit as possible about *what* you are trying to build and *why*. **Do not focus on the tech stack at this point**.
+>Be as explicit as possible about characters, setting, and conflicts. **Do not worry about writing style or format yet**.
 
-An example prompt:
-
-```text
-Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
-assign tasks, comment and move tasks between boards in Kanban style. In this initial phase for this feature,
-let's call it "Create Taskify," let's have multiple users but the users will be declared ahead of time, predefined.
-I want five users in two different categories, one product manager and four engineers. Let's create three
-different sample projects. Let's have the standard Kanban columns for the status of each task, such as "To Do,"
-"In Progress," "In Review," and "Done." There will be no login for this application as this is just the very
-first testing thing to ensure that our basic features are set up. For each task in the UI for a task card,
-you should be able to change the current status of the task between the different columns in the Kanban work board.
-You should be able to leave an unlimited number of comments for a particular card. You should be able to, from that task
-card, assign one of the valid users. When you first launch Taskify, it's going to give you a list of the five users to pick
-from. There will be no password required. When you click on a user, you go into the main view, which displays the list of
-projects. When you click on a project, you open the Kanban board for that project. You're going to see the columns.
-You'll be able to drag and drop cards back and forth between different columns. You will see any cards that are
-assigned to you, the currently logged in user, in a different color from all the other ones, so you can quickly
-see yours. You can edit any comments that you make, but you can't edit comments that other people made. You can
-delete any comments that you made, but you can't delete comments anybody else made.
-```
-
-After this prompt is entered, you should see Claude Code kick off the planning and spec drafting process. Claude Code will also trigger some of the built-in scripts to set up the repository.
-
-Once this step is completed, you should have a new branch created (e.g., `001-create-taskify`), as well as a new specification in the `specs/001-create-taskify` directory.
-
-The produced specification should contain a set of user stories and functional requirements, as defined in the template.
-
-At this stage, your project folder contents should resemble the following:
+Example prompt:
 
 ```text
-└── .specify
-    ├── memory
-    │  └── constitution.md
-    ├── scripts
-    │  ├── check-prerequisites.sh
-    │  ├── common.sh
-    │  ├── create-new-feature.sh
-    │  ├── setup-plan.sh
-    │  └── update-claude-md.sh
-    ├── specs
-    │  └── 001-create-taskify
-    │      └── spec.md
-    └── templates
-        ├── plan-template.md
-        ├── spec-template.md
-        └── tasks-template.md
+I want to write a story about Captain Elena Voss, a veteran starship pilot haunted by a past mission that went wrong. She's recruited for a dangerous mission to escort a mysterious scientist through hostile territory. The scientist claims to have discovered an ancient alien technology that could shift the balance of power between the three galactic factions. Elena must choose between following orders, protecting innocent lives, and uncovering the truth about what really happened on her failed mission—which connects to this ancient technology.
 ```
 
-### **STEP 3:** Functional specification clarification (required before planning)
+This creates a `world.md` file in your story directory (e.g., `worlds/001-alien-technology/world.md`).
 
-With the baseline specification created, you can go ahead and clarify any of the requirements that were not captured properly within the first shot attempt.
+### **STEP 3:** Expand underspecified elements (optional but recommended)
 
-You should run the structured clarification workflow **before** creating a technical plan to reduce rework downstream.
-
-Preferred order:
-
-1. Use `/speckit.clarify` (structured) – sequential, coverage-based questioning that records answers in a Clarifications section.
-2. Optionally follow up with ad-hoc free-form refinement if something still feels vague.
-
-If you intentionally want to skip clarification (e.g., spike or exploratory prototype), explicitly state that so the agent doesn't block on missing clarifications.
-
-Example free-form refinement prompt (after `/speckit.clarify` if still needed):
+If your world description has `[NEEDS EXPANSION]` markers or feels thin in places, use `/worldkit.expand`:
 
 ```text
-For each sample project or project that you create there should be a variable number of tasks between 5 and 15
-tasks for each one randomly distributed into different states of completion. Make sure that there's at least
-one task in each stage of completion.
+/worldkit.expand
 ```
 
-You should also ask Claude Code to validate the **Review & Acceptance Checklist**, checking off the things that are validated/pass the requirements, and leave the ones that are not unchecked. The following prompt can be used:
+The AI will ask targeted questions to help you deepen characters, settings, conflicts, and world rules before you outline.
+
+### **STEP 4:** Create story outline
+
+Use `/worldkit.outline` to structure your story:
 
 ```text
-Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
+/worldkit.outline Structure this as a three-act story. Act I: Elena reluctantly takes the mission, we learn about her past. Act II: Journey through dangerous space, growing threat, revelation about the scientist's true goals. Act III: Elena must make impossible choice at the ancient alien facility, confronting both external threat and her past trauma.
 ```
 
-It's important to use the interaction with Claude Code as an opportunity to clarify and ask questions around the specification - **do not treat its first attempt as final**.
+This generates `outline.md` with detailed act structure, plot points, and character arcs.
 
-### **STEP 4:** Generate a plan
+### **STEP 5:** Validate the outline
 
-You can now be specific about the tech stack and other technical requirements. You can use the `/speckit.plan` command that is built into the project template with a prompt like this:
+Review the outline and validate it:
 
 ```text
-We are going to generate this using .NET Aspire, using Postgres as the database. The frontend should use
-Blazor server with drag-and-drop task boards, real-time updates. There should be a REST API created with a projects API,
-tasks API, and a notifications API.
+Read the outline and check if all plot points are clear, character arcs are complete, and pacing feels appropriate. Let me know if anything needs adjustment.
 ```
 
-The output of this step will include a number of implementation detail documents, with your directory tree resembling this:
+### **STEP 6:** Generate chapter breakdown
+
+Use `/worldkit.chapters` to create detailed chapter and scene breakdown:
 
 ```text
-.
-├── CLAUDE.md
-├── memory
-│  └── constitution.md
-├── scripts
-│  ├── check-prerequisites.sh
-│  ├── common.sh
-│  ├── create-new-feature.sh
-│  ├── setup-plan.sh
-│  └── update-claude-md.sh
-├── specs
-│  └── 001-create-taskify
-│      ├── contracts
-│      │  ├── api-spec.json
-│      │  └── signalr-spec.md
-│      ├── data-model.md
-│      ├── plan.md
-│      ├── quickstart.md
-│      ├── research.md
-│      └── spec.md
-└── templates
-    ├── CLAUDE-template.md
-    ├── plan-template.md
-    ├── spec-template.md
-    └── tasks-template.md
+/worldkit.chapters
 ```
 
-Check the `research.md` document to ensure that the right tech stack is used, based on your instructions. You can ask Claude Code to refine it if any of the components stand out, or even have it check the locally-installed version of the platform/framework you want to use (e.g., .NET).
+This creates `chapters.md` with chapter-by-chapter and scene-by-scene details including POV, goals, conflicts, and outcomes.
 
-Additionally, you might want to ask Claude Code to research details about the chosen tech stack if it's something that is rapidly changing (e.g., .NET Aspire, JS frameworks), with a prompt like this:
+### **STEP 7:** Writing
+
+Once ready, use `/worldkit.write` to start drafting:
 
 ```text
-I want you to go through the implementation plan and implementation details, looking for areas that could
-benefit from additional research as .NET Aspire is a rapidly changing library. For those areas that you identify that
-require further research, I want you to update the research document with additional details about the specific
-versions that we are going to be using in this Taskify application and spawn parallel research tasks to clarify
-any details using research from the web.
+/worldkit.write
 ```
 
-During this process, you might find that Claude Code gets stuck researching the wrong thing - you can help nudge it in the right direction with a prompt like this:
-
-```text
-I think we need to break this down into a series of steps. First, identify a list of tasks
-that you would need to do during implementation that you're not sure of or would benefit
-from further research. Write down a list of those tasks. And then for each one of these tasks,
-I want you to spin up a separate research task so that the net results is we are researching
-all of those very specific tasks in parallel. What I saw you doing was it looks like you were
-researching .NET Aspire in general and I don't think that's gonna do much for us in this case.
-That's way too untargeted research. The research needs to help you solve a specific targeted question.
-```
-
->[!NOTE]
->Claude Code might be over-eager and add components that you did not ask for. Ask it to clarify the rationale and the source of the change.
-
-### **STEP 5:** Have Claude Code validate the plan
-
-With the plan in place, you should have Claude Code run through it to make sure that there are no missing pieces. You can use a prompt like this:
-
-```text
-Now I want you to go and audit the implementation plan and the implementation detail files.
-Read through it with an eye on determining whether or not there is a sequence of tasks that you need
-to be doing that are obvious from reading this. Because I don't know if there's enough here. For example,
-when I look at the core implementation, it would be useful to reference the appropriate places in the implementation
-details where it can find the information as it walks through each step in the core implementation or in the refinement.
-```
-
-This helps refine the implementation plan and helps you avoid potential blind spots that Claude Code missed in its planning cycle. Once the initial refinement pass is complete, ask Claude Code to go through the checklist once more before you can get to the implementation.
-
-You can also ask Claude Code (if you have the [GitHub CLI](https://docs.github.com/en/github-cli/github-cli) installed) to go ahead and create a pull request from your current branch to `main` with a detailed description, to make sure that the effort is properly tracked.
-
->[!NOTE]
->Before you have the agent implement it, it's also worth prompting Claude Code to cross-check the details to see if there are any over-engineered pieces (remember - it can be over-eager). If over-engineered components or decisions exist, you can ask Claude Code to resolve them. Ensure that Claude Code follows the [constitution](base/memory/constitution.md) as the foundational piece that it must adhere to when establishing the plan.
-
-### **STEP 6:** Generate task breakdown with /speckit.tasks
-
-With the implementation plan validated, you can now break down the plan into specific, actionable tasks that can be executed in the correct order. Use the `/speckit.tasks` command to automatically generate a detailed task breakdown from your implementation plan:
-
-```text
-/speckit.tasks
-```
-
-This step creates a `tasks.md` file in your feature specification directory that contains:
-
-- **Task breakdown organized by user story** - Each user story becomes a separate implementation phase with its own set of tasks
-- **Dependency management** - Tasks are ordered to respect dependencies between components (e.g., models before services, services before endpoints)
-- **Parallel execution markers** - Tasks that can run in parallel are marked with `[P]` to optimize development workflow
-- **File path specifications** - Each task includes the exact file paths where implementation should occur
-- **Test-driven development structure** - If tests are requested, test tasks are included and ordered to be written before implementation
-- **Checkpoint validation** - Each user story phase includes checkpoints to validate independent functionality
-
-The generated tasks.md provides a clear roadmap for the `/speckit.implement` command, ensuring systematic implementation that maintains code quality and allows for incremental delivery of user stories.
-
-### **STEP 7:** Implementation
-
-Once ready, use the `/speckit.implement` command to execute your implementation plan:
-
-```text
-/speckit.implement
-```
-
-The `/speckit.implement` command will:
-
-- Validate that all prerequisites are in place (constitution, spec, plan, and tasks)
-- Parse the task breakdown from `tasks.md`
-- Execute tasks in the correct order, respecting dependencies and parallel execution markers
-- Follow the TDD approach defined in your task plan
-- Provide progress updates and handle errors appropriately
-
->[!IMPORTANT]
->The AI agent will execute local CLI commands (such as `dotnet`, `npm`, etc.) - make sure you have the required tools installed on your machine.
-
-Once the implementation is complete, test the application and resolve any runtime errors that may not be visible in CLI logs (e.g., browser console errors). You can copy and paste such errors back to your AI agent for resolution.
+The AI will draft chapters according to your detailed breakdown, maintaining voice, style, and consistency with your world foundation.
 
 </details>
 
 ---
-
-## 🔍 Troubleshooting
-
-### Git Credential Manager on Linux
-
-If you're having issues with Git authentication on Linux, you can install Git Credential Manager:
-
-```bash
-#!/usr/bin/env bash
-set -e
-echo "Downloading Git Credential Manager v2.6.1..."
-wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.6.1/gcm-linux_amd64.2.6.1.deb
-echo "Installing Git Credential Manager..."
-sudo dpkg -i gcm-linux_amd64.2.6.1.deb
-echo "Configuring Git to use GCM..."
-git config --global credential.helper manager
-echo "Cleaning up..."
-rm gcm-linux_amd64.2.6.1.deb
-```
 
 ## 👥 Maintainers
 
@@ -622,11 +400,7 @@ rm gcm-linux_amd64.2.6.1.deb
 
 ## 💬 Support
 
-For support, please open a [GitHub issue](https://github.com/github/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
-
-## 🙏 Acknowledgements
-
-This project is heavily influenced by and based on the work and research of [John Lam](https://github.com/jflam).
+For support, please open a [GitHub issue](https://github.com/algm/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using World-Driven Fiction Writing.
 
 ## 📄 License
 

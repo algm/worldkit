@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
-# Update agent context files with information from plan.md
+# Update agent context files with information from world.md and outline.md
 #
-# This script maintains AI agent context files by parsing feature specifications 
-# and updating agent-specific configuration files with project information.
+# This script maintains AI agent context files by parsing world specifications 
+# and updating agent-specific configuration files with story information.
 #
 # MAIN FUNCTIONS:
 # 1. Environment Validation
 #    - Verifies git repository structure and branch information
-#    - Checks for required plan.md files and templates
+#    - Checks for required world.md files and templates
 #    - Validates file permissions and accessibility
 #
-# 2. Plan Data Extraction
-#    - Parses plan.md files to extract project metadata
-#    - Identifies language/version, frameworks, databases, and project types
-#    - Handles missing or incomplete specification data gracefully
+# 2. World Data Extraction
+#    - Parses world.md files to extract story metadata
+#    - Identifies genre, setting, characters, and story type
+#    - Handles missing or incomplete world data gracefully
 #
 # 3. Agent File Management
 #    - Creates new agent context files from templates when needed
-#    - Updates existing agent files with new project information
+#    - Updates existing agent files with new story information
 #    - Preserves manual additions and custom configurations
 #    - Supports multiple AI agent formats and directory structures
 #
 # 4. Content Generation
-#    - Generates language-specific build/test commands
-#    - Creates appropriate project directory structures
-#    - Updates technology stacks and recent changes sections
+#    - Generates story-specific context information
+#    - Creates appropriate directory references
+#    - Updates recent changes sections
 #    - Maintains consistent formatting and timestamps
 #
 # 5. Multi-Agent Support
@@ -35,7 +35,7 @@
 #    - Creates default Claude file if no agent files exist
 #
 # Usage: ./update-agent-context.sh [agent_type]
-# Agent types: claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|q
+# Agent types: claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|roo|codebuddy|amp|q
 # Leave empty to update all existing agent files
 
 set -e
@@ -55,20 +55,20 @@ source "$SCRIPT_DIR/common.sh"
 # Get all paths and variables from common functions
 eval $(get_world_paths)
 
-NEW_PLAN="$STORY_OUTLINE"  # Alias for compatibility with existing code
+WORLD_FILE_PATH="$WORLD_FILE"  # Alias for compatibility with existing code
 AGENT_TYPE="${1:-}"
 
 # Agent-specific file paths  
 CLAUDE_FILE="$REPO_ROOT/CLAUDE.md"
 GEMINI_FILE="$REPO_ROOT/GEMINI.md"
 COPILOT_FILE="$REPO_ROOT/.github/copilot-instructions.md"
-CURSOR_FILE="$REPO_ROOT/.cursor/rules/specify-rules.mdc"
+CURSOR_FILE="$REPO_ROOT/.cursor/rules/worldbuild-rules.mdc"
 QWEN_FILE="$REPO_ROOT/QWEN.md"
 AGENTS_FILE="$REPO_ROOT/AGENTS.md"
-WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/specify-rules.md"
-KILOCODE_FILE="$REPO_ROOT/.kilocode/rules/specify-rules.md"
-AUGGIE_FILE="$REPO_ROOT/.augment/rules/specify-rules.md"
-ROO_FILE="$REPO_ROOT/.roo/rules/specify-rules.md"
+WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/worldbuild-rules.md"
+KILOCODE_FILE="$REPO_ROOT/.kilocode/rules/worldbuild-rules.md"
+AUGGIE_FILE="$REPO_ROOT/.augment/rules/worldbuild-rules.md"
+ROO_FILE="$REPO_ROOT/.roo/rules/worldbuild-rules.md"
 CODEBUDDY_FILE="$REPO_ROOT/CODEBUDDY.md"
 AMP_FILE="$REPO_ROOT/AGENTS.md"
 Q_FILE="$REPO_ROOT/AGENTS.md"
@@ -76,11 +76,11 @@ Q_FILE="$REPO_ROOT/AGENTS.md"
 # Template file
 TEMPLATE_FILE="$REPO_ROOT/.worldbuild/templates/agent-file-template.md"
 
-# Global variables for parsed plan data
-NEW_LANG=""
-NEW_FRAMEWORK=""
-NEW_DB=""
-NEW_PROJECT_TYPE=""
+# Global variables for parsed world data
+GENRE=""
+SETTING=""
+STORY_TYPE=""
+PROTAGONIST=""
 
 #==============================================================================
 # Utility Functions
@@ -118,23 +118,23 @@ trap cleanup EXIT INT TERM
 #==============================================================================
 
 validate_environment() {
-    # Check if we have a current branch/feature (git or non-git)
+    # Check if we have a current branch/story (git or non-git)
     if [[ -z "$CURRENT_BRANCH" ]]; then
-        log_error "Unable to determine current feature"
+        log_error "Unable to determine current story"
         if [[ "$HAS_GIT" == "true" ]]; then
-            log_info "Make sure you're on a feature branch"
+            log_info "Make sure you're on a story branch"
         else
-            log_info "Set WORLDBUILD_STORY environment variable or create a feature first"
+            log_info "Set WORLDBUILD_STORY environment variable or create a story first"
         fi
         exit 1
     fi
     
-    # Check if plan.md exists
-    if [[ ! -f "$NEW_PLAN" ]]; then
-        log_error "No plan.md found at $NEW_PLAN"
-        log_info "Make sure you're working on a feature with a corresponding spec directory"
+    # Check if world.md exists
+    if [[ ! -f "$WORLD_FILE_PATH" ]]; then
+        log_error "No world.md found at $WORLD_FILE_PATH"
+        log_info "Make sure you're working on a story with a corresponding world directory"
         if [[ "$HAS_GIT" != "true" ]]; then
-            log_info "Use: export WORLDBUILD_STORY=your-feature-name or create a new feature first"
+            log_info "Use: export WORLDBUILD_STORY=your-story-name or create a new story first"
         fi
         exit 1
     fi
@@ -147,14 +147,14 @@ validate_environment() {
 }
 
 #==============================================================================
-# Plan Parsing Functions
+# World Parsing Functions
 #==============================================================================
 
-extract_plan_field() {
+extract_world_field() {
     local field_pattern="$1"
-    local plan_file="$2"
+    local world_file="$2"
     
-    grep "^\*\*${field_pattern}\*\*: " "$plan_file" 2>/dev/null | \
+    grep "^\*\*${field_pattern}\*\*: " "$world_file" 2>/dev/null | \
         head -1 | \
         sed "s|^\*\*${field_pattern}\*\*: ||" | \
         sed 's/^[ \t]*//;s/[ \t]*$//' | \
@@ -162,54 +162,55 @@ extract_plan_field() {
         grep -v "^N/A$" || echo ""
 }
 
-parse_plan_data() {
-    local plan_file="$1"
+parse_world_data() {
+    local world_file="$1"
     
-    if [[ ! -f "$plan_file" ]]; then
-        log_error "Plan file not found: $plan_file"
+    if [[ ! -f "$world_file" ]]; then
+        log_error "World file not found: $world_file"
         return 1
     fi
     
-    if [[ ! -r "$plan_file" ]]; then
-        log_error "Plan file is not readable: $plan_file"
+    if [[ ! -r "$world_file" ]]; then
+        log_error "World file is not readable: $world_file"
         return 1
     fi
     
-    log_info "Parsing plan data from $plan_file"
+    log_info "Parsing world data from $world_file"
     
-    NEW_LANG=$(extract_plan_field "Language/Version" "$plan_file")
-    NEW_FRAMEWORK=$(extract_plan_field "Primary Dependencies" "$plan_file")
-    NEW_DB=$(extract_plan_field "Storage" "$plan_file")
-    NEW_PROJECT_TYPE=$(extract_plan_field "Project Type" "$plan_file")
+    # Extract story information from world.md
+    GENRE=$(extract_world_field "Genre" "$world_file")
+    SETTING=$(extract_world_field "Setting" "$world_file")
+    STORY_TYPE=$(extract_world_field "Story Type" "$world_file")
+    PROTAGONIST=$(extract_world_field "Protagonist" "$world_file")
     
     # Log what we found
-    if [[ -n "$NEW_LANG" ]]; then
-        log_info "Found language: $NEW_LANG"
+    if [[ -n "$GENRE" ]]; then
+        log_info "Found genre: $GENRE"
     else
-        log_warning "No language information found in plan"
+        log_warning "No genre information found in world"
     fi
     
-    if [[ -n "$NEW_FRAMEWORK" ]]; then
-        log_info "Found framework: $NEW_FRAMEWORK"
+    if [[ -n "$SETTING" ]]; then
+        log_info "Found setting: $SETTING"
     fi
     
-    if [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]]; then
-        log_info "Found database: $NEW_DB"
+    if [[ -n "$STORY_TYPE" ]]; then
+        log_info "Found story type: $STORY_TYPE"
     fi
     
-    if [[ -n "$NEW_PROJECT_TYPE" ]]; then
-        log_info "Found project type: $NEW_PROJECT_TYPE"
+    if [[ -n "$PROTAGONIST" ]]; then
+        log_info "Found protagonist: $PROTAGONIST"
     fi
 }
 
-format_technology_stack() {
-    local lang="$1"
-    local framework="$2"
+format_story_info() {
+    local genre="$1"
+    local setting="$2"
     local parts=()
     
     # Add non-empty parts
-    [[ -n "$lang" && "$lang" != "NEEDS CLARIFICATION" ]] && parts+=("$lang")
-    [[ -n "$framework" && "$framework" != "NEEDS CLARIFICATION" && "$framework" != "N/A" ]] && parts+=("$framework")
+    [[ -n "$genre" && "$genre" != "NEEDS CLARIFICATION" ]] && parts+=("$genre")
+    [[ -n "$setting" && "$setting" != "NEEDS CLARIFICATION" && "$setting" != "N/A" ]] && parts+=("$setting")
     
     # Join with proper formatting
     if [[ ${#parts[@]} -eq 0 ]]; then
@@ -217,10 +218,10 @@ format_technology_stack() {
     elif [[ ${#parts[@]} -eq 1 ]]; then
         echo "${parts[0]}"
     else
-        # Join multiple parts with " + "
+        # Join multiple parts with " - "
         local result="${parts[0]}"
         for ((i=1; i<${#parts[@]}; i++)); do
-            result="$result + ${parts[i]}"
+            result="$result - ${parts[i]}"
         done
         echo "$result"
     fi
@@ -230,44 +231,44 @@ format_technology_stack() {
 # Template and Content Generation Functions
 #==============================================================================
 
-get_project_structure() {
-    local project_type="$1"
+get_story_structure() {
+    local story_type="$1"
     
-    if [[ "$project_type" == *"web"* ]]; then
-        echo "backend/\\nfrontend/\\ntests/"
+    if [[ "$story_type" == *"series"* ]] || [[ "$story_type" == *"trilogy"* ]]; then
+        echo "worlds/\\ncharacters/\\noutline.md\\nchapters.md"
     else
-        echo "src/\\ntests/"
+        echo "world.md\\noutline.md\\nchapters.md\\ncharacters/"
     fi
 }
 
-get_commands_for_language() {
-    local lang="$1"
+get_recommended_commands() {
+    local genre="$1"
     
-    case "$lang" in
-        *"Python"*)
-            echo "cd src && pytest && ruff check ."
+    case "$genre" in
+        *"Fantasy"*|*"Sci-Fi"*|*"Science Fiction"*)
+            echo "/worldkit.worldbuild → /worldkit.sensory → /worldkit.outline → /worldkit.chapters → /worldkit.write"
             ;;
-        *"Rust"*)
-            echo "cargo test && cargo clippy"
+        *"Mystery"*|*"Thriller"*)
+            echo "/worldkit.worldbuild → /worldkit.outline → /worldkit.bible → /worldkit.write"
             ;;
-        *"JavaScript"*|*"TypeScript"*)
-            echo "npm test \\&\\& npm run lint"
+        *"Romance"*)
+            echo "/worldkit.worldbuild → /worldkit.character → /worldkit.outline → /worldkit.write"
             ;;
         *)
-            echo "# Add commands for $lang"
+            echo "/worldkit.worldbuild → /worldkit.outline → /worldkit.chapters → /worldkit.write"
             ;;
     esac
 }
 
-get_language_conventions() {
-    local lang="$1"
-    echo "$lang: Follow standard conventions"
+get_story_conventions() {
+    local genre="$1"
+    echo "$genre: Follow genre conventions and reader expectations"
 }
 
 create_new_agent_file() {
     local target_file="$1"
     local temp_file="$2"
-    local project_name="$3"
+    local story_name="$3"
     local current_date="$4"
     
     if [[ ! -f "$TEMPLATE_FILE" ]]; then
@@ -287,53 +288,52 @@ create_new_agent_file() {
         return 1
     fi
     
-    # Replace template placeholders
-    local project_structure
-    project_structure=$(get_project_structure "$NEW_PROJECT_TYPE")
+    # Replace template placeholders with story information
+    local story_structure
+    story_structure=$(get_story_structure "$STORY_TYPE")
     
     local commands
-    commands=$(get_commands_for_language "$NEW_LANG")
+    commands=$(get_recommended_commands "$GENRE")
     
-    local language_conventions
-    language_conventions=$(get_language_conventions "$NEW_LANG")
+    local story_conventions
+    story_conventions=$(get_story_conventions "$GENRE")
     
-    # Perform substitutions with error checking using safer approach
-    # Escape special characters for sed by using a different delimiter or escaping
-    local escaped_lang=$(printf '%s\n' "$NEW_LANG" | sed 's/[\[\.*^$()+{}|]/\\&/g')
-    local escaped_framework=$(printf '%s\n' "$NEW_FRAMEWORK" | sed 's/[\[\.*^$()+{}|]/\\&/g')
+    # Perform substitutions with error checking
+    local escaped_genre=$(printf '%s\n' "$GENRE" | sed 's/[\[\.*^$()+{}|]/\\&/g')
+    local escaped_setting=$(printf '%s\n' "$SETTING" | sed 's/[\[\.*^$()+{}|]/\\&/g')
     local escaped_branch=$(printf '%s\n' "$CURRENT_BRANCH" | sed 's/[\[\.*^$()+{}|]/\\&/g')
     
-    # Build technology stack and recent change strings conditionally
-    local tech_stack
-    if [[ -n "$escaped_lang" && -n "$escaped_framework" ]]; then
-        tech_stack="- $escaped_lang + $escaped_framework ($escaped_branch)"
-    elif [[ -n "$escaped_lang" ]]; then
-        tech_stack="- $escaped_lang ($escaped_branch)"
-    elif [[ -n "$escaped_framework" ]]; then
-        tech_stack="- $escaped_framework ($escaped_branch)"
+    # Build story info and recent change strings conditionally
+    local story_info
+    if [[ -n "$escaped_genre" && -n "$escaped_setting" ]]; then
+        story_info="- $escaped_genre - $escaped_setting ($escaped_branch)"
+    elif [[ -n "$escaped_genre" ]]; then
+        story_info="- $escaped_genre ($escaped_branch)"
+    elif [[ -n "$escaped_setting" ]]; then
+        story_info="- $escaped_setting ($escaped_branch)"
     else
-        tech_stack="- ($escaped_branch)"
+        story_info="- ($escaped_branch)"
     fi
 
     local recent_change
-    if [[ -n "$escaped_lang" && -n "$escaped_framework" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_lang + $escaped_framework"
-    elif [[ -n "$escaped_lang" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_lang"
-    elif [[ -n "$escaped_framework" ]]; then
-        recent_change="- $escaped_branch: Added $escaped_framework"
+    if [[ -n "$escaped_genre" && -n "$escaped_setting" ]]; then
+        recent_change="- $escaped_branch: Started $escaped_genre story in $escaped_setting"
+    elif [[ -n "$escaped_genre" ]]; then
+        recent_change="- $escaped_branch: Started $escaped_genre story"
+    elif [[ -n "$escaped_setting" ]]; then
+        recent_change="- $escaped_branch: Started story set in $escaped_setting"
     else
-        recent_change="- $escaped_branch: Added"
+        recent_change="- $escaped_branch: Started new story"
     fi
 
     local substitutions=(
-        "s|\[PROJECT NAME\]|$project_name|"
+        "s|\[WORLD NAME\]|$story_name|"
         "s|\[DATE\]|$current_date|"
-        "s|\[EXTRACTED FROM ALL PLAN.MD FILES\]|$tech_stack|"
-        "s|\[ACTUAL STRUCTURE FROM PLANS\]|$project_structure|g"
-        "s|\[ONLY COMMANDS FOR ACTIVE TECHNOLOGIES\]|$commands|"
-        "s|\[LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE\]|$language_conventions|"
-        "s|\[LAST 3 FEATURES AND WHAT THEY ADDED\]|$recent_change|"
+        "s|\[EXTRACTED FROM ALL OUTLINE.MD FILES\]|$story_info|"
+        "s|\[ACTUAL STRUCTURE FROM OUTLINES\]|$story_structure|g"
+        "s|\[ONLY COMMANDS RELEVANT TO CURRENT STORIES\]|$commands|"
+        "s|\[GENRE-SPECIFIC, ONLY FOR GENRES IN USE\]|$story_conventions|"
+        "s|\[LAST 3 STORIES AND WHAT THEY ADDED TO THE WORLD\]|$recent_change|"
     )
     
     for substitution in "${substitutions[@]}"; do
@@ -371,32 +371,32 @@ update_existing_agent_file() {
     }
     
     # Process the file in one pass
-    local tech_stack=$(format_technology_stack "$NEW_LANG" "$NEW_FRAMEWORK")
-    local new_tech_entries=()
+    local story_info=$(format_story_info "$GENRE" "$SETTING")
+    local new_story_entries=()
     local new_change_entry=""
     
-    # Prepare new technology entries
-    if [[ -n "$tech_stack" ]] && ! grep -q "$tech_stack" "$target_file"; then
-        new_tech_entries+=("- $tech_stack ($CURRENT_BRANCH)")
+    # Prepare new story entries
+    if [[ -n "$story_info" ]] && ! grep -q "$story_info" "$target_file"; then
+        new_story_entries+=("- $story_info ($CURRENT_BRANCH)")
     fi
     
-    if [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]] && [[ "$NEW_DB" != "NEEDS CLARIFICATION" ]] && ! grep -q "$NEW_DB" "$target_file"; then
-        new_tech_entries+=("- $NEW_DB ($CURRENT_BRANCH)")
+    if [[ -n "$PROTAGONIST" ]] && [[ "$PROTAGONIST" != "N/A" ]] && [[ "$PROTAGONIST" != "NEEDS CLARIFICATION" ]] && ! grep -q "$PROTAGONIST" "$target_file"; then
+        new_story_entries+=("- Protagonist: $PROTAGONIST ($CURRENT_BRANCH)")
     fi
     
     # Prepare new change entry
-    if [[ -n "$tech_stack" ]]; then
-        new_change_entry="- $CURRENT_BRANCH: Added $tech_stack"
-    elif [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]] && [[ "$NEW_DB" != "NEEDS CLARIFICATION" ]]; then
-        new_change_entry="- $CURRENT_BRANCH: Added $NEW_DB"
+    if [[ -n "$story_info" ]]; then
+        new_change_entry="- $CURRENT_BRANCH: Working on $story_info"
+    elif [[ -n "$PROTAGONIST" ]] && [[ "$PROTAGONIST" != "N/A" ]] && [[ "$PROTAGONIST" != "NEEDS CLARIFICATION" ]]; then
+        new_change_entry="- $CURRENT_BRANCH: Developing $PROTAGONIST story"
     fi
     
     # Check if sections exist in the file
-    local has_active_technologies=0
+    local has_active_stories=0
     local has_recent_changes=0
     
-    if grep -q "^## Active Technologies" "$target_file" 2>/dev/null; then
-        has_active_technologies=1
+    if grep -q "^## Active Stories" "$target_file" 2>/dev/null; then
+        has_active_stories=1
     fi
     
     if grep -q "^## Recent Changes" "$target_file" 2>/dev/null; then
@@ -404,33 +404,32 @@ update_existing_agent_file() {
     fi
     
     # Process file line by line
-    local in_tech_section=false
+    local in_stories_section=false
     local in_changes_section=false
-    local tech_entries_added=false
+    local story_entries_added=false
     local changes_entries_added=false
     local existing_changes_count=0
-    local file_ended=false
     
     while IFS= read -r line || [[ -n "$line" ]]; do
-        # Handle Active Technologies section
-        if [[ "$line" == "## Active Technologies" ]]; then
+        # Handle Active Stories section
+        if [[ "$line" == "## Active Stories" ]]; then
             echo "$line" >> "$temp_file"
-            in_tech_section=true
+            in_stories_section=true
             continue
-        elif [[ $in_tech_section == true ]] && [[ "$line" =~ ^##[[:space:]] ]]; then
-            # Add new tech entries before closing the section
-            if [[ $tech_entries_added == false ]] && [[ ${#new_tech_entries[@]} -gt 0 ]]; then
-                printf '%s\n' "${new_tech_entries[@]}" >> "$temp_file"
-                tech_entries_added=true
+        elif [[ $in_stories_section == true ]] && [[ "$line" =~ ^##[[:space:]] ]]; then
+            # Add new story entries before closing the section
+            if [[ $story_entries_added == false ]] && [[ ${#new_story_entries[@]} -gt 0 ]]; then
+                printf '%s\n' "${new_story_entries[@]}" >> "$temp_file"
+                story_entries_added=true
             fi
             echo "$line" >> "$temp_file"
-            in_tech_section=false
+            in_stories_section=false
             continue
-        elif [[ $in_tech_section == true ]] && [[ -z "$line" ]]; then
-            # Add new tech entries before empty line in tech section
-            if [[ $tech_entries_added == false ]] && [[ ${#new_tech_entries[@]} -gt 0 ]]; then
-                printf '%s\n' "${new_tech_entries[@]}" >> "$temp_file"
-                tech_entries_added=true
+        elif [[ $in_stories_section == true ]] && [[ -z "$line" ]]; then
+            # Add new story entries before empty line in stories section
+            if [[ $story_entries_added == false ]] && [[ ${#new_story_entries[@]} -gt 0 ]]; then
+                printf '%s\n' "${new_story_entries[@]}" >> "$temp_file"
+                story_entries_added=true
             fi
             echo "$line" >> "$temp_file"
             continue
@@ -467,18 +466,18 @@ update_existing_agent_file() {
         fi
     done < "$target_file"
     
-    # Post-loop check: if we're still in the Active Technologies section and haven't added new entries
-    if [[ $in_tech_section == true ]] && [[ $tech_entries_added == false ]] && [[ ${#new_tech_entries[@]} -gt 0 ]]; then
-        printf '%s\n' "${new_tech_entries[@]}" >> "$temp_file"
-        tech_entries_added=true
+    # Post-loop check: if we're still in the Active Stories section and haven't added new entries
+    if [[ $in_stories_section == true ]] && [[ $story_entries_added == false ]] && [[ ${#new_story_entries[@]} -gt 0 ]]; then
+        printf '%s\n' "${new_story_entries[@]}" >> "$temp_file"
+        story_entries_added=true
     fi
     
     # If sections don't exist, add them at the end of the file
-    if [[ $has_active_technologies -eq 0 ]] && [[ ${#new_tech_entries[@]} -gt 0 ]]; then
+    if [[ $has_active_stories -eq 0 ]] && [[ ${#new_story_entries[@]} -gt 0 ]]; then
         echo "" >> "$temp_file"
-        echo "## Active Technologies" >> "$temp_file"
-        printf '%s\n' "${new_tech_entries[@]}" >> "$temp_file"
-        tech_entries_added=true
+        echo "## Active Stories" >> "$temp_file"
+        printf '%s\n' "${new_story_entries[@]}" >> "$temp_file"
+        story_entries_added=true
     fi
     
     if [[ $has_recent_changes -eq 0 ]] && [[ -n "$new_change_entry" ]]; then
@@ -512,8 +511,8 @@ update_agent_file() {
     
     log_info "Updating $agent_name context file: $target_file"
     
-    local project_name
-    project_name=$(basename "$REPO_ROOT")
+    local story_name
+    story_name=$(basename "$REPO_ROOT")
     local current_date
     current_date=$(date +%Y-%m-%d)
     
@@ -535,7 +534,7 @@ update_agent_file() {
             return 1
         }
         
-        if create_new_agent_file "$target_file" "$temp_file" "$project_name" "$current_date"; then
+        if create_new_agent_file "$target_file" "$temp_file" "$story_name" "$current_date"; then
             if mv "$temp_file" "$target_file"; then
                 log_success "Created new $agent_name context file"
             else
@@ -703,16 +702,16 @@ print_summary() {
     echo
     log_info "Summary of changes:"
     
-    if [[ -n "$NEW_LANG" ]]; then
-        echo "  - Added language: $NEW_LANG"
+    if [[ -n "$NEW_GENRE" ]]; then
+        echo "  - Working on genre: $NEW_GENRE"
     fi
     
-    if [[ -n "$NEW_FRAMEWORK" ]]; then
-        echo "  - Added framework: $NEW_FRAMEWORK"
+    if [[ -n "$NEW_SETTING" ]]; then
+        echo "  - Working on setting: $NEW_SETTING"
     fi
     
-    if [[ -n "$NEW_DB" ]] && [[ "$NEW_DB" != "N/A" ]]; then
-        echo "  - Added database: $NEW_DB"
+    if [[ -n "$NEW_PROTAGONIST" ]] && [[ "$NEW_PROTAGONIST" != "N/A" ]]; then
+        echo "  - Working on protagonist: $NEW_PROTAGONIST"
     fi
     
     echo
@@ -728,11 +727,11 @@ main() {
     # Validate environment before proceeding
     validate_environment
     
-    log_info "=== Updating agent context files for feature $CURRENT_BRANCH ==="
+    log_info "=== Updating agent context files for story $CURRENT_BRANCH ==="
     
-    # Parse the plan file to extract project information
-    if ! parse_plan_data "$NEW_PLAN"; then
-        log_error "Failed to parse plan data"
+    # Parse the world file to extract story information
+    if ! parse_world_data "$NEW_WORLD"; then
+        log_error "Failed to parse world data"
         exit 1
     fi
     

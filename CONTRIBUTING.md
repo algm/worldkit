@@ -57,7 +57,7 @@ Here are a few things you can do that will increase the likelihood of your pull 
 
 When working on worldkit:
 
-1. Test changes with the `worldbuild` CLI commands (`/worldkit.specify`, `/worldkit.plan`, `/worldkit.tasks`) in your coding agent of choice
+1. Test changes with the `worldbuild` CLI commands (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`) in your coding agent of choice
 2. Verify templates are working correctly in `templates/` directory
 3. Test script functionality in the `scripts/` directory
 4. Ensure memory files (`memory/constitution.md`) are updated if major process changes are made

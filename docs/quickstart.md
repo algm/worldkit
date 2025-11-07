@@ -21,31 +21,31 @@ uvx --from git+https://github.com/algm/worldkit.git worldbuild init <PROJECT_NAM
 uvx --from git+https://github.com/algm/worldkit.git worldbuild init <PROJECT_NAME> --script sh  # Force POSIX shell
 ```
 
-### 2. Create the Spec
+### 2. Describe the world / story
 
-Use the `/worldkit.specify` command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
-
-```bash
-/worldkit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
-```
-
-### 3. Create a Technical Implementation Plan
-
-Use the `/worldkit.plan` command to provide your tech stack and architecture choices.
+Use the `/worldkit.worldbuild` command to describe what you want to create. Focus on the **what** and **why**; avoid implementation details.
 
 ```bash
-/worldkit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/worldkit.worldbuild Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
 ```
 
-### 4. Break Down and Implement
+### 3. Create a high-level outline
 
-Use `/worldkit.tasks` to create an actionable task list, then ask your agent to implement the feature.
+Use the `/worldkit.outline` command to create a high-level story or feature outline. This maps major beats and structure.
+
+```bash
+/worldkit.outline The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+```
+
+### 4. Break down and iterate
+
+Use `/worldkit.chapters` (or `/worldkit.checklist` for validation) to break the outline into smaller, actionable units. Then ask your agent to implement or draft according to those units.
 
 ## Detailed Example: Building Taskify
 
 Here's a complete example of building a team productivity platform:
 
-### Step 1: Define Requirements with `/worldkit.specify`
+### Step 1: Define Requirements with `/worldkit.worldbuild`
 
 ```text
 Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
@@ -82,7 +82,7 @@ Also validate the specification checklist:
 Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
 ```
 
-### Step 3: Generate Technical Plan with `/worldkit.plan`
+### Step 3: Generate High-Level Outline with `/worldkit.outline`
 
 Be specific about your tech stack and technical requirements:
 
@@ -111,10 +111,10 @@ implement specs/002-create-taskify/plan.md
 ## Key Principles
 
 - **Be explicit** about what you're building and why
-- **Don't focus on tech stack** during specification phase
-- **Iterate and refine** your specifications before implementation
-- **Validate** the plan before coding begins
-- **Let the AI agent handle** the implementation details
+- **Don't focus on tech stack** during the creative/specification phase
+- **Iterate and refine** your world/story before heavy implementation
+- **Validate** the outline before writing large sections
+- **Let the AI agent assist** with implementation details once structure is defined
 
 ## Next Steps
 

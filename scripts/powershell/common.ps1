@@ -80,8 +80,8 @@ function Test-FeatureBranch {
     }
     
     if ($Branch -notmatch '^[0-9]{3}-') {
-        Write-Output "ERROR: Not on a feature branch. Current branch: $Branch"
-        Write-Output "Feature branches should be named like: 001-feature-name"
+        Write-Output "ERROR: Not on a story branch. Current branch: $Branch"
+        Write-Output "Story branches should be named like: 001-story-name"
         return $false
     }
     return $true

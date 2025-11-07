@@ -1,14 +1,14 @@
 #!/usr/bin/env pwsh
-<#!
+<#
 .SYNOPSIS
-Update agent context files with information from plan.md (PowerShell version)
+Update agent context files with information from world.md (PowerShell version)
 
 .DESCRIPTION
 Mirrors the behavior of scripts/bash/update-agent-context.sh:
  1. Environment Validation
- 2. Plan Data Extraction
+ 2. World Data Extraction (from world.md)
  3. Agent File Management (create from template or update existing)
- 4. Content Generation (technology stack, recent changes, timestamp)
+ 4. Content Generation (story information, recent changes, timestamp)
  5. Multi-Agent Support (claude, gemini, copilot, cursor-agent, qwen, opencode, codex, windsurf, kilocode, auggie, roo, amp, q)
 
 .PARAMETER AgentType
@@ -40,31 +40,31 @@ $envData = Get-WorldPathsEnv
 $REPO_ROOT     = $envData.REPO_ROOT
 $CURRENT_BRANCH = $envData.CURRENT_BRANCH
 $HAS_GIT       = $envData.HAS_GIT
-$STORY_OUTLINE = $envData.STORY_OUTLINE
-$NEW_PLAN = $STORY_OUTLINE
+$WORLD_FILE = $envData.WORLD_FILE
+$NEW_WORLD = $WORLD_FILE
 
-# Agent file paths
+# Agent-specific file paths
 $CLAUDE_FILE   = Join-Path $REPO_ROOT 'CLAUDE.md'
 $GEMINI_FILE   = Join-Path $REPO_ROOT 'GEMINI.md'
 $COPILOT_FILE  = Join-Path $REPO_ROOT '.github/copilot-instructions.md'
-$CURSOR_FILE   = Join-Path $REPO_ROOT '.cursor/rules/specify-rules.mdc'
+$CURSOR_FILE   = Join-Path $REPO_ROOT '.cursor/rules/worldbuild-rules.mdc'
 $QWEN_FILE     = Join-Path $REPO_ROOT 'QWEN.md'
 $AGENTS_FILE   = Join-Path $REPO_ROOT 'AGENTS.md'
-$WINDSURF_FILE = Join-Path $REPO_ROOT '.windsurf/rules/specify-rules.md'
-$KILOCODE_FILE = Join-Path $REPO_ROOT '.kilocode/rules/specify-rules.md'
-$AUGGIE_FILE   = Join-Path $REPO_ROOT '.augment/rules/specify-rules.md'
-$ROO_FILE      = Join-Path $REPO_ROOT '.roo/rules/specify-rules.md'
-$CODEBUDDY_FILE = Join-Path $REPO_ROOT 'CODEBUDDY.md'
+$WINDSURF_FILE = Join-Path $REPO_ROOT '.windsurf/rules/worldbuild-rules.md'
+$KILOCODE_FILE = Join-Path $REPO_ROOT '.kilocode/rules/worldbuild-rules.md'
+$AUGGIE_FILE   = Join-Path $REPO_ROOT '.augment/rules/worldbuild-rules.md'
+$ROO_FILE      = Join-Path $REPO_ROOT '.roo/rules/worldbuild-rules.md'
+$CODEBUDDY_FILE= Join-Path $REPO_ROOT 'CODEBUDDY.md'
 $AMP_FILE      = Join-Path $REPO_ROOT 'AGENTS.md'
 $Q_FILE        = Join-Path $REPO_ROOT 'AGENTS.md'
 
 $TEMPLATE_FILE = Join-Path $REPO_ROOT '.worldbuild/templates/agent-file-template.md'
 
-# Parsed plan data placeholders
-$script:NEW_LANG = ''
-$script:NEW_FRAMEWORK = ''
-$script:NEW_DB = ''
-$script:NEW_PROJECT_TYPE = ''
+# Parsed world data placeholders
+$script:NEW_GENRE = ''
+$script:NEW_SETTING = ''
+$script:NEW_PROTAGONIST = ''
+$script:NEW_STORY_TYPE = ''
 
 function Write-Info { 
     param(
@@ -100,14 +100,14 @@ function Write-Err {
 
 function Validate-Environment {
     if (-not $CURRENT_BRANCH) {
-        Write-Err 'Unable to determine current feature'
-        if ($HAS_GIT) { Write-Info "Make sure you're on a feature branch" } else { Write-Info 'Set WORLDBUILD_STORY environment variable or create a feature first' }
+        Write-Err 'Unable to determine current story'
+        if ($HAS_GIT) { Write-Info "Make sure you're on a story branch" } else { Write-Info 'Set WORLDBUILD_STORY environment variable or create a story first' }
         exit 1
     }
-    if (-not (Test-Path $NEW_PLAN)) {
-        Write-Err "No plan.md found at $NEW_PLAN"
-        Write-Info 'Ensure you are working on a feature with a corresponding spec directory'
-        if (-not $HAS_GIT) { Write-Info 'Use: $env:WORLDBUILD_STORY=your-feature-name or create a new feature first' }
+    if (-not (Test-Path $NEW_WORLD)) {
+        Write-Err "No world.md found at $NEW_WORLD"
+        Write-Info 'Ensure you are working on a story with a corresponding world directory'
+        if (-not $HAS_GIT) { Write-Info 'Use: $env:WORLDBUILD_STORY=your-story-name or create a new story first' }
         exit 1
     }
     if (-not (Test-Path $TEMPLATE_FILE)) {
@@ -117,17 +117,17 @@ function Validate-Environment {
     }
 }
 
-function Extract-PlanField {
+function Extract-WorldField {
     param(
         [Parameter(Mandatory=$true)]
         [string]$FieldPattern,
         [Parameter(Mandatory=$true)]
-        [string]$PlanFile
+        [string]$WorldFile
     )
-    if (-not (Test-Path $PlanFile)) { return '' }
-    # Lines like **Language/Version**: Python 3.12
+    if (-not (Test-Path $WorldFile)) { return '' }
+    # Lines like **Genre**: Fantasy
     $regex = "^\*\*$([Regex]::Escape($FieldPattern))\*\*: (.+)$"
-    Get-Content -LiteralPath $PlanFile -Encoding utf8 | ForEach-Object {
+    Get-Content -LiteralPath $WorldFile -Encoding utf8 | ForEach-Object {
         if ($_ -match $regex) { 
             $val = $Matches[1].Trim()
             if ($val -notin @('NEEDS CLARIFICATION','N/A')) { return $val }
@@ -135,66 +135,66 @@ function Extract-PlanField {
     } | Select-Object -First 1
 }
 
-function Parse-PlanData {
+function Parse-WorldData {
     param(
         [Parameter(Mandatory=$true)]
-        [string]$PlanFile
+        [string]$WorldFile
     )
-    if (-not (Test-Path $PlanFile)) { Write-Err "Plan file not found: $PlanFile"; return $false }
-    Write-Info "Parsing plan data from $PlanFile"
-    $script:NEW_LANG        = Extract-PlanField -FieldPattern 'Language/Version' -PlanFile $PlanFile
-    $script:NEW_FRAMEWORK   = Extract-PlanField -FieldPattern 'Primary Dependencies' -PlanFile $PlanFile
-    $script:NEW_DB          = Extract-PlanField -FieldPattern 'Storage' -PlanFile $PlanFile
-    $script:NEW_PROJECT_TYPE = Extract-PlanField -FieldPattern 'Project Type' -PlanFile $PlanFile
+    if (-not (Test-Path $WorldFile)) { Write-Err "World file not found: $WorldFile"; return $false }
+    Write-Info "Parsing world data from $WorldFile"
+    $script:NEW_GENRE        = Extract-WorldField -FieldPattern 'Genre' -WorldFile $WorldFile
+    $script:NEW_SETTING   = Extract-WorldField -FieldPattern 'Setting' -WorldFile $WorldFile
+    $script:NEW_PROTAGONIST          = Extract-WorldField -FieldPattern 'Protagonist' -WorldFile $WorldFile
+    $script:NEW_STORY_TYPE = Extract-WorldField -FieldPattern 'Story Type' -WorldFile $WorldFile
 
-    if ($NEW_LANG) { Write-Info "Found language: $NEW_LANG" } else { Write-WarningMsg 'No language information found in plan' }
-    if ($NEW_FRAMEWORK) { Write-Info "Found framework: $NEW_FRAMEWORK" }
-    if ($NEW_DB -and $NEW_DB -ne 'N/A') { Write-Info "Found database: $NEW_DB" }
-    if ($NEW_PROJECT_TYPE) { Write-Info "Found project type: $NEW_PROJECT_TYPE" }
+    if ($NEW_GENRE) { Write-Info "Found genre: $NEW_GENRE" } else { Write-WarningMsg 'No genre information found in world' }
+    if ($NEW_SETTING) { Write-Info "Found setting: $NEW_SETTING" }
+    if ($NEW_PROTAGONIST -and $NEW_PROTAGONIST -ne 'N/A') { Write-Info "Found protagonist: $NEW_PROTAGONIST" }
+    if ($NEW_STORY_TYPE) { Write-Info "Found story type: $NEW_STORY_TYPE" }
     return $true
 }
 
-function Format-TechnologyStack {
+function Format-StoryInfo {
     param(
         [Parameter(Mandatory=$false)]
-        [string]$Lang,
+        [string]$Genre,
         [Parameter(Mandatory=$false)]
-        [string]$Framework
+        [string]$Setting
     )
     $parts = @()
-    if ($Lang -and $Lang -ne 'NEEDS CLARIFICATION') { $parts += $Lang }
-    if ($Framework -and $Framework -notin @('NEEDS CLARIFICATION','N/A')) { $parts += $Framework }
+    if ($Genre -and $Genre -ne 'NEEDS CLARIFICATION') { $parts += $Genre }
+    if ($Setting -and $Setting -notin @('NEEDS CLARIFICATION','N/A')) { $parts += $Setting }
     if (-not $parts) { return '' }
     return ($parts -join ' + ')
 }
 
-function Get-ProjectStructure { 
+function Get-StoryStructure { 
     param(
         [Parameter(Mandatory=$false)]
-        [string]$ProjectType
+        [string]$StoryType
     )
-    if ($ProjectType -match 'web') { return "backend/`nfrontend/`ntests/" } else { return "src/`ntests/" } 
+    if ($StoryType -match 'series') { return "world/`nbooks/`ncharacters/" } else { return "world/`nchapters/`ncharacters/" } 
 }
 
-function Get-CommandsForLanguage { 
+function Get-RecommendedCommands { 
     param(
         [Parameter(Mandatory=$false)]
-        [string]$Lang
+        [string]$Genre
     )
-    switch -Regex ($Lang) {
-        'Python' { return "cd src; pytest; ruff check ." }
-        'Rust' { return "cargo test; cargo clippy" }
-        'JavaScript|TypeScript' { return "npm test; npm run lint" }
-        default { return "# Add commands for $Lang" }
+    switch -Regex ($Genre) {
+        'Fantasy|Science Fiction' { return "/worldbuild; /character; /sensory; /bible" }
+        'Mystery|Thriller' { return "/worldbuild; /outline; /chapters; /revise" }
+        'Literary|Drama' { return "/character; /voice; /sensory; /revise" }
+        default { return "# Add recommended commands for $Genre" }
     }
 }
 
-function Get-LanguageConventions { 
+function Get-GenreConventions { 
     param(
         [Parameter(Mandatory=$false)]
-        [string]$Lang
+        [string]$Genre
     )
-    if ($Lang) { "${Lang}: Follow standard conventions" } else { 'General: Follow standard conventions' } 
+    if ($Genre) { "${Genre}: Follow genre conventions and reader expectations" } else { 'General: Follow standard fiction writing conventions' } 
 }
 
 function New-AgentFile {
@@ -202,7 +202,7 @@ function New-AgentFile {
         [Parameter(Mandatory=$true)]
         [string]$TargetFile,
         [Parameter(Mandatory=$true)]
-        [string]$ProjectName,
+        [string]$StoryName,
         [Parameter(Mandatory=$true)]
         [datetime]$Date
     )
@@ -210,47 +210,47 @@ function New-AgentFile {
     $temp = New-TemporaryFile
     Copy-Item -LiteralPath $TEMPLATE_FILE -Destination $temp -Force
 
-    $projectStructure = Get-ProjectStructure -ProjectType $NEW_PROJECT_TYPE
-    $commands = Get-CommandsForLanguage -Lang $NEW_LANG
-    $languageConventions = Get-LanguageConventions -Lang $NEW_LANG
+    $storyStructure = Get-StoryStructure -StoryType $NEW_STORY_TYPE
+    $commands = Get-RecommendedCommands -Genre $NEW_GENRE
+    $genreConventions = Get-GenreConventions -Genre $NEW_GENRE
 
-    $escaped_lang = $NEW_LANG
-    $escaped_framework = $NEW_FRAMEWORK
+    $escaped_genre = $NEW_GENRE
+    $escaped_setting = $NEW_SETTING
     $escaped_branch = $CURRENT_BRANCH
 
     $content = Get-Content -LiteralPath $temp -Raw -Encoding utf8
-    $content = $content -replace '\[PROJECT NAME\]',$ProjectName
+    $content = $content -replace '\[WORLD NAME\]',$StoryName
     $content = $content -replace '\[DATE\]',$Date.ToString('yyyy-MM-dd')
     
-    # Build the technology stack string safely
-    $techStackForTemplate = ""
-    if ($escaped_lang -and $escaped_framework) {
-        $techStackForTemplate = "- $escaped_lang + $escaped_framework ($escaped_branch)"
-    } elseif ($escaped_lang) {
-        $techStackForTemplate = "- $escaped_lang ($escaped_branch)"
-    } elseif ($escaped_framework) {
-        $techStackForTemplate = "- $escaped_framework ($escaped_branch)"
+    # Build the story info string safely
+    $storyInfoForTemplate = ""
+    if ($escaped_genre -and $escaped_setting) {
+        $storyInfoForTemplate = "- $escaped_genre + $escaped_setting ($escaped_branch)"
+    } elseif ($escaped_genre) {
+        $storyInfoForTemplate = "- $escaped_genre ($escaped_branch)"
+    } elseif ($escaped_setting) {
+        $storyInfoForTemplate = "- $escaped_setting ($escaped_branch)"
     }
     
-    $content = $content -replace '\[EXTRACTED FROM ALL PLAN.MD FILES\]',$techStackForTemplate
-    # For project structure we manually embed (keep newlines)
-    $escapedStructure = [Regex]::Escape($projectStructure)
-    $content = $content -replace '\[ACTUAL STRUCTURE FROM PLANS\]',$escapedStructure
+    $content = $content -replace '\[EXTRACTED FROM ALL OUTLINE.MD FILES\]',$storyInfoForTemplate
+    # For story structure we manually embed (keep newlines)
+    $escapedStructure = [Regex]::Escape($storyStructure)
+    $content = $content -replace '\[ACTUAL STRUCTURE FROM OUTLINES\]',$escapedStructure
     # Replace escaped newlines placeholder after all replacements
-    $content = $content -replace '\[ONLY COMMANDS FOR ACTIVE TECHNOLOGIES\]',$commands
-    $content = $content -replace '\[LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE\]',$languageConventions
+    $content = $content -replace '\[ONLY COMMANDS RELEVANT TO CURRENT STORIES\]',$commands
+    $content = $content -replace '\[GENRE-SPECIFIC, ONLY FOR GENRES IN USE\]',$genreConventions
     
     # Build the recent changes string safely
     $recentChangesForTemplate = ""
-    if ($escaped_lang -and $escaped_framework) {
-        $recentChangesForTemplate = "- ${escaped_branch}: Added ${escaped_lang} + ${escaped_framework}"
-    } elseif ($escaped_lang) {
-        $recentChangesForTemplate = "- ${escaped_branch}: Added ${escaped_lang}"
-    } elseif ($escaped_framework) {
-        $recentChangesForTemplate = "- ${escaped_branch}: Added ${escaped_framework}"
+    if ($escaped_genre -and $escaped_setting) {
+        $recentChangesForTemplate = "- ${escaped_branch}: Working on ${escaped_genre} + ${escaped_setting}"
+    } elseif ($escaped_genre) {
+        $recentChangesForTemplate = "- ${escaped_branch}: Working on ${escaped_genre}"
+    } elseif ($escaped_setting) {
+        $recentChangesForTemplate = "- ${escaped_branch}: Working on ${escaped_setting}"
     }
     
-    $content = $content -replace '\[LAST 3 FEATURES AND WHAT THEY ADDED\]',$recentChangesForTemplate
+    $content = $content -replace '\[LAST 3 STORIES AND WHAT THEY ADDED TO THE WORLD\]',$recentChangesForTemplate
     # Convert literal \n sequences introduced by Escape to real newlines
     $content = $content -replace '\\n',[Environment]::NewLine
 
@@ -268,43 +268,43 @@ function Update-ExistingAgentFile {
         [Parameter(Mandatory=$true)]
         [datetime]$Date
     )
-    if (-not (Test-Path $TargetFile)) { return (New-AgentFile -TargetFile $TargetFile -ProjectName (Split-Path $REPO_ROOT -Leaf) -Date $Date) }
+    if (-not (Test-Path $TargetFile)) { return (New-AgentFile -TargetFile $TargetFile -StoryName (Split-Path $REPO_ROOT -Leaf) -Date $Date) }
 
-    $techStack = Format-TechnologyStack -Lang $NEW_LANG -Framework $NEW_FRAMEWORK
-    $newTechEntries = @()
-    if ($techStack) {
-        $escapedTechStack = [Regex]::Escape($techStack)
-        if (-not (Select-String -Pattern $escapedTechStack -Path $TargetFile -Quiet)) { 
-            $newTechEntries += "- $techStack ($CURRENT_BRANCH)" 
+    $storyInfo = Format-StoryInfo -Genre $NEW_GENRE -Setting $NEW_SETTING
+    $newStoryEntries = @()
+    if ($storyInfo) {
+        $escapedStoryInfo = [Regex]::Escape($storyInfo)
+        if (-not (Select-String -Pattern $escapedStoryInfo -Path $TargetFile -Quiet)) { 
+            $newStoryEntries += "- $storyInfo ($CURRENT_BRANCH)" 
         }
     }
-    if ($NEW_DB -and $NEW_DB -notin @('N/A','NEEDS CLARIFICATION')) {
-        $escapedDB = [Regex]::Escape($NEW_DB)
-        if (-not (Select-String -Pattern $escapedDB -Path $TargetFile -Quiet)) { 
-            $newTechEntries += "- $NEW_DB ($CURRENT_BRANCH)" 
+    if ($NEW_PROTAGONIST -and $NEW_PROTAGONIST -notin @('N/A','NEEDS CLARIFICATION')) {
+        $escapedProtagonist = [Regex]::Escape($NEW_PROTAGONIST)
+        if (-not (Select-String -Pattern $escapedProtagonist -Path $TargetFile -Quiet)) { 
+            $newStoryEntries += "- Protagonist: $NEW_PROTAGONIST ($CURRENT_BRANCH)" 
         }
     }
     $newChangeEntry = ''
-    if ($techStack) { $newChangeEntry = "- ${CURRENT_BRANCH}: Added ${techStack}" }
-    elseif ($NEW_DB -and $NEW_DB -notin @('N/A','NEEDS CLARIFICATION')) { $newChangeEntry = "- ${CURRENT_BRANCH}: Added ${NEW_DB}" }
+    if ($storyInfo) { $newChangeEntry = "- ${CURRENT_BRANCH}: Working on ${storyInfo}" }
+    elseif ($NEW_PROTAGONIST -and $NEW_PROTAGONIST -notin @('N/A','NEEDS CLARIFICATION')) { $newChangeEntry = "- ${CURRENT_BRANCH}: Working on protagonist ${NEW_PROTAGONIST}" }
 
     $lines = Get-Content -LiteralPath $TargetFile -Encoding utf8
     $output = New-Object System.Collections.Generic.List[string]
-    $inTech = $false; $inChanges = $false; $techAdded = $false; $changeAdded = $false; $existingChanges = 0
+    $inStories = $false; $inChanges = $false; $storiesAdded = $false; $changeAdded = $false; $existingChanges = 0
 
     for ($i=0; $i -lt $lines.Count; $i++) {
         $line = $lines[$i]
-        if ($line -eq '## Active Technologies') {
+        if ($line -eq '## Active Stories') {
             $output.Add($line)
-            $inTech = $true
+            $inStories = $true
             continue
         }
-        if ($inTech -and $line -match '^##\s') {
-            if (-not $techAdded -and $newTechEntries.Count -gt 0) { $newTechEntries | ForEach-Object { $output.Add($_) }; $techAdded = $true }
-            $output.Add($line); $inTech = $false; continue
+        if ($inStories -and $line -match '^##\s') {
+            if (-not $storiesAdded -and $newStoryEntries.Count -gt 0) { $newStoryEntries | ForEach-Object { $output.Add($_) }; $storiesAdded = $true }
+            $output.Add($line); $inStories = $false; continue
         }
-        if ($inTech -and [string]::IsNullOrWhiteSpace($line)) {
-            if (-not $techAdded -and $newTechEntries.Count -gt 0) { $newTechEntries | ForEach-Object { $output.Add($_) }; $techAdded = $true }
+        if ($inStories -and [string]::IsNullOrWhiteSpace($line)) {
+            if (-not $storiesAdded -and $newStoryEntries.Count -gt 0) { $newStoryEntries | ForEach-Object { $output.Add($_) }; $storiesAdded = $true }
             $output.Add($line); continue
         }
         if ($line -eq '## Recent Changes') {
@@ -325,9 +325,9 @@ function Update-ExistingAgentFile {
         $output.Add($line)
     }
 
-    # Post-loop check: if we're still in the Active Technologies section and haven't added new entries
-    if ($inTech -and -not $techAdded -and $newTechEntries.Count -gt 0) {
-        $newTechEntries | ForEach-Object { $output.Add($_) }
+    # Post-loop check: if we're still in the Active Stories section and haven't added new entries
+    if ($inStories -and -not $storiesAdded -and $newStoryEntries.Count -gt 0) {
+        $newStoryEntries | ForEach-Object { $output.Add($_) }
     }
 
     Set-Content -LiteralPath $TargetFile -Value ($output -join [Environment]::NewLine) -Encoding utf8
@@ -343,14 +343,14 @@ function Update-AgentFile {
     )
     if (-not $TargetFile -or -not $AgentName) { Write-Err 'Update-AgentFile requires TargetFile and AgentName'; return $false }
     Write-Info "Updating $AgentName context file: $TargetFile"
-    $projectName = Split-Path $REPO_ROOT -Leaf
+    $storyName = Split-Path $REPO_ROOT -Leaf
     $date = Get-Date
 
     $dir = Split-Path -Parent $TargetFile
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
 
     if (-not (Test-Path $TargetFile)) {
-        if (New-AgentFile -TargetFile $TargetFile -ProjectName $projectName -Date $date) { Write-Success "Created new $AgentName context file" } else { Write-Err 'Failed to create new agent file'; return $false }
+        if (New-AgentFile -TargetFile $TargetFile -StoryName $storyName -Date $date) { Write-Success "Created new $AgentName context file" } else { Write-Err 'Failed to create new agent file'; return $false }
     } else {
         try {
             if (Update-ExistingAgentFile -TargetFile $TargetFile -Date $date) { Write-Success "Updated existing $AgentName context file" } else { Write-Err 'Failed to update agent file'; return $false }
@@ -411,17 +411,17 @@ function Update-AllExistingAgents {
 function Print-Summary {
     Write-Host ''
     Write-Info 'Summary of changes:'
-    if ($NEW_LANG) { Write-Host "  - Added language: $NEW_LANG" }
-    if ($NEW_FRAMEWORK) { Write-Host "  - Added framework: $NEW_FRAMEWORK" }
-    if ($NEW_DB -and $NEW_DB -ne 'N/A') { Write-Host "  - Added database: $NEW_DB" }
+    if ($NEW_GENRE) { Write-Host "  - Working on genre: $NEW_GENRE" }
+    if ($NEW_SETTING) { Write-Host "  - Working on setting: $NEW_SETTING" }
+    if ($NEW_PROTAGONIST -and $NEW_PROTAGONIST -ne 'N/A') { Write-Host "  - Working on protagonist: $NEW_PROTAGONIST" }
     Write-Host ''
     Write-Info 'Usage: ./update-agent-context.ps1 [-AgentType claude|gemini|copilot|cursor-agent|qwen|opencode|codex|windsurf|kilocode|auggie|roo|codebuddy|amp|q]'
 }
 
 function Main {
     Validate-Environment
-    Write-Info "=== Updating agent context files for feature $CURRENT_BRANCH ==="
-    if (-not (Parse-PlanData -PlanFile $NEW_PLAN)) { Write-Err 'Failed to parse plan data'; exit 1 }
+    Write-Info "=== Updating agent context files for story $CURRENT_BRANCH ==="
+    if (-not (Parse-WorldData -WorldFile $NEW_WORLD)) { Write-Err 'Failed to parse world data'; exit 1 }
     $success = $true
     if ($AgentType) {
         Write-Info "Updating specific agent: $AgentType"

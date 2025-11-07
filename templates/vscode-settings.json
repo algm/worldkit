@@ -1,14 +1,22 @@
 {
     "chat.promptFilesRecommendations": {
-        "speckit.constitution": true,
-        "speckit.specify": true,
-        "speckit.plan": true,
-        "speckit.tasks": true,
-        "speckit.implement": true
+        "worldkit.foundation": true,
+        "worldkit.worldbuild": true,
+        "worldkit.outline": true,
+        "worldkit.chapters": true,
+        "worldkit.write": true,
+        "worldkit.character": true,
+        "worldkit.sensory": true,
+        "worldkit.expand": true,
+        "worldkit.bible": true,
+        "worldkit.voice": true,
+        "worldkit.analyze": true,
+        "worldkit.revise": true,
+        "worldkit.checklist": true
     },
     "chat.tools.terminal.autoApprove": {
-        ".specify/scripts/bash/": true,
-        ".specify/scripts/powershell/": true
+        ".worldbuild/scripts/bash/": true,
+        ".worldbuild/scripts/powershell/": true
     }
 }
 

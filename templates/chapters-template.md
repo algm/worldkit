@@ -14,6 +14,127 @@
 
 **POV Strategy**: [e.g., "First person from protagonist only", "Third person limited alternating between characters", "Multiple first-person POVs"]
 
+## Subplot Weaving Matrix
+
+<!--
+  Track which subplots are active in each chapter. Each chapter should ideally advance 2-3 story threads.
+  This ensures subplots don't disappear for too long and the narrative feels layered.
+-->
+
+| Chapter | Main Plot | Subplot A: [Name] | Subplot B: [Name] | Subplot C: [Name] | Subplot D: [Name] |
+|---------|-----------|-------------------|-------------------|-------------------|-------------------|
+| 1 | ✅ Introduce | ✅ Plant seed | - | - | - |
+| 2 | ✅ Develop | 🔄 Active | ✅ Introduce | - | - |
+| 3 | ✅ Develop | - | 🔄 Active | ✅ Introduce | - |
+| 4 | ✅ Escalate | 🔄 Active | 🔄 Active | - | - |
+| 5 | ✅ Midpoint | - | - | 🔄 Active | ✅ Introduce |
+| ... | ... | ... | ... | ... | ... |
+| [X] | ✅ Climax | ✅ Resolve | ✅ Resolve | ✅ Resolve | ✅ Resolve |
+
+**Legend**:
+- ✅ = Active advancement in this chapter
+- 🔄 = Mentioned/maintained but not advanced
+- \- = Dormant (not present)
+
+**Subplot Balance Check**:
+- [ ] No subplot dormant for more than 3-4 consecutive chapters
+- [ ] Each chapter advances 2-3 story threads (main + subplots)
+- [ ] Subplots don't overwhelm main plot
+- [ ] All subplots resolve or intentionally left open by end
+
+## Emotional Beats Map
+
+<!--
+  Plan the emotional journey through your story. Each chapter should have a target emotion,
+  creating an emotional arc that complements the plot arc. Consecutive chapters should contrast
+  emotionally to create rhythm.
+-->
+
+| Chapter | Target Emotion | Emotional Arc Within Chapter | Contrast w/ Previous |
+|---------|----------------|------------------------------|----------------------|
+| 1 | Curiosity/Unease | Ordinary → Disrupted | N/A (opening) |
+| 2 | Fear/Determination | Shock → Resolve to act | ✅ Yes (unease → fear) |
+| 3 | Hope | Despair → Small victory | ✅ Yes (fear → hope) |
+| 4 | Betrayal | Trust → Revelation | ✅ Yes (hope → betrayal) |
+| 5 | Confusion/Doubt | Certainty → Uncertainty | ✅ Yes (pain → doubt) |
+| 6 | Anger/Resolve | Acceptance → Fury → Commitment | ✅ Yes (doubt → anger) |
+| ... | ... | ... | ... |
+| [Climax] | Terror → Relief/Triumph | Maximum fear → Resolution | Highest stakes |
+| [End] | Bittersweet/Hope | Sadness → Acceptance → Peace | From intensity to calm |
+
+**Emotional Pacing Notes**:
+- **Breather chapters**: [List chapters that provide emotional relief]
+- **Intensity chapters**: [List chapters with highest emotional stakes]
+- **Emotional throughline**: [How protagonist's emotions evolve from Ch 1 to end]
+
+**Emotion Check**:
+- [ ] Consecutive chapters contrast emotionally (not monotonous)
+- [ ] Emotional intensity builds toward climax
+- [ ] Breather moments are earned (after high intensity)
+- [ ] Target emotions serve story and character arc
+
+## Scene-Sequel Structure Tracking
+
+<!--
+  Dwight Swain's Scene-Sequel pattern:
+  - SCENE (action): Goal → Conflict → Disaster
+  - SEQUEL (reaction): Reaction → Dilemma → Decision
+  
+  Balance action scenes with reflection sequels. Too much action = exhausting.
+  Too much reflection = boring. Typical ratio: 60-70% scenes, 30-40% sequels.
+-->
+
+| Chapter | Primary Type | Structure | Function | Action/Reflection Ratio |
+|---------|--------------|-----------|----------|-------------------------|
+| 1 | SCENE | Goal → Conflict → Disaster | Inciting incident | 70% action / 30% reflection |
+| 2 | SEQUEL | Reaction → Dilemma → Decision | Process Ch 1 disaster | 30% action / 70% reflection |
+| 3 | SCENE | Goal → Conflict → Disaster | First attempt at solution | 80% action / 20% reflection |
+| 4 | SEQUEL | Reaction → Dilemma → Decision | Regroup after failure | 20% action / 80% reflection |
+| 5 | SCENE | Goal → Conflict → Disaster | New approach | 75% action / 25% reflection |
+| 6 | SCENE | Goal → Conflict → Disaster | Escalation | 85% action / 15% reflection |
+| 7 | SEQUEL | Reaction → Dilemma → Decision | Midpoint processing | 40% action / 60% reflection |
+| ... | ... | ... | ... | ... |
+| [Climax] | SCENE | Goal → Conflict → Resolution | Final confrontation | 95% action / 5% reflection |
+| [End] | SEQUEL | Reaction → New Normal | Process victory/loss | 10% action / 90% reflection |
+
+**Scene-Sequel Balance**:
+- **Total Scenes (action)**: [X chapters] (~XX%)
+- **Total Sequels (reaction)**: [Y chapters] (~YY%)
+- **Ratio**: [Verify 60-70% scenes is maintained]
+
+**Pattern Check**:
+- [ ] Scenes and sequels alternate (mostly)
+- [ ] After major disasters, sequel follows for processing
+- [ ] Multiple scenes in a row justified (rising action, climax)
+- [ ] Each sequel ends with DECISION that drives next scene
+- [ ] Not too many sequels in a row (bogs down pacing)
+
+**Scene Structure Breakdown**:
+
+**SCENE Pattern** (Action):
+1. **Goal**: What character wants in this chapter/scene
+2. **Conflict**: Opposition to that goal (person, nature, society, self)
+3. **Disaster**: Outcome worse than starting point (drives story forward)
+
+**SEQUEL Pattern** (Reaction):
+1. **Reaction**: Emotional response to disaster (visceral, immediate)
+2. **Dilemma**: Weighing terrible options (all choices have costs)
+3. **Decision**: Choice made → becomes GOAL of next scene
+
+**Example Application**:
+
+**Chapter 3 (SCENE)**:
+- **Goal**: Protagonist attempts to steal the artifact
+- **Conflict**: Guards, traps, moral qualms
+- **Disaster**: Gets artifact but betrays ally doing it
+
+**Chapter 4 (SEQUEL)**:
+- **Reaction**: Guilt, fear of consequences, questioning self
+- **Dilemma**: Return artifact and face punishment? Keep it and lose integrity?
+- **Decision**: Will try to return artifact and make amends → GOAL of Ch 5
+
+## Overview
+
 ## Act I: Setup
 
 ### Chapter 1: [Chapter Title]
@@ -25,6 +146,18 @@
 **Estimated Word Count**: [X words]
 
 **Purpose**: [What this chapter accomplishes - plot and character]
+
+**Chapter Type**: [SCENE or SEQUEL]
+
+**Structure**:
+- [If SCENE] Goal → Conflict → Disaster: [Brief description]
+- [If SEQUEL] Reaction → Dilemma → Decision: [Brief description]
+
+**Subplots Active**: [Which subplots from matrix appear here]
+
+**Target Emotion**: [From emotional beats map]
+
+**Emotional Arc**: [Starting emotion] → [Ending emotion]
 
 **Opening Line Idea**: [Optional - memorable first line if you have one]
 
@@ -60,6 +193,18 @@
 
 **Purpose**: [Chapter's narrative function]
 
+**Chapter Type**: [SCENE or SEQUEL]
+
+**Structure**:
+- [If SCENE] Goal → Conflict → Disaster: [Brief description]
+- [If SEQUEL] Reaction → Dilemma → Decision: [Brief description]
+
+**Subplots Active**: [Which subplots appear here]
+
+**Target Emotion**: [From emotional beats map]
+
+**Emotional Arc**: [Starting emotion] → [Ending emotion]
+
 **Scene Breakdown**:
 
 1. **Scene 2.1** - [Scene title/summary]
@@ -93,6 +238,18 @@
 **Estimated Word Count**: [X words]
 
 **Purpose**: [Chapter's function in rising action]
+
+**Chapter Type**: [SCENE or SEQUEL]
+
+**Structure**:
+- [If SCENE] Goal → Conflict → Disaster: [Brief description]
+- [If SEQUEL] Reaction → Dilemma → Decision: [Brief description]
+
+**Subplots Active**: [Which subplots advance here]
+
+**Target Emotion**: [From emotional beats map]
+
+**Emotional Arc**: [Starting emotion] → [Ending emotion]
 
 **Scene Breakdown**:
 

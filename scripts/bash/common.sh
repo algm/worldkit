@@ -73,8 +73,8 @@ check_feature_branch() {
     fi
 
     if [[ ! "$branch" =~ ^[0-9]{3}- ]]; then
-        echo "ERROR: Not on a feature branch. Current branch: $branch" >&2
-        echo "Feature branches should be named like: 001-feature-name" >&2
+        echo "ERROR: Not on a story branch. Current branch: $branch" >&2
+        echo "Story branches should be named like: 001-story-name" >&2
         return 1
     fi
 
@@ -151,10 +151,12 @@ WORLD_DIR='$world_dir'
 WORLD_FILE='$world_dir/world.md'
 STORY_OUTLINE='$world_dir/outline.md'
 CHAPTERS='$world_dir/chapters.md'
-RESEARCH='$world_dir/research.md'
-DATA_MODEL='$world_dir/data-model.md'
-QUICKSTART='$world_dir/quickstart.md'
-CONTRACTS_DIR='$world_dir/contracts'
+CHARACTERS_DIR='$world_dir/characters'
+SENSORY_BANK='$world_dir/sensory-bank.md'
+STORY_BIBLE='$world_dir/story-bible.md'
+VOICES_DIR='$world_dir/voices'
+REVISION_NOTES_DIR='$world_dir/revision-notes'
+CLARIFICATIONS='$world_dir/clarifications.md'
 EOF
 }
 

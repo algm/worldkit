@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-	"name": "SpecKitDevContainer",
+	"name": "WorldkitDevContainer",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/python:3.13-trixie", // based on Debian "Trixie" (13)
 	"features": {
@@ -27,9 +27,9 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [
-	8080 // for Spec-Kit documentation site
-  ],
+	"forwardPorts": [
+		8080 // for Worldbuilding Kit documentation site
+	],
   "containerUser": "devcontainer",
   "updateRemoteUserUID": true,
   "postCreateCommand": "chmod +x ./.devcontainer/post-create.sh && ./.devcontainer/post-create.sh",
@@ -61,15 +61,18 @@
 		// Specify settings for Github Copilot
 		"git.autofetch": true,
 		"chat.promptFilesRecommendations": {
-			"speckit.constitution": true,
-			"speckit.specify": true,
-			"speckit.plan": true,
-			"speckit.tasks": true,
-			"speckit.implement": true
+			"worldkit.foundation": true,
+			"worldkit.worldbuild": true,
+			"worldkit.outline": true,
+			"worldkit.chapters": true,
+			"worldkit.write": true,
+			"worldkit.expand": true,
+			"worldkit.analyze": true,
+			"worldkit.checklist": true
 		},
 		"chat.tools.terminal.autoApprove": {
-			".specify/scripts/bash/": true,
-			".specify/scripts/powershell/": true
+			".worldbuild/scripts/bash/": true,
+			".worldbuild/scripts/powershell/": true
 		}
       }
     }

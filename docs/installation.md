@@ -66,9 +66,9 @@ uvx --from git+https://github.com/algm/worldkit.git worldbuild init <project_nam
 
 After initialization, you should see the following commands available in your AI agent:
 
-- `/worldkit.specify` - Create specifications
-- `/worldkit.plan` - Generate implementation plans  
-- `/worldkit.tasks` - Break down into actionable tasks
+- `/worldkit.foundation` - Establish world foundation and rules
+- `/worldkit.worldbuild` - Create baseline world and story description
+- `/worldkit.outline` - Create story outline and plot structure
 
 The `.worldbuild/scripts` directory will contain both `.sh` and `.ps1` scripts.
 

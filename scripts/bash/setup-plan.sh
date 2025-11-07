@@ -30,7 +30,7 @@ source "$SCRIPT_DIR/common.sh"
 # Get all paths and variables from common functions
 eval $(get_world_paths)
 
-# Check if we're on a proper feature branch (only for git repos)
+# Check if we're on a proper story branch (only for git repos)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 
 # Ensure the world directory exists

@@ -54,7 +54,7 @@ Follow these steps to add a new agent (using a hypothetical new agent as an exam
 
 **IMPORTANT**: Use the actual CLI tool name as the key, not a shortened version.
 
-Add the new agent to the `AGENT_CONFIG` dictionary in `src/specify_cli/__init__.py`. This is the **single source of truth** for all agent metadata:
+Add the new agent to the `AGENT_CONFIG` dictionary in `src/worldbuild_cli/__init__.py`. This is the **single source of truth** for all agent metadata:
 
 ```python
 AGENT_CONFIG = {
@@ -138,10 +138,10 @@ gh release create "$VERSION" \
 
 ##### Bash script (`scripts/bash/update-agent-context.sh`)
 
-Add file variable:
+##### Add file variable:
 
 ```bash
-WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/specify-rules.md"
+WINDSURF_FILE="$REPO_ROOT/.windsurf/rules/worldbuild-rules.md"
 ```
 
 Add to case statement:
@@ -160,10 +160,10 @@ esac
 
 ##### PowerShell script (`scripts/powershell/update-agent-context.ps1`)
 
-Add file variable:
+##### Add file variable:
 
 ```powershell
-$windsurfFile = Join-Path $repoRoot '.windsurf/rules/specify-rules.md'
+$windsurfFile = Join-Path $repoRoot '.windsurf/rules/worldbuild-rules.md'
 ```
 
 Add to switch statement:
@@ -365,7 +365,7 @@ Different agents use different argument placeholders:
 ## Testing New Agent Integration
 
 1. **Build test**: Run package creation script locally
-2. **CLI test**: Test `specify init --ai <agent>` command
+2. **CLI test**: Test `worldbuild init --ai <agent>` command
 3. **File generation**: Verify correct directory structure and files
 4. **Command validation**: Ensure generated commands work with the agent
 5. **Context update**: Test agent context update scripts

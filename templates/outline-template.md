@@ -188,6 +188,107 @@
 
 [Brief arc summaries for key supporting characters]
 
+## Conflict Escalation & Stakes
+
+### Tension Ladder (Ways Things Worsen)
+
+<!--
+  List 20-30 ways the situation can deteriorate. This is your "disaster menu" 
+  to ensure conflict escalates naturally throughout the story.
+  Not all will be used, but having options prevents pulling punches.
+-->
+
+**Increasing Complications**:
+
+1. [First level complication - relatively minor]
+2. [Second level - slightly worse]
+3. [Third level - personal stakes introduced]
+4. [Fourth level - relationships threatened]
+5. [Fifth level - physical danger]
+6. [Sixth level - moral dilemma]
+7. [Seventh level - betrayal possibility]
+8. [Eighth level - allies endangered]
+9. [Ninth level - time pressure increased]
+10. [Tenth level - no good choices remain]
+11. [Eleventh level - must sacrifice something valued]
+12. [Twelfth level - identity threatened]
+13. [Thirteenth level - world/community at risk]
+14. [Fourteenth level - impossible choice]
+15. [Fifteenth level - point of no return]
+16. [Sixteenth level - catastrophic failure]
+17. [Seventeenth level - total loss]
+18. [Eighteenth level - must become what they hate]
+19. [Nineteenth level - death of core belief]
+20. [Twentieth level - ultimate sacrifice required]
+
+**[Additional complications 21-30 if needed]**
+
+**Usage Plan**: 
+- Act I uses complications #1-7
+- Act II-A uses #8-14
+- Act II-B uses #15-20
+- Act III escalates beyond ladder or resolves
+
+### Stakes Verification by Act
+
+**Act I Stakes**:
+- **Personal**: [What protagonist personally risks]
+- **Relational**: [What relationships are at risk]
+- **External**: [What in the world is threatened]
+- **Clear to Reader**: [Yes/No - are stakes obvious by end of Act I?]
+
+**Act II Stakes** (should increase):
+- **Personal**: [Higher personal cost than Act I]
+- **Relational**: [Relationships more threatened]
+- **External**: [Bigger world threat]
+- **Clear to Reader**: [Are raised stakes obvious?]
+
+**Act III Stakes** (should be highest):
+- **Personal**: [Maximum personal risk]
+- **Relational**: [Relationships on the line]
+- **External**: [Highest world threat]
+- **Ultimate Cost**: [What must be sacrificed to win?]
+
+**Stakes Escalation Check**:
+- [ ] Stakes clearly increase from Act I → Act II → Act III
+- [ ] Personal stakes deepen throughout
+- [ ] External and internal stakes intertwine
+- [ ] Reader understands what will be lost if protagonist fails
+
+### Disaster Menu
+
+<!--
+  For key scenes, have multiple disaster options ready.
+  When scene ends, things should be worse than they started.
+  Choose disasters that force character growth.
+-->
+
+**Scene 2 (Inciting Incident) - Disaster Options**:
+- Option A: [Moderate disaster - loses something minor]
+- Option B: [Severe disaster - loses something major]
+- Option C: [Catastrophic disaster - loses everything]
+- **Selected**: [Which option you'll use and why]
+
+**Scene 6 (Midpoint) - Disaster Options**:
+- Option A: [Moderate reversal]
+- Option B: [Severe reversal]
+- Option C: [Catastrophic reversal]
+- **Selected**: [Which and why]
+
+**Scene 8 (All Is Lost) - Disaster Options**:
+- Option A: [Bad but recoverable]
+- Option B: [Devastating but not fatal]
+- Option C: [Complete annihilation of hope]
+- **Selected**: [Which and why]
+
+**Scene 11 (Climax) - Potential Costs**:
+- Option A: [Victory with minor cost]
+- Option B: [Victory with major sacrifice]
+- Option C: [Victory with pyrrhic cost]
+- Option D: [Partial victory/bittersweet]
+- Option E: [Tragic ending]
+- **Selected**: [Which and why]
+
 ## Pacing & Tension
 
 **Tension Curve**: [Describe how tension builds throughout the story]
@@ -195,6 +296,12 @@
 **Breather Moments**: [Identify where the story needs breathing room between intense scenes]
 
 **Page-Turner Moments**: [Scenes designed to keep readers engaged]
+
+**Conflict Pacing**:
+- Act I: Introduce conflict, establish stakes
+- Act II-A: Escalate conflict, complicate stakes
+- Act II-B: Maximize conflict, raise stakes to unbearable
+- Act III: Resolve conflict through maximum stakes confrontation
 
 ## Theme Integration
 

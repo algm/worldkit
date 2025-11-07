@@ -212,7 +212,7 @@ Worldbuilding Kit supports generating all story content (world descriptions, out
 - `zh` - Chinese (中文)
 - And many more...
 
-The language preference is saved in `/memory/config.json` and automatically applied to all worldbuilding commands (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, etc.).
+The language preference is saved in `/memory/config.json` and automatically applied to all worldbuilding commands (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, `/worldkit.character`, `/worldkit.sensory`, `/worldkit.expand`, `/worldkit.bible`, `/worldkit.voice`, `/worldkit.analyze`, `/worldkit.revise`, `/worldkit.checklist`).
 
 **Note:** Technical markers, file paths, and structural elements remain in English for consistency across the workflow.
 
@@ -240,8 +240,13 @@ Additional commands for enhanced quality and depth:
 
 | Command              | Description                                                           |
 |----------------------|-----------------------------------------------------------------------|
+| `/worldkit.character`| Deep character development through interviews, backstories, and voice profiling |
+| `/worldkit.sensory`  | Build sensory banks (smells, sounds, textures, tastes) for vivid, consistent world details |
 | `/worldkit.expand`   | Expand underspecified story elements (recommended before `/worldkit.outline`) |
+| `/worldkit.bible`    | Generate comprehensive story bible - index characters, locations, timeline, track consistency |
+| `/worldkit.voice`    | Develop and maintain consistent POV character voices through exercises and verification |
 | `/worldkit.analyze`  | Cross-element consistency & continuity check (run after `/worldkit.chapters`, before `/worldkit.write`) |
+| `/worldkit.revise`   | Multi-pass revision system: dialogue, pacing, show-don't-tell, consistency, and prose polish |
 | `/worldkit.checklist`| Generate custom quality checklists to validate story completeness, clarity, and consistency |
 
 ### Environment Variables
@@ -262,13 +267,14 @@ World-Driven Fiction Writing is a structured process that emphasizes:
 
 ## 🌟 Writing Phases
 
-| Phase | Focus | Key Activities |
-|-------|-------|----------------|
-| **Foundation Building** | World rules & principles | <ul><li>Define magic/technology systems</li><li>Establish world constraints</li><li>Set genre conventions</li><li>Create consistency guidelines</li></ul> |
-| **World Creation** | Characters & setting | <ul><li>Develop compelling characters</li><li>Design vivid settings</li><li>Identify central conflicts</li><li>Explore themes</li></ul> |
-| **Story Outlining** | Plot structure | <ul><li>Apply narrative frameworks</li><li>Map character arcs</li><li>Plan plot points</li><li>Integrate subplots</li></ul> |
-| **Scene Breakdown** | Detailed planning | <ul><li>Break story into chapters</li><li>Define scene goals</li><li>Track POV and pacing</li><li>Prepare for writing</li></ul> |
-| **Writing** | Execution | <ul><li>Draft chapters in order</li><li>Maintain voice and style</li><li>Follow the structure</li><li>Preserve consistency</li></ul> |
+| Phase | Focus | Key Activities | Optional Enhancements |
+|-------|-------|----------------|----------------------|
+| **Foundation Building** | World rules & principles | <ul><li>Define magic/technology systems</li><li>Establish world constraints</li><li>Set genre conventions</li><li>Create consistency guidelines</li></ul> | <ul><li>`/worldkit.foundation`</li></ul> |
+| **World Creation** | Characters & setting | <ul><li>Develop compelling characters</li><li>Design vivid settings</li><li>Identify central conflicts</li><li>Explore themes</li></ul> | <ul><li>`/worldkit.worldbuild`</li><li>`/worldkit.character` (deep character dev)</li><li>`/worldkit.sensory` (sensory banks)</li></ul> |
+| **Story Outlining** | Plot structure | <ul><li>Apply narrative frameworks</li><li>Map character arcs</li><li>Plan plot points</li><li>Integrate subplots</li></ul> | <ul><li>`/worldkit.outline`</li><li>`/worldkit.expand` (clarify underspecified elements)</li></ul> |
+| **Scene Breakdown** | Detailed planning | <ul><li>Break story into chapters</li><li>Define scene goals</li><li>Track POV and pacing</li><li>Prepare for writing</li></ul> | <ul><li>`/worldkit.chapters`</li><li>`/worldkit.bible` (consistency tracking)</li><li>`/worldkit.analyze` (continuity check)</li></ul> |
+| **Writing** | Execution | <ul><li>Draft chapters in order</li><li>Maintain voice and style</li><li>Follow the structure</li><li>Preserve consistency</li></ul> | <ul><li>`/worldkit.write`</li><li>`/worldkit.voice` (POV consistency)</li></ul> |
+| **Revision** | Polish & refinement | <ul><li>Multi-pass editing</li><li>Strengthen dialogue</li><li>Improve pacing</li><li>Enhance prose quality</li></ul> | <ul><li>`/worldkit.revise` (5 focused passes)</li><li>`/worldkit.checklist` (quality validation)</li></ul> |
 
 ## 🎯 Goals
 
@@ -344,7 +350,7 @@ worldbuild init <story_name> --ai copilot
 
 Go to the project folder and run your AI agent (e.g., `claude`).
 
-You will know things are configured correctly if you see the `/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, and `/worldkit.write` commands available.
+You will know things are configured correctly if you see the `/worldkit.*` commands available (including `/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, and optional commands like `/worldkit.character`, `/worldkit.sensory`, `/worldkit.bible`, `/worldkit.voice`, `/worldkit.expand`, `/worldkit.analyze`, `/worldkit.revise`, `/worldkit.checklist`).
 
 Start by establishing your world's foundation using the `/worldkit.foundation` command:
 

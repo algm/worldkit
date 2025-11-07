@@ -34,6 +34,7 @@ import shlex
 import json
 from pathlib import Path
 from typing import Optional, Tuple
+from datetime import datetime
 
 import typer
 import httpx
@@ -878,7 +879,8 @@ def save_language_config(project_path: Path, language: str, tracker: StepTracker
                     config = json.load(f)
             except json.JSONDecodeError as e:
                 # If config file is corrupted, back it up and start fresh
-                backup_file = memory_dir / f"config.json.backup-{os.getpid()}"
+                timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+                backup_file = memory_dir / f"config.json.backup-{timestamp}"
                 shutil.copy2(config_file, backup_file)
                 if tracker:
                     tracker.add("language", "Configure output language")
@@ -1043,12 +1045,11 @@ def init(
                 raise typer.Exit(1)
 
     # Validate language code format (basic validation for common ISO 639-1 codes)
-    if language:
-        # Allow 2-letter codes (ISO 639-1) or 2-letter with region (e.g., en-US)
-        # This is a lenient validation to allow flexibility
-        if not (len(language) >= 2 and language[0:2].isalpha()):
-            console.print(f"[yellow]Warning:[/yellow] Language code '{language}' may not be valid. Expected format: ISO 639-1 code (e.g., 'en', 'es', 'fr')")
-            console.print("[yellow]Proceeding anyway, but generated content may default to English if the AI doesn't recognize this code.[/yellow]")
+    # Allow 2-letter codes (ISO 639-1) or 2-letter with region (e.g., en-US)
+    # This is a lenient validation to allow flexibility
+    if len(language) < 2 or not language[0:2].isalpha():
+        console.print(f"[yellow]Warning:[/yellow] Language code '{language}' may not be valid. Expected format: ISO 639-1 code (e.g., 'en', 'es', 'fr')")
+        console.print("[yellow]Proceeding anyway, but generated content may default to English if the AI doesn't recognize this code.[/yellow]")
 
     if script_type:
         if script_type not in SCRIPT_TYPE_CHOICES:
@@ -1067,7 +1068,7 @@ def init(
     console.print(f"[cyan]Selected script type:[/cyan] {selected_script}")
     console.print(f"[cyan]Output language:[/cyan] {language}")
 
-    tracker = StepTracker("Initialize Worldbuild Project")
+    tracker = StepTracker("Initialize Specify Project")
 
     sys._specify_tracker_active = True
 

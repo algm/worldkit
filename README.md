@@ -22,6 +22,7 @@
 - [⚡ Get Started](#-get-started)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
 - [🔧 Worldbuild CLI Reference](#-worldbuild-cli-reference)
+- [🌍 Language Support](#-language-support)
 - [📚 Core Philosophy](#-core-philosophy)
 - [🌟 Writing Phases](#-writing-phases)
 - [🎯 Goals](#-goals)
@@ -214,6 +215,8 @@ Worldbuilding Kit supports generating all story content (world descriptions, out
 The language preference is saved in `/memory/config.json` and automatically applied to all worldbuilding commands (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, etc.).
 
 **Note:** Technical markers, file paths, and structural elements remain in English for consistency across the workflow.
+
+📖 **For complete language support documentation, examples, and troubleshooting, see [Language Support Guide](docs/language-support.md)**
 
 ### Available Slash Commands
 

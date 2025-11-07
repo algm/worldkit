@@ -6,7 +6,7 @@ This project uses GitHub issues to track bugs and feature requests. Please searc
 
 For help or questions about using this project, please:
 
-- Open a [GitHub issue](https://github.com/algm/spec-kit/issues/new) for bug reports, feature requests, or questions about the World-Driven Fiction Writing methodology
+- Open a [GitHub issue](https://github.com/algm/worldkit/issues/new) for bug reports, feature requests, or questions about the World-Driven Fiction Writing methodology
 - Check the [comprehensive guide](./world-driven.md) for detailed documentation on the World-Driven Fiction Writing process
 - Review the [README](./README.md) for getting started instructions and troubleshooting tips
 

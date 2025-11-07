@@ -2,50 +2,50 @@
 
 This guide will help you get started with World-Driven Fiction Writing using Worldbuilding Kit.
 
-> NEW: All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `specify` CLI auto-selects based on OS unless you pass `--script sh|ps`.
+> NEW: All automation scripts now provide both Bash (`.sh`) and PowerShell (`.ps1`) variants. The `worldbuild` CLI auto-selects based on OS unless you pass `--script sh|ps`.
 
 ## The 4-Step Process
 
-### 1. Install Specify
+### 1. Install Worldbuild
 
 Initialize your project depending on the coding agent you're using:
 
 ```bash
-uvx --from git+https://github.com/algm/spec-kit.git specify init <PROJECT_NAME>
+uvx --from git+https://github.com/algm/worldkit.git worldbuild init <PROJECT_NAME>
 ```
 
 Pick script type explicitly (optional):
 
 ```bash
-uvx --from git+https://github.com/algm/spec-kit.git specify init <PROJECT_NAME> --script ps  # Force PowerShell
-uvx --from git+https://github.com/algm/spec-kit.git specify init <PROJECT_NAME> --script sh  # Force POSIX shell
+uvx --from git+https://github.com/algm/worldkit.git worldbuild init <PROJECT_NAME> --script ps  # Force PowerShell
+uvx --from git+https://github.com/algm/worldkit.git worldbuild init <PROJECT_NAME> --script sh  # Force POSIX shell
 ```
 
 ### 2. Create the Spec
 
-Use the `/speckit.specify` command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
+Use the `/worldkit.specify` command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
 
 ```bash
-/speckit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
+/worldkit.specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
 ```
 
 ### 3. Create a Technical Implementation Plan
 
-Use the `/speckit.plan` command to provide your tech stack and architecture choices.
+Use the `/worldkit.plan` command to provide your tech stack and architecture choices.
 
 ```bash
-/speckit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
+/worldkit.plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
 ```
 
 ### 4. Break Down and Implement
 
-Use `/speckit.tasks` to create an actionable task list, then ask your agent to implement the feature.
+Use `/worldkit.tasks` to create an actionable task list, then ask your agent to implement the feature.
 
 ## Detailed Example: Building Taskify
 
 Here's a complete example of building a team productivity platform:
 
-### Step 1: Define Requirements with `/speckit.specify`
+### Step 1: Define Requirements with `/worldkit.specify`
 
 ```text
 Develop Taskify, a team productivity platform. It should allow users to create projects, add team members,
@@ -82,7 +82,7 @@ Also validate the specification checklist:
 Read the review and acceptance checklist, and check off each item in the checklist if the feature spec meets the criteria. Leave it empty if it does not.
 ```
 
-### Step 3: Generate Technical Plan with `/speckit.plan`
+### Step 3: Generate Technical Plan with `/worldkit.plan`
 
 Be specific about your tech stack and technical requirements:
 

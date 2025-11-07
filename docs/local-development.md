@@ -7,8 +7,8 @@ This guide shows how to iterate on the `worldbuild` CLI locally without publishi
 ## 1. Clone and Switch Branches
 
 ```bash
-git clone https://github.com/algm/spec-kit.git
-cd spec-kit
+git clone https://github.com/algm/worldkit.git
+cd worldkit
 # Work on a feature branch
 git checkout -b your-feature-branch
 ```
@@ -60,7 +60,7 @@ You can also point uvx at a specific branch without merging:
 ```bash
 # Push your working branch first
 git push origin your-feature-branch
-uvx --from git+https://github.com/algm/spec-kit.git@your-feature-branch worldbuild init demo-branch-test --script ps
+uvx --from git+https://github.com/algm/worldkit.git@your-feature-branch worldbuild init demo-branch-test --script ps
 ```
 
 ### 4a. Absolute Path uvx (Run From Anywhere)
@@ -68,21 +68,21 @@ uvx --from git+https://github.com/algm/spec-kit.git@your-feature-branch worldbui
 If you're in another directory, use an absolute path instead of `.`:
 
 ```bash
-uvx --from /mnt/c/GitHub/spec-kit worldbuild --help
-uvx --from /mnt/c/GitHub/spec-kit worldbuild init demo-anywhere --ai copilot --ignore-agent-tools --script sh
+uvx --from /mnt/c/GitHub/worldkit worldbuild --help
+uvx --from /mnt/c/GitHub/worldkit worldbuild init demo-anywhere --ai copilot --ignore-agent-tools --script sh
 ```
 
 Set an environment variable for convenience:
 
 ```bash
-export WORLDBUILD_KIT_SRC=/mnt/c/GitHub/spec-kit
+export WORLDBUILD_KIT_SRC=/mnt/c/GitHub/worldkit
 uvx --from "$WORLDBUILD_KIT_SRC" worldbuild init demo-env --ai copilot --ignore-agent-tools --script ps
 ```
 
 (Optional) Define a shell function:
 
 ```bash
-worldbuild-dev() { uvx --from /mnt/c/GitHub/spec-kit worldbuild "$@"; }
+worldbuild-dev() { uvx --from /mnt/c/GitHub/worldkit worldbuild "$@"; }
 # Then
 worldbuild-dev --help
 ```
@@ -146,7 +146,7 @@ worldbuild init demo --skip-tls --ai gemini --ignore-agent-tools --script ps
 | Run CLI directly | `python -m src.worldbuild_cli --help` |
 | Editable install | `uv pip install -e .` then `worldbuild ...` |
 | Local uvx run (repo root) | `uvx --from . worldbuild ...` |
-| Local uvx run (abs path) | `uvx --from /mnt/c/GitHub/spec-kit worldbuild ...` |
+| Local uvx run (abs path) | `uvx --from /mnt/c/GitHub/worldkit worldbuild ...` |
 | Git branch uvx | `uvx --from git+URL@branch worldbuild ...` |
 | Build wheel | `uv build` |
 

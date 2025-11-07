@@ -10,6 +10,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for all written content
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to writing**:
+   - Write all narrative content, dialogue, descriptions, and prose in the configured language
+   - Maintain natural, fluent writing appropriate to the target language and its literary conventions
+   - Keep technical markers in English for consistency (e.g., scene markers, tracking notes)
+
 ## Outline
 
 1. **Prerequisites Check**:

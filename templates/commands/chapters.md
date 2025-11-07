@@ -10,6 +10,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for all generated outputs
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to outputs**:
+   - Write all chapter summaries, scene descriptions, and narrative planning in the configured language
+   - Keep technical markers and section headers in English for consistency (e.g., `Chapter 1`, `Scene 1`, file paths)
+   - Maintain the template structure while translating the content
+
 ## Outline
 
 1. **Prerequisites Check**:

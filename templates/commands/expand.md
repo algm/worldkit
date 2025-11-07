@@ -10,6 +10,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for all generated outputs
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to outputs**:
+   - Ask questions and write expansions in the configured language
+   - Keep technical markers in English for consistency (e.g., `[NEEDS EXPANSION]`, file paths)
+   - Maintain the template structure while translating the content
+
 ## Outline
 
 This command helps expand underspecified elements in your world/story description through structured questioning. It's designed to be run **after** `/worldkit.worldbuild` but **before** `/worldkit.outline`.

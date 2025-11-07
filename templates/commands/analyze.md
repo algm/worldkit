@@ -13,6 +13,20 @@ $ARGUMENTS
 
 You **MUST** consider the user input before proceeding (if not empty).
 
+## Output Language Configuration
+
+Before proceeding, check for language configuration:
+
+1. **Load language preference** from `/memory/config.json`:
+   - If the file exists and contains a `language` field, use that language for analysis reports and recommendations
+   - Language codes: `en` (English), `es` (Spanish), `fr` (French), `de` (German), `pt` (Portuguese), `ja` (Japanese), `zh` (Chinese), etc.
+   - Default to English if no configuration is found
+
+2. **Apply language to outputs**:
+   - Write analysis reports, findings, and recommendations in the configured language
+   - Keep technical markers and severity levels in English for consistency (e.g., `CRITICAL`, `WARNING`, file paths)
+   - Maintain report structure while translating the content
+
 ## Goal
 
 Identify inconsistencies, continuity errors, plot holes, and underspecified elements across the three core documents (`world.md`, `outline.md`, `chapters.md`) before writing. This command should run after `/worldkit.chapters` has successfully produced a complete `chapters.md`.

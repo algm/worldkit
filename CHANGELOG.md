@@ -7,6 +7,20 @@ All notable changes to the Worldbuild CLI and templates are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-11-07
+
+### Added
+
+- **Multi-language support for generated outputs**: New `--language` / `--lang` option in `worldbuild init` command allows choosing the language for all generated story content
+  - Supported languages include: English (en), Spanish (es), French (fr), German (de), Portuguese (pt), Japanese (ja), Chinese (zh), and more
+  - Language preference is saved in `/memory/config.json` and automatically applied to all worldbuilding commands
+  - All command templates (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, `/worldkit.expand`, `/worldkit.analyze`, `/worldkit.checklist`) now check and apply the configured language
+  - Technical markers, file paths, and structural elements remain in English for consistency
+  - Examples:
+    - `worldbuild init mi-novela --ai claude --language es` - Spanish output
+    - `worldbuild init mon-roman --ai copilot --lang fr` - French output
+    - `worldbuild init meine-geschichte --lang de` - German output
+
 ## [1.0.0] - 2025-11-07
 
 ### Changed

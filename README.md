@@ -22,6 +22,7 @@
 - [⚡ Get Started](#-get-started)
 - [🤖 Supported AI Agents](#-supported-ai-agents)
 - [🔧 Worldbuild CLI Reference](#-worldbuild-cli-reference)
+- [🌍 Language Support](#-language-support)
 - [📚 Core Philosophy](#-core-philosophy)
 - [🌟 Writing Phases](#-writing-phases)
 - [🎯 Goals](#-goals)
@@ -158,6 +159,7 @@ The `worldbuild` command supports the following options:
 | `<story-name>`         | Argument | Name for your new story directory (optional if using `--here`, or use `.` for current directory) |
 | `--ai`                 | Option   | AI assistant to use: `claude`, `gemini`, `copilot`, `cursor-agent`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, `roo`, `codebuddy`, `amp`, or `q` |
 | `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                 |
+| `--language`, `--lang` | Option   | Language for generated outputs (e.g., `en`, `es`, `fr`, `de`, `pt`, `ja`, `zh`). Default: `en` |
 | `--ignore-agent-tools` | Flag     | Skip checks for AI agent tools like Claude Code                             |
 | `--no-git`             | Flag     | Skip git repository initialization                                          |
 | `--here`               | Flag     | Initialize project in the current directory instead of creating a new one   |
@@ -181,14 +183,40 @@ worldbuild init my-fantasy-novel --ai cursor-agent
 # Initialize with PowerShell scripts (Windows/cross-platform)
 worldbuild init my-fantasy-novel --ai copilot --script ps
 
-# Initialize in current directory
-worldbuild init . --ai copilot
+# Initialize with Spanish language output
+worldbuild init mi-novela-fantastica --ai claude --language es
+
+# Initialize with French language output
+worldbuild init mon-roman --ai copilot --lang fr
+
+# Initialize in current directory with German output
+worldbuild init . --ai copilot --language de
 # or use the --here flag
-worldbuild init --here --ai copilot
+worldbuild init --here --ai copilot --lang pt
 
 # Check system requirements
 worldbuild check
 ```
+
+### Language Support
+
+Worldbuilding Kit supports generating all story content (world descriptions, outlines, chapters, and writing) in multiple languages. Use the `--language` or `--lang` option when initializing your project:
+
+**Supported languages include:**
+- `en` - English (default)
+- `es` - Spanish (Español)
+- `fr` - French (Français)
+- `de` - German (Deutsch)
+- `pt` - Portuguese (Português)
+- `ja` - Japanese (日本語)
+- `zh` - Chinese (中文)
+- And many more...
+
+The language preference is saved in `/memory/config.json` and automatically applied to all worldbuilding commands (`/worldkit.foundation`, `/worldkit.worldbuild`, `/worldkit.outline`, `/worldkit.chapters`, `/worldkit.write`, etc.).
+
+**Note:** Technical markers, file paths, and structural elements remain in English for consistency across the workflow.
+
+📖 **For complete language support documentation, examples, and troubleshooting, see [Language Support Guide](docs/language-support.md)**
 
 ### Available Slash Commands
 

@@ -32,7 +32,7 @@ if (-not (Test-StoryBranch -Branch $paths.CURRENT_BRANCH -HasGit $paths.HAS_GIT)
 New-Item -ItemType Directory -Path $paths.FEATURE_DIR -Force | Out-Null
 
 # Copy plan template if it exists, otherwise note it or create empty file
-$template = Join-Path $paths.REPO_ROOT '.specify/templates/plan-template.md'
+$template = Join-Path $paths.REPO_ROOT '.worldbuild/templates/plan-template.md'
 if (Test-Path $template) { 
     Copy-Item $template $paths.IMPL_PLAN -Force
     Write-Output "Copied plan template to $($paths.IMPL_PLAN)"

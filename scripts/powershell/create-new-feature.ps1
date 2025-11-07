@@ -41,7 +41,7 @@ $featureDesc = ($FeatureDescription -join ' ').Trim()
 function Find-RepositoryRoot {
     param(
         [string]$StartDir,
-        [string[]]$Markers = @('.git', '.specify')
+        [string[]]$Markers = @('.git', '.worldbuild')
     )
     $current = Resolve-Path $StartDir
     while ($true) {
@@ -261,7 +261,7 @@ if ($hasGit) {
 $featureDir = Join-Path $worldsDir $branchName
 New-Item -ItemType Directory -Path $featureDir -Force | Out-Null
 
-$template = Join-Path $repoRoot '.specify/templates/spec-template.md'
+$template = Join-Path $repoRoot '.worldbuild/templates/spec-template.md'
 $specFile = Join-Path $featureDir 'world.md'
 if (Test-Path $template) { 
     Copy-Item $template $specFile -Force 

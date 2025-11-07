@@ -102,20 +102,20 @@ fi
 # Validate required directories and files
 if [[ ! -d "$STORY_DIR" ]]; then
     echo "ERROR: Feature directory not found: $STORY_DIR" >&2
-    echo "Run /speckit.specify first to create the feature structure." >&2
+    echo "Run /worldkit.worldbuild first to create the feature structure." >&2
     exit 1
 fi
 
 if [[ ! -f "$STORY_OUTLINE" ]]; then
     echo "ERROR: outline.md not found in $STORY_DIR" >&2
-    echo "Run /speckit.plan first to create the implementation plan." >&2
+    echo "Run /worldkit.plan first to create the implementation plan." >&2
     exit 1
 fi
 
 # Check for chapters.md if required
 if $REQUIRE_TASKS && [[ ! -f "$TASKS" ]]; then
     echo "ERROR: chapters.md not found in $STORY_DIR" >&2
-    echo "Run /speckit.tasks first to create the task list." >&2
+    echo "Run /worldkit.tasks first to create the task list." >&2
     exit 1
 fi
 

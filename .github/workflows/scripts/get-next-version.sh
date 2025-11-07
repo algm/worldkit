@@ -9,7 +9,18 @@ set -euo pipefail
 LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
 echo "latest_tag=$LATEST_TAG" >> $GITHUB_OUTPUT
 
-# Extract version number and increment
+# Check if pyproject.toml exists and extract version from it
+if [ -f "pyproject.toml" ]; then
+  PYPROJECT_VERSION=$(grep '^version = ' pyproject.toml | sed 's/version = "\(.*\)"/\1/' | tr -d ' ')
+  if [ -n "$PYPROJECT_VERSION" ]; then
+    NEW_VERSION="v$PYPROJECT_VERSION"
+    echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+    echo "Using version from pyproject.toml: $NEW_VERSION"
+    exit 0
+  fi
+fi
+
+# Fallback: Extract version number and increment
 VERSION=$(echo $LATEST_TAG | sed 's/v//')
 IFS='.' read -ra VERSION_PARTS <<< "$VERSION"
 MAJOR=${VERSION_PARTS[0]:-0}
